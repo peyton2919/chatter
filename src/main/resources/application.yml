@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  thymeleaf:
+    cache: false
+    mode: HTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    prefix: classpath:/templates/   #\u524D\u7F00
+    suffix: .html   #\u540E\u7F00
+  datasource:
+    username: root
+    password: hc2919
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_chatter?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true
+    hikari:
+      minimum-idle: 5   # \u6700\u5C0F\u8FDE\u63A5\u6570
+      maximum-pool-size: 20 # \u6700\u5927\u8FDE\u63A5\u6570
+      auto-commit: true   #\u81EA\u52A8\u63D0\u4EA4
+      idle-timeout: 1000000  #\u8FDE\u63A5\u8D85\u65F6\u7684\u6700\u5927\u65F6\u957F\uFF08\u6BEB\u79D2\uFF09\uFF0C\u8D85\u65F6\u5219\u88AB\u91CA\u653E\uFF08retired\uFF09,\u9ED8\u8BA4\uFF1A10\u5206\u949F
+      pool-name: hikariCP     #\u8FDE\u63A5\u6C60\u540D\u5B57
+      max-lifetime: 30000     #\u8FDE\u63A5\u7684\u751F\u547D\u65F6\u957F\uFF08\u6BEB\u79D2\uFF09\u8D85\u65F6\u800C\u4E14\u6CA1\u88AB\u4F7F\u7528\u5219\u88AB\u91CA\u653E\uFF08retired\uFF09,\u9ED8\u8BA4\uFF1A30\u5206\u949F 1800000ms
+      connection-timeout: 30000   #\u7B49\u5F85\u8FDE\u63A5\u6C60\u5206\u914D\u8FDE\u63A5\u7684\u6700\u5927\u65F6\u957F\uFF08\u6BEB\u79D2\uFF09,\u8D85\u8FC7\u8FD9\u4E2A\u65F6\u957F\u8FD8\u6CA1\u53EF\u7528\u7684\u8FDE\u63A5\u5219\u53D1\u751FSQLException,\u9ED8\u8BA430\u79D2
+      connection-test-query: SELECT 1
+  web:
+    resources:
+      static-locations: classpath:/resources/,classpath:/static/,classpath:/public/  # classpath:/META-INF/resources/,
+  mvc:
+    format:
+      date-time: yyyy-MM-dd HH:mm:ss
+    hiddenmethod:
+      filter:
+        enabled: true   # \u8BBE\u7F6E\u5F00\u542FRESTFul\u98CE\u683C
+  servlet:
+    multipart:
+      max-file-size: 500KB  # \u8BBE\u7F6E\u6587\u4EF6\u4E0A\u4F20\u5927\u5C0F\u7684\u9650\u5236
+      max-request-size: 2MB # \u6587\u4EF6\u6700\u5927\u8BF7\u6C42\u9650\u5236\uFF0C\u7528\u4E8E\u6279\u91CF
+
+mybatis:
+  mapper-locations: classpath:mappers/*Mapper.xml   # \u6240\u6709 mapper \u6620\u5C04\u7684\u6587\u4EF6\u6240\u5728\u76EE\u5F55\u4F4D\u7F6E cn/peyton/children/chatter/
+  type-aliases-package: cn.peyton.children.chatter.pojo   # \u6240\u6709\u6570\u636E\u5E93\u8868\u9006\u5411\u540E\u6240--\u6620\u5C04\u7684\u5B9E\u4F53\u7C7B Entity/Bean/POJO
+  configuration:
+    map-underscore-to-camel-case: true  # \u5F00\u542F\u9A7C\u5CF0
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl   #\u5F00\u542F mybatis \u7684\u65E5\u5FD7\u5B9E\u73B0\uFF0C\u53EF\u4EE5\u5728\u63A7\u5236\u53F0\u6253\u5370\u8F93\u5165 SQL \u8BED\u53E5\uFF0C\u5F00\u53D1\u73AF\u5883\u914D\u7F6E

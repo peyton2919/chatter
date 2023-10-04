@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.TopicMapper">
+	<resultMap id="ResultTopicMap" type="cn.peyton.children.chatter.pojo.Topic">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="title_pic" property="titlePic" jdbcType="VARCHAR"/>
+		<result column="desc" property="desc" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+		<result column="topic_class_id" property="topicClassId" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_topic_List">
+		id,title,title_pic,desc,type,create_time,topic_class_id
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Topic" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into topic(title,title_pic,desc,type,create_time,topic_class_id)
+		values (#{title},#{titlePic},#{desc},#{type},#{createTime},#{topicClassId})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Topic" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into topic
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="title != null">title,</if>
+			<if test="titlePic != null">title_pic,</if>
+			<if test="desc != null">desc,</if>
+			<if test="type != null">type,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="topicClassId != null">topic_class_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="title != null">#{title},</if>
+			<if test="titlePic != null">#{titlePic},</if>
+			<if test="desc != null">#{desc},</if>
+			<if test="type != null">#{type},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="topicClassId != null">#{topicClassId},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from topic
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Topic">
+		update topic
+		<set>
+			<if test="title != null">title = #{title},</if>
+			<if test="titlePic != null">title_pic = #{titlePic},</if>
+			<if test="desc != null">desc = #{desc},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="topicClassId != null">topic_class_id = #{topicClassId},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Topic">
+		update topic
+		set 
+			title = #{title},
+			title_pic = #{titlePic},
+			desc = #{desc},
+			type = #{type},
+			create_time = #{createTime},
+			topic_class_id = #{topicClassId}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultTopicMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_topic_List"/>
+		from topic
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

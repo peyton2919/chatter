@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.PostImageMapper">
+	<resultMap id="ResultPostImageMap" type="cn.peyton.children.chatter.pojo.PostImage">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="post_id" property="postId" jdbcType="INTEGER"/>
+		<result column="image_id" property="imageId" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_post_image_List">
+		id,post_id,image_id,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.PostImage" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into post_image(post_id,image_id,create_time)
+		values (#{postId},#{imageId},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.PostImage" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into post_image
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="postId != null">post_id,</if>
+			<if test="imageId != null">image_id,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="postId != null">#{postId},</if>
+			<if test="imageId != null">#{imageId},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from post_image
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.PostImage">
+		update post_image
+		<set>
+			<if test="postId != null">post_id = #{postId},</if>
+			<if test="imageId != null">image_id = #{imageId},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.PostImage">
+		update post_image
+		set 
+			post_id = #{postId},
+			image_id = #{imageId},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultPostImageMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_post_image_List"/>
+		from post_image
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

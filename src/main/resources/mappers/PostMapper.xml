@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.PostMapper">
+	<resultMap id="ResultPostMap" type="cn.peyton.children.chatter.pojo.Post">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="title" property="title" jdbcType="VARCHAR"/>
+		<result column="title_pic" property="titlePic" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="LONGVARCHAR"/>
+		<result column="share_num" property="shareNum" jdbcType="INTEGER"/>
+		<result column="path" property="path" jdbcType="VARCHAR"/>
+		<result column="type" property="type" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+		<result column="post_class_id" property="postClassId" jdbcType="INTEGER"/>
+		<result column="share_id" property="shareId" jdbcType="INTEGER"/>
+		<result column="is_open" property="isOpen" jdbcType="TINYINT"/>
+	</resultMap>
+
+	<sql id="Column_post_List">
+		id,user_id,title,title_pic,content,share_num,path,type,create_time,post_class_id,share_id,is_open
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Post" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into post(user_id,title,title_pic,content,share_num,path,type,create_time,post_class_id,share_id,is_open)
+		values (#{userId},#{title},#{titlePic},#{content},#{shareNum},#{path},#{type},#{createTime},#{postClassId},#{shareId},#{isOpen})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Post" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into post
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">user_id,</if>
+			<if test="title != null">title,</if>
+			<if test="titlePic != null">title_pic,</if>
+			<if test="content != null">content,</if>
+			<if test="shareNum != null">share_num,</if>
+			<if test="path != null">path,</if>
+			<if test="type != null">type,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="postClassId != null">post_class_id,</if>
+			<if test="shareId != null">share_id,</if>
+			<if test="isOpen != null">is_open,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">#{userId},</if>
+			<if test="title != null">#{title},</if>
+			<if test="titlePic != null">#{titlePic},</if>
+			<if test="content != null">#{content},</if>
+			<if test="shareNum != null">#{shareNum},</if>
+			<if test="path != null">#{path},</if>
+			<if test="type != null">#{type},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="postClassId != null">#{postClassId},</if>
+			<if test="shareId != null">#{shareId},</if>
+			<if test="isOpen != null">#{isOpen},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from post
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Post">
+		update post
+		<set>
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="title != null">title = #{title},</if>
+			<if test="titlePic != null">title_pic = #{titlePic},</if>
+			<if test="content != null">content = #{content},</if>
+			<if test="shareNum != null">share_num = #{shareNum},</if>
+			<if test="path != null">path = #{path},</if>
+			<if test="type != null">type = #{type},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="postClassId != null">post_class_id = #{postClassId},</if>
+			<if test="shareId != null">share_id = #{shareId},</if>
+			<if test="isOpen != null">is_open = #{isOpen},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Post">
+		update post
+		set 
+			user_id = #{userId},
+			title = #{title},
+			title_pic = #{titlePic},
+			content = #{content},
+			share_num = #{shareNum},
+			path = #{path},
+			type = #{type},
+			create_time = #{createTime},
+			post_class_id = #{postClassId},
+			share_id = #{shareId},
+			is_open = #{isOpen}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultPostMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_post_List"/>
+		from post
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

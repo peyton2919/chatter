@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.ImagesMapper">
+	<resultMap id="ResultImagesMap" type="cn.peyton.children.chatter.pojo.Images">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_images_List">
+		id,url,create_time,user_id
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Images" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into images(url,create_time,user_id)
+		values (#{url},#{createTime},#{userId})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Images" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into images
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="url != null">url,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="userId != null">user_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="url != null">#{url},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="userId != null">#{userId},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from images
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Images">
+		update images
+		<set>
+			<if test="url != null">url = #{url},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="userId != null">user_id = #{userId},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Images">
+		update images
+		set 
+			url = #{url},
+			create_time = #{createTime},
+			user_id = #{userId}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultImagesMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_images_List"/>
+		from images
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

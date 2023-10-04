@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.UserInfoMapper">
+	<resultMap id="ResultUserInfoMap" type="cn.peyton.children.chatter.pojo.UserInfo">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="age" property="age" jdbcType="TINYINT"/>
+		<result column="sex" property="sex" jdbcType="TINYINT"/>
+		<result column="qg" property="qg" jdbcType="TINYINT"/>
+		<result column="job" property="job" jdbcType="VARCHAR"/>
+		<result column="path" property="path" jdbcType="VARCHAR"/>
+		<result column="birthday" property="birthday" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="Column_user_info_List">
+		id,user_id,age,sex,qg,job,path,birthday
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.UserInfo" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into user_info(user_id,age,sex,qg,job,path,birthday)
+		values (#{userId},#{age},#{sex},#{qg},#{job},#{path},#{birthday})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.UserInfo" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">user_id,</if>
+			<if test="age != null">age,</if>
+			<if test="sex != null">sex,</if>
+			<if test="qg != null">qg,</if>
+			<if test="job != null">job,</if>
+			<if test="path != null">path,</if>
+			<if test="birthday != null">birthday,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">#{userId},</if>
+			<if test="age != null">#{age},</if>
+			<if test="sex != null">#{sex},</if>
+			<if test="qg != null">#{qg},</if>
+			<if test="job != null">#{job},</if>
+			<if test="path != null">#{path},</if>
+			<if test="birthday != null">#{birthday},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user_info
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.UserInfo">
+		update user_info
+		<set>
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="age != null">age = #{age},</if>
+			<if test="sex != null">sex = #{sex},</if>
+			<if test="qg != null">qg = #{qg},</if>
+			<if test="job != null">job = #{job},</if>
+			<if test="path != null">path = #{path},</if>
+			<if test="birthday != null">birthday = #{birthday},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.UserInfo">
+		update user_info
+		set 
+			user_id = #{userId},
+			age = #{age},
+			sex = #{sex},
+			qg = #{qg},
+			job = #{job},
+			path = #{path},
+			birthday = #{birthday}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultUserInfoMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_user_info_List"/>
+		from user_info
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

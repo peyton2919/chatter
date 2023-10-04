@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.UserMapper">
+	<resultMap id="ResultUserMap" type="cn.peyton.children.chatter.pojo.User">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="username" property="username" jdbcType="VARCHAR"/>
+		<result column="user_pic" property="userPic" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_user_List">
+		id,username,user_pic,password,phone,email,status,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.User" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into user(username,user_pic,password,phone,email,status,create_time)
+		values (#{username},#{userPic},#{password},#{phone},#{email},#{status},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.User" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="username != null">username,</if>
+			<if test="userPic != null">user_pic,</if>
+			<if test="password != null">password,</if>
+			<if test="phone != null">phone,</if>
+			<if test="email != null">email,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="username != null">#{username},</if>
+			<if test="userPic != null">#{userPic},</if>
+			<if test="password != null">#{password},</if>
+			<if test="phone != null">#{phone},</if>
+			<if test="email != null">#{email},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.User">
+		update user
+		<set>
+			<if test="username != null">username = #{username},</if>
+			<if test="userPic != null">user_pic = #{userPic},</if>
+			<if test="password != null">password = #{password},</if>
+			<if test="phone != null">phone = #{phone},</if>
+			<if test="email != null">email = #{email},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.User">
+		update user
+		set 
+			username = #{username},
+			user_pic = #{userPic},
+			password = #{password},
+			phone = #{phone},
+			email = #{email},
+			status = #{status},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultUserMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_user_List"/>
+		from user
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

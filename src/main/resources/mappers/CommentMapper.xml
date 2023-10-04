@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.CommentMapper">
+	<resultMap id="ResultCommentMap" type="cn.peyton.children.chatter.pojo.Comment">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="f_id" property="fId" jdbcType="INTEGER"/>
+		<result column="fnum" property="fnum" jdbcType="INTEGER"/>
+		<result column="data" property="data" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+		<result column="post_id" property="postId" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_comment_List">
+		id,user_id,f_id,fnum,data,create_time,post_id
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Comment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into comment(user_id,f_id,fnum,data,create_time,post_id)
+		values (#{userId},#{fId},#{fnum},#{data},#{createTime},#{postId})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Comment" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into comment
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">user_id,</if>
+			<if test="fId != null">f_id,</if>
+			<if test="fnum != null">fnum,</if>
+			<if test="data != null">data,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="postId != null">post_id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">#{userId},</if>
+			<if test="fId != null">#{fId},</if>
+			<if test="fnum != null">#{fnum},</if>
+			<if test="data != null">#{data},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="postId != null">#{postId},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from comment
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Comment">
+		update comment
+		<set>
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="fId != null">f_id = #{fId},</if>
+			<if test="fnum != null">fnum = #{fnum},</if>
+			<if test="data != null">data = #{data},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="postId != null">post_id = #{postId},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Comment">
+		update comment
+		set 
+			user_id = #{userId},
+			f_id = #{fId},
+			fnum = #{fnum},
+			data = #{data},
+			create_time = #{createTime},
+			post_id = #{postId}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultCommentMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_comment_List"/>
+		from comment
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.TopicPostMapper">
+	<resultMap id="ResultTopicPostMap" type="cn.peyton.children.chatter.pojo.TopicPost">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="topic_id" property="topicId" jdbcType="INTEGER"/>
+		<result column="post_id" property="postId" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_topic_post_List">
+		id,topic_id,post_id,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.TopicPost" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into topic_post(topic_id,post_id,create_time)
+		values (#{topicId},#{postId},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.TopicPost" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into topic_post
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="topicId != null">topic_id,</if>
+			<if test="postId != null">post_id,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="topicId != null">#{topicId},</if>
+			<if test="postId != null">#{postId},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from topic_post
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.TopicPost">
+		update topic_post
+		<set>
+			<if test="topicId != null">topic_id = #{topicId},</if>
+			<if test="postId != null">post_id = #{postId},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.TopicPost">
+		update topic_post
+		set 
+			topic_id = #{topicId},
+			post_id = #{postId},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultTopicPostMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_topic_post_List"/>
+		from topic_post
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

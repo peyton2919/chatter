@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.PostClassMapper">
+	<resultMap id="ResultPostClassMap" type="cn.peyton.children.chatter.pojo.PostClass">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="class_name" property="className" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_post_class_List">
+		id,class_name,status,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.PostClass" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into post_class(class_name,status,create_time)
+		values (#{className},#{status},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.PostClass" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into post_class
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="className != null">class_name,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="className != null">#{className},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from post_class
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.PostClass">
+		update post_class
+		<set>
+			<if test="className != null">class_name = #{className},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.PostClass">
+		update post_class
+		set 
+			class_name = #{className},
+			status = #{status},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultPostClassMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_post_class_List"/>
+		from post_class
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

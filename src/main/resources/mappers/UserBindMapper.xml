@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.UserBindMapper">
+	<resultMap id="ResultUserBindMap" type="cn.peyton.children.chatter.pojo.UserBind">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="type" property="type" jdbcType="VARCHAR"/>
+		<result column="open_id" property="openId" jdbcType="VARCHAR"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+		<result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="Column_user_bind_List">
+		id,type,open_id,user_id,nick_name,avatar_url
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.UserBind" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into user_bind(type,open_id,user_id,nick_name,avatar_url)
+		values (#{type},#{openId},#{userId},#{nickName},#{avatarUrl})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.UserBind" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into user_bind
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="type != null">type,</if>
+			<if test="openId != null">open_id,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="nickName != null">nick_name,</if>
+			<if test="avatarUrl != null">avatar_url,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="type != null">#{type},</if>
+			<if test="openId != null">#{openId},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="nickName != null">#{nickName},</if>
+			<if test="avatarUrl != null">#{avatarUrl},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from user_bind
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.UserBind">
+		update user_bind
+		<set>
+			<if test="type != null">type = #{type},</if>
+			<if test="openId != null">open_id = #{openId},</if>
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="nickName != null">nick_name = #{nickName},</if>
+			<if test="avatarUrl != null">avatar_url = #{avatarUrl},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.UserBind">
+		update user_bind
+		set 
+			type = #{type},
+			open_id = #{openId},
+			user_id = #{userId},
+			nick_name = #{nickName},
+			avatar_url = #{avatarUrl}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultUserBindMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_user_bind_List"/>
+		from user_bind
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>

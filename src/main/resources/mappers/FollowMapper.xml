@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.peyton.children.chatter.mapper.FollowMapper">
+	<resultMap id="ResultFollowMap" type="cn.peyton.children.chatter.pojo.Follow">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="follow_id" property="followId" jdbcType="INTEGER"/>
+		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<sql id="Column_follow_List">
+		id,follow_id,user_id,create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Follow" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into follow(follow_id,user_id,create_time)
+		values (#{followId},#{userId},#{createTime})
+	</insert>
+
+	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Follow" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into follow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="followId != null">follow_id,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="createTime != null">create_time,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="followId != null">#{followId},</if>
+			<if test="userId != null">#{userId},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+	</insert>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from follow
+		where id = #{id}
+	</delete>
+
+	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Follow">
+		update follow
+		<set>
+			<if test="followId != null">follow_id = #{followId},</if>
+			<if test="userId != null">user_id = #{userId},</if>
+			<if test="createTime != null">create_time = #{createTime},</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Follow">
+		update follow
+		set 
+			follow_id = #{followId},
+			user_id = #{userId},
+			create_time = #{createTime}
+		where id = #{id}
+	</update>
+
+	<select id="selectByPrimaryKey" resultMap="ResultFollowMap"  parameterType="java.lang.Integer">
+		select
+		<include refid="Column_follow_List"/>
+		from follow
+		where id = #{id}
+	</select>
+
+	<!-- new create method   -->
+
+</mapper>
