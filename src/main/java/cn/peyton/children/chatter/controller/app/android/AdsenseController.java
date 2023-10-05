@@ -6,6 +6,11 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 /**
  * <h3> 广告 Controller 类</h3>
  * <pre>
@@ -23,6 +28,12 @@ public class AdsenseController {
 
 	@GetMapping("/find")
 	public Adsense findById() {
+		int _tmp = (int) (System.currentTimeMillis() / 1000);
+		System.out.println(System.currentTimeMillis());
+		System.out.println(_tmp);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		long _timeLong = Long.valueOf(_tmp);
+		System.out.println(format.format(new Date(_timeLong*1000l)));
 		return adsenseService.findById(1);
 	}
 

@@ -8,6 +8,7 @@ public class ChatterApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ChatterApplication.class, args);
+
     }
 
 }
