@@ -32,7 +32,7 @@ public final class HttpServletResponseTools implements Serializable {
             writer = response.getWriter();
             writer.print(json);
         } catch (IOException e) {
-            throw new RuntimeException("cn.peyton.plum.core.utils.HttpServletResponseUtils: " +
+            throw new RuntimeException("cn.peyton.core.toolkit.HttpServletResponseUtils: " +
                     "{方法名：returnJson}; 写writer异常[IOException]");
         } finally {
             if (null != writer) {

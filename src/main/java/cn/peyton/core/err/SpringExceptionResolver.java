@@ -1,16 +1,15 @@
 package cn.peyton.core.err;
 
 
-import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.enums.HttpStatusCode;
 import cn.peyton.core.err.child.GlobalException;
 import cn.peyton.core.err.child.ParamException;
 import cn.peyton.core.err.child.TransactionalException;
 import cn.peyton.core.err.child.ValidationException;
+import cn.peyton.core.json.JSONResult;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,7 +37,7 @@ public class SpringExceptionResolver implements HandlerExceptionResolver {
     private static final String PAGE = ".page";
 
     @Override
-    @ExceptionHandler(value = {Exception.class})
+    //@ExceptionHandler(value = {Exception.class})
     public ModelAndView resolveException(HttpServletRequest request,
                                          HttpServletResponse response,
                                          Object obj, Exception ex) {

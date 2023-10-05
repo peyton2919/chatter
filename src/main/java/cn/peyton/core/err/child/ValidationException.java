@@ -1,9 +1,9 @@
 package cn.peyton.core.err.child;
 
 import cn.peyton.core.json.JSONResult;
-import cn.peyton.core.json.JsonMapper;
-import cn.peyton.core.toolkit.HttpServletResponseTools;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
 
 /**
  * <h3>验证 异常类</h3>
@@ -15,7 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
  * </pre>
  * @author peyton
  */
-public class ValidationException extends RuntimeException {
+public class  ValidationException extends RuntimeException {
+
 
     public ValidationException() {
     }
@@ -41,8 +42,16 @@ public class ValidationException extends RuntimeException {
      * @param response response 对象
      * @param jsonResult jsonResult 对象{封装的数据}
      */
-    public ValidationException(HttpServletResponse response, JSONResult jsonResult) {
-        HttpServletResponseTools.returnJson(
-                response, JsonMapper.toJSon(jsonResult));
+    public ValidationException(HttpServletResponse response, JSONResult jsonResult)  {
+        //HttpServletResponseTools.returnJson(
+        //        response, JsonMapper.toJSon(jsonResult));
+
+        try {
+            response.sendRedirect("/err?result="+ jsonResult);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
 }

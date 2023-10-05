@@ -1,10 +1,10 @@
 package cn.peyton.core.err.child;
 
-
 import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.json.JsonMapper;
 import cn.peyton.core.toolkit.HttpServletResponseTools;
 import jakarta.servlet.http.HttpServletResponse;
+
 
 /**
  * <h3>全局 异常类</h3>
@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * </pre>
  */
 public class GlobalException extends RuntimeException {
+
 
     public GlobalException() {
         super();
@@ -45,5 +46,9 @@ public class GlobalException extends RuntimeException {
     public GlobalException(HttpServletResponse response, JSONResult jsonResult) {
         HttpServletResponseTools.returnJson(
                 response, JsonMapper.toJSon(jsonResult));
+    }
+
+    public GlobalException(HttpServletResponse response, JSONResult result, Object obj, String url) {
+
     }
 }
