@@ -1,6 +1,9 @@
 package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.Adsense;
+import cn.peyton.core.page.PageQuery;
+
+import java.util.List;
 
 /**
  * <h3> 广告 Mapper 接口</h3>
@@ -57,5 +60,11 @@ public interface AdsenseMapper {
 
 	// ==================================== new create method ==================================== //
 
-
+	/**
+	 * <h4>根据 类型 查找 广告对象集合</h4>
+	 * @param type 类型
+	 * @param page 分页对象
+	 * @return
+	 */
+	List<Adsense> findByType(Integer type, PageQuery page);
 }

@@ -1,9 +1,5 @@
 package cn.peyton.core.aop;
 
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
-
 import java.io.Serializable;
 
 /**
@@ -20,9 +16,9 @@ import java.io.Serializable;
  * @version: 1.0.0
  * </pre>
  */
-@Aspect
-@Slf4j
-@Component
+//@Aspect
+//@Slf4j
+//@Component
 public class AopLogs  implements Serializable {
 
     /**
@@ -31,21 +27,21 @@ public class AopLogs  implements Serializable {
      * @return
      * @throws Throwable
      */
-//    @Around("execution(* cn.peyton.plum..*.*(..))")
-//    public Object printLogTimesOfService(ProceedingJoinPoint point) throws Throwable {
-//        ;
-//        log.info("正在执行{}.{}", point.getTarget().getClass(), point.getSignature().getName());
-//        long startTime = System.currentTimeMillis();
-//        Object result = point.proceed();
-//        long endTime = System.currentTimeMillis();
-//        long exTimes = endTime - startTime;
-//        if (exTimes > 3000) {
-//            log.error("当前执行耗时：{}",exTimes);
-//        }else if (exTimes > 200){
-//            log.warn("当前执行耗时：{}",exTimes);
-//        }else {
-//            log.info("当前执行耗时：{}",exTimes);
-//        }
-//        return result;
-//    }
+    //@Around("execution(* cn.peyton.children.*.find*(..))")
+    //public Object printLogTimesOfService(ProceedingJoinPoint point) throws Throwable {
+    //    ;
+    //    log.info("正在执行{}.{}", point.getTarget().getClass(), point.getSignature().getName());
+    //    long startTime = System.currentTimeMillis();
+    //    Object result = point.proceed();
+    //    long endTime = System.currentTimeMillis();
+    //    long exTimes = endTime - startTime;
+    //    if (exTimes > 3000) {
+    //        log.error("当前执行耗时：{}",exTimes);
+    //    }else if (exTimes > 200){
+    //        log.warn("当前执行耗时：{}",exTimes);
+    //    }else {
+    //        log.info("当前执行耗时：{}",exTimes);
+    //    }
+    //    return result;
+    //}
 }

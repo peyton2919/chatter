@@ -1,9 +1,14 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.FeedbackService;
+import cn.peyton.children.chatter.bo.FeedbackBo;
 import cn.peyton.children.chatter.mapper.FeedbackMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.FeedbackParam;
+import cn.peyton.children.chatter.service.FeedbackService;
+import cn.peyton.core.page.PageQuery;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 反馈 Service 实现类</h3>
@@ -19,4 +24,13 @@ public class FeedbackServiceImpl implements FeedbackService {
 	@Resource
 	private FeedbackMapper feedbackMapper;
 
+	@Override
+	public boolean create(FeedbackParam param) {
+		return feedbackMapper.insertSelective(param.convert()) > 0 ? true : false;
+	}
+
+	@Override
+	public List<FeedbackParam> finds(PageQuery page) {
+		return new FeedbackBo().adapter(feedbackMapper.finds(page));
+	}
 }

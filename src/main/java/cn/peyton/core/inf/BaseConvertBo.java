@@ -67,4 +67,5 @@ public abstract class BaseConvertBo<P,T> implements Serializable {
         return params;
     }
 
+
 }

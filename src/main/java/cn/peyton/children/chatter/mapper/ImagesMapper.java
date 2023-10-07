@@ -2,6 +2,8 @@ package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.Images;
 
+import java.util.List;
+
 /**
  * <h3> 图片 Mapper 接口</h3>
  * <pre>
@@ -57,5 +59,17 @@ public interface ImagesMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h4>批量插入</h4>
+	 * @param imagesList 图片对象集合
+	 * @return 返回受影响的行数
+	 */
+	int insertBatch(List<Images> imagesList);
 
+	/**
+	 * <h>根据 帖子ID 查找 集合</h>
+	 * @param postId 帖子ID
+	 * @return
+	 */
+	List<Images> selectByExpand(int postId);
 }

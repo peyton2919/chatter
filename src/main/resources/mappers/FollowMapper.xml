@@ -64,4 +64,45 @@
 
 	<!-- new create method   -->
 
+	<select id="findByUserId" resultMap="ResultFollowMap">
+		select
+		<include refid="Column_follow_List"/>
+		from follow
+		where user_id = #{userId}
+	</select>
+
+	<!-- new create method   -->
+	<select id="checkFollow" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		from follow
+		where user_id=#{userId} and follow_id=#{followId}
+
+	</select>
+
+	<select id="friends" resultMap="ResultFollowMap">
+		SELECT
+		<include refid="Column_follow_List"></include>
+		from follow
+		WHERE user_id
+		IN
+		(SELECT follow_id from follow WHERE user_id = #{userId})
+		and follow_id = #{userId}
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<select id="follows"  resultMap="ResultFollowMap">
+		SELECT
+		<include refid="Column_follow_List"></include>
+		from follow
+		WHERE
+		<if test="fens">
+			follow_id= #{userId}
+		</if>
+		<if test="!fens">
+			user_id= #{userId}
+		</if>
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
 </mapper>

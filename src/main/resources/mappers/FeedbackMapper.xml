@@ -69,4 +69,10 @@
 
 	<!-- new create method   -->
 
+	<select id="finds" resultMap="ResultFeedbackMap" parameterType="cn.peyton.core.page.PageQuery">
+		select
+		<include refid="Column_feedback_List"/>
+		from feedback
+		limit #{page.offset},#{page.pageSize}
+	</select>
 </mapper>

@@ -49,28 +49,28 @@ public class SpringExceptionResolver implements HandlerExceptionResolver {
         //这里我们要求项目中所有请求json数据，都使用 .json 结尾
         if (url.endsWith(JSON)) {
             if (ex instanceof GlobalException || ex instanceof ValidationException) {
-                JSONResult result = JSONResult.fail(HttpStatusCode.CUSTOMIZE_EXCEPTION_ERROR.getCode() , "（╯＾╰） " + ex.getMessage());
+                JSONResult result = JSONResult.fail(HttpStatusCode.ERR_VALID.getCode() , "（╯＾╰） " + ex.getMessage());
                 mv = new ModelAndView("jsonView", result.toMap());
             }else if (ex instanceof TransactionalException){
-                JSONResult result = JSONResult.fail(HttpStatusCode.CUSTOMIZE_EXCEPTION_ERROR.getCode() , "（╯＾╰） 添加或更新处理出错了。");
+                JSONResult result = JSONResult.fail(HttpStatusCode.ERR_VALID.getCode() , "（╯＾╰） 添加或更新处理出错了。");
                 mv = new ModelAndView("jsonView", result.toMap());
             }else if (ex instanceof ParamException){
-                JSONResult result = JSONResult.fail(HttpStatusCode.CUSTOMIZE_EXCEPTION_ERROR.getCode() , "（╯＾╰） " + ex.getMessage());
+                JSONResult result = JSONResult.fail(HttpStatusCode.ERR_VALID.getCode() , "（╯＾╰） " + ex.getMessage());
                 mv = new ModelAndView("jsonView", result.toMap());
             }else {
                 log.error("未知Json异常, url: {}" , url,ex);
-                JSONResult result = JSONResult.fail(HttpStatusCode.CUSTOMIZE_EXCEPTION_ERROR.getCode() , defaultMsg);
+                JSONResult result = JSONResult.fail(HttpStatusCode.ERR_VALID.getCode() , defaultMsg);
                 mv = new ModelAndView("jsonView", result.toMap());
             }
             //这里我们要求项目中所有请求page页面，都使用 .page 结尾
         } else if(url.endsWith(PAGE)){
             log.error("未知页面异常, url: {}" , url ,ex);
-            JSONResult result = JSONResult.fail(HttpStatusCode.CUSTOMIZE_EXCEPTION_ERROR.getCode() , defaultMsg);
+            JSONResult result = JSONResult.fail(HttpStatusCode.ERR_VALID.getCode() , defaultMsg);
             //这里的exception 是一个jsp页面
             mv = new ModelAndView("exception", result.toMap());
         }else {
             log.error("未知异常, url: {}" , url,ex);
-            JSONResult result = JSONResult.fail(HttpStatusCode.CUSTOMIZE_EXCEPTION_ERROR.getCode() , defaultMsg);
+            JSONResult result = JSONResult.fail(HttpStatusCode.ERR_VALID.getCode() , defaultMsg);
             mv = new ModelAndView("index", result.toMap());
         }
         return mv;

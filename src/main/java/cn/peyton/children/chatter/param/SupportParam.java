@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Support;
+import cn.peyton.core.validator.constraints.Size;
 
 import java.io.Serializable;
 /**
@@ -21,6 +22,7 @@ public class SupportParam implements Serializable {
 	/** 帖子id  */
 	private Integer postId;
 	/** 0 顶 1踩  */
+	@Size(min = 0,max = 1,message = "数值超出规定范围！")
 	private Integer type;
 	/** 创建时间  */
 	private Integer createTime;

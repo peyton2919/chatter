@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class UserBind implements Serializable {
 	/** 编号  */
 	private Integer id;
-	/** 类型  */
+	/** 类型 对应第三方的 provider  */
 	private String type;
 	/** 开放编号  */
 	private String openId;
@@ -47,14 +47,14 @@ public class UserBind implements Serializable {
 	}
 
 	/** 
-	 * @param type 类型 
+	 * @param type 类型 对应第三方的 provider
 	 */ 
 	public void setType(String type){
 		this.type = type;
 	}
 
 	/** 
-	 * @return 类型 
+	 * @return 类型 对应第三方的 provider
 	 */ 
 	public String getType(){
 		return type;

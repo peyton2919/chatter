@@ -2,6 +2,8 @@ package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.UserBind;
 
+import java.util.List;
+
 /**
  * <h3> 第三方登录信息 Mapper 接口</h3>
  * <pre>
@@ -57,5 +59,28 @@ public interface UserBindMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h>根据用户编号 查找 用户绑定对象</h>
+	 * @param id 用户编号
+	 * @return
+	 */
+	List<UserBind> findByUserId(Integer id);
+
+	/**
+	 * <h4>判断 第三方账号 是否被 他人绑定</h4>
+	 * @param userId 用户编号
+	 * @param openId 第三方账号
+	 * @param type 账号类型 {qq,weixin,xinaweibo}
+	 * @return true 表示 可用 没有绑定过; false 表示 取反;
+	 */
+	int checkBindOther(int userId,String openId, String type);
+
+	/**
+	 * <h4>根据openId和type 查找 用户绑定</h4>
+	 * @param openId
+	 * @param type
+	 * @return 用户绑定对象
+	 */
+	UserBind findByOpenIdAndType(String openId,String type);
 
 }

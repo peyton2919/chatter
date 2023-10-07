@@ -9,6 +9,9 @@
 		<result column="data" property="data" jdbcType="VARCHAR"/>
 		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
 		<result column="post_id" property="postId" jdbcType="INTEGER"/>
+		<association property="user" javaType="cn.peyton.children.chatter.pojo.User"
+					 column="user_id" select="cn.peyton.children.chatter.mapper.UserMapper.findByExpand">
+		</association>
 	</resultMap>
 
 	<sql id="Column_comment_List">
@@ -78,5 +81,25 @@
 	</select>
 
 	<!-- new create method   -->
+
+	<select id="checkCommentByFId" resultType="java.lang.Integer">
+		select count(id) from comment where id = #{fId}
+	</select>
+
+	<select id="checkCommentByFIdAndPostId" resultType="java.lang.Integer">
+		select count(id) from comment where id = #{fId} and post_id = #{postId}
+	</select>
+
+	<update id="updateFnumInt">
+		UPDATE comment SET fnum = fnum + 1 WHERE id=#{id}
+	</update>
+
+	<select id="findByPostId" resultMap="ResultCommentMap">
+		SELECT <include refid="Column_comment_List"/>
+		FROM comment WHERE post_id = #{postId}
+	</select>
+	<select id="countByPostId" resultType="java.lang.Integer">
+		SELECT count(id) FROM comment WHERE post_id = #{postId}
+	</select>
 
 </mapper>

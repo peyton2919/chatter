@@ -73,5 +73,23 @@
 	</select>
 
 	<!-- new create method   -->
+	<select id="findByUserId" resultMap="ResultUserBindMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Column_user_bind_List"/>
+		from user_bind
+		where user_id = #{id}
+	</select>
+
+	<select id="checkBindOther" resultType="java.lang.Integer">
+		select
+			count(id)
+		from user_bind
+		where user_id!=#{userId} and type=#{type} and open_id=#{openId}
+	</select>
+
+	<select id="findByOpenIdAndType" resultType="cn.peyton.children.chatter.pojo.UserBind">
+		SELECT <include refid="Column_user_bind_List"/>
+		FROM user_bind WHERE type=#{type} AND open_id=#{openId}
+	</select>
 
 </mapper>

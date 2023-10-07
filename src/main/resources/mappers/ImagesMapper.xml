@@ -63,5 +63,19 @@
 	</select>
 
 	<!-- new create method   -->
+	<insert id="insertBatch" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into images(url,user_id)
+		values
+		<foreach collection="imagesList" item="images" separator=",">
+			(#{images.url},#{images.userId})
+		</foreach>
+	</insert>
 
+
+	<select id="selectByExpand" resultMap="ResultImagesMap" parameterType="java.lang.Integer">
+		select imgs.id,imgs.url,imgs.create_time,imgs.user_id
+		from images as imgs,post_image
+		where imgs.id = post_image.image_id
+		  and post_id =  #{postId}
+	</select>
 </mapper>

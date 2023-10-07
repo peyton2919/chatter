@@ -1,6 +1,10 @@
 package cn.peyton.children.chatter.pojo;
 
+import cn.peyton.core.toolkit.base.Lists;
+
 import java.io.Serializable;
+import java.util.List;
+
 /**
  * <h3> 用户信息 实体类</h3>
  * <pre>
@@ -28,7 +32,21 @@ public class User implements Serializable {
 	/** 创建时间  */
 	private Integer createTime;
 
+	// 附加
+	/** 用户扩展信息 对象 */
+	private UserInfo userInfo;
+	/** 用户绑定对象 */
+	private List<UserBind> userBinds;
+
 	//================================== Constructor =======================================//
+	public User(){
+		if (null == userInfo) {
+			userInfo = new UserInfo();
+		}
+		if (null == userBinds) {
+			userBinds = Lists.newArrayList();
+		}
+	}
 
 	//================================== Method =======================================//
 
@@ -147,4 +165,31 @@ public class User implements Serializable {
 		return createTime;
 	}
 
+	/**
+	 * @return 用户扩展信息 对象
+	 */
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	/**
+	 * @param userInfo 用户扩展信息 对象
+	 */
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	/**
+	 * @return 用户绑定对象
+	 */
+	public List<UserBind> getUserBinds() {
+		return userBinds;
+	}
+
+	/**
+	 * @param userBinds 用户绑定对象
+	 */
+	public void setUserBinds(List<UserBind> userBinds) {
+		this.userBinds = userBinds;
+	}
 }

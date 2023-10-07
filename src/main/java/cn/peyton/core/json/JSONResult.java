@@ -10,9 +10,20 @@ import java.util.Map;
 
 /**
  * <h3>自定义响应数据数据结构,保证序列化json时，如果是null对象，key也会消失</h3>
+ * <pre>
+ *     主要用到 3 个字段:
+ *          code:   状态码, 用来标识成功还是失败;
+ *          msg:    消息, 返回时带回的消息;
+ *          data:    返回后带回的数据；
+ *
+ *      需要扩展用到以下 3 个字段:
+ *          expand:     需要带回的扩展数据;
+ *          errorCode:  扩展的异常状态码;
+ *          httpStatusCode:     需要带回的 response 带的状态码; 默认为 `-1`
+ * </pre>
  *
  * <pre>
- * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
+ * @mail <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
  * @date: 2021/10/31 23:36
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @version 1.0.0

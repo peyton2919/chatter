@@ -63,5 +63,11 @@
 	</select>
 
 	<!-- new create method   -->
-
+	<!-- new create method   -->
+	<select id="finds" resultMap="ResultPostClassMap" >
+		select
+			id,class_name
+		from post_class
+		order by create_time desc
+	</select>
 </mapper>

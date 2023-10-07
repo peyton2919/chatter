@@ -69,4 +69,11 @@
 
 	<!-- new create method   -->
 
+	<select id="findByType" resultMap="ResultAdsenseMap">
+		select
+		<include refid="Column_adsense_List"/>
+		from adsense
+		where type = #{type}
+		limit #{page.offset},#{page.pageSize}
+	</select>
 </mapper>

@@ -1,6 +1,10 @@
 package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.Feedback;
+import cn.peyton.core.page.PageQuery;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <h3> 反馈 Mapper 接口</h3>
@@ -57,5 +61,10 @@ public interface FeedbackMapper {
 
 	// ==================================== new create method ==================================== //
 
-
+	/**
+	 * <h4>获取用户反馈列表</h4>
+	 * @param page 分页对象
+	 * @return
+	 */
+	List<Feedback> finds(@Param("page") PageQuery page);
 }

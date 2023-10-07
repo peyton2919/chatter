@@ -1,6 +1,9 @@
 package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.Post;
+import cn.peyton.core.page.PageQuery;
+
+import java.util.List;
 
 /**
  * <h3> 帖子 Mapper 接口</h3>
@@ -57,5 +60,55 @@ public interface PostMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h4>判断文章是否存在</h4>
+	 * @param id 文章编号
+	 * @return 返回行数 > 0 表示存在 ; 否则取反
+	 */
+	int checkPost(Integer id);
+	/**
+	 * <h>根据文章编号 并 type=1 查找文章对象 </h>
+	 * @param id 文章编号
+	 * @return 文章对象
+	 */
+	Post findByShareId(Integer id);
+	/**
+	 * <h4>根据文章分类，分页查找,只查isOpen=1</h4>
+	 * @param postClassId 文章分类编号
+	 * @param page 分页对象
+	 * @return 文章集合
+	 */
+	List<Post> findByClassId(int postClassId, PageQuery page);
 
+	/**
+	 * <h4>根据关键字，分页查找,只查isOpen=1</h4>
+	 * @param keyword 关键字
+	 * @param page 分页对象
+	 * @return 文章集合
+	 */
+	List<Post> search(String keyword, PageQuery page);
+
+	/**
+	 * <h4>根据话题 ID 查找,只查isOpen=1</h4>
+	 * @param topicId 话题 ID
+	 * @param page 分页对象
+	 * type 0 表示 按分享数排序, 1 表示 按最新时间排序
+	 * @return
+	 */
+	List<Post> findByTopicId(int topicId, PageQuery page,int type);
+
+	/**
+	 * <h4>根据用户 ID 查找,只查isOpen=1</h4>
+	 * @param userId 话题 ID
+	 * @param page 分页对象
+	 * @return
+	 */
+	List<Post> findByUserId(int userId, PageQuery page);
+	/**
+	 * <h4>根据用户 ID 查找,全部(含隐私) </h4>
+	 * @param userId 话题 ID
+	 * @param page 分页对象
+	 * @return
+	 */
+	List<Post> findByPKUserId(int userId, PageQuery page);
 }

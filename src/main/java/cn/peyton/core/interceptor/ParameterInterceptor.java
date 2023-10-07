@@ -40,7 +40,7 @@ public class ParameterInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        log.info("===============  进入拦截器{ParameterInterceptor}  ===============");
+        log.info("===============  进入拦截器{Parameter Interceptor}  ===============");
         //如果不是映射到方法直接通过，可以访问资源
         if (!(handler instanceof HandlerMethod)) { return true; }
 
@@ -72,7 +72,7 @@ public class ParameterInterceptor implements HandlerInterceptor {
         }
 
         //  ***************************************************************************  //
-        //获取 是否标记 Valid 的方法
+        //获取 是否标记 @Valid 的方法
         Valid _validAnnotation = _method.getAnnotation(Valid.class);
         // 有 @Valid 注解，需要验证
         if (null != _validAnnotation && _validAnnotation.require()) {
@@ -110,6 +110,7 @@ public class ParameterInterceptor implements HandlerInterceptor {
                 }
             }
             if (null != _errMap && _errMap.size() >0){
+                // 写到页面
                 HttpServletResponseTools.returnJson(
                         response, JsonMapper.toJSon(JSONResult.fail(_errMap)));
                 return false;

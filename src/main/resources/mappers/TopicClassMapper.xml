@@ -63,5 +63,10 @@
 	</select>
 
 	<!-- new create method   -->
-
+	<select id="finds" resultMap="ResultTopicClassMap">
+		select
+			id,class_name
+		from topic_class
+		order by create_time desc
+	</select>
 </mapper>

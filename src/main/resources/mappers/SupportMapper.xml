@@ -69,4 +69,31 @@
 
 	<!-- new create method   -->
 
+	<select id="checkSupport" resultType="cn.peyton.children.chatter.pojo.Support">
+		select
+		<include refid="Column_support_List"/>
+		from support
+		where user_id = #{userId} and post_id=#{postId}
+	</select>
+
+	<select id="findDingAndCaiByPostId" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		from support
+		where post_id=#{postId} and type =#{type}
+	</select>
+
+	<select id="findDingByPostId" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		from support
+		where post_id=#{postId} and type =0
+	</select>
+
+	<select id="findCaiByPostId" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		from support
+		where post_id=#{postId} and type =1
+	</select>
 </mapper>

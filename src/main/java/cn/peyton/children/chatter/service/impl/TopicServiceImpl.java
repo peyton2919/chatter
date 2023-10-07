@@ -1,9 +1,14 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.TopicService;
+import cn.peyton.children.chatter.bo.TopicBo;
 import cn.peyton.children.chatter.mapper.TopicMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.TopicParam;
+import cn.peyton.children.chatter.service.TopicService;
+import cn.peyton.core.page.PageQuery;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 话题 Service 实现类</h3>
@@ -18,5 +23,20 @@ import jakarta.annotation.Resource;
 public class TopicServiceImpl implements TopicService {
 	@Resource
 	private TopicMapper topicMapper;
+
+	@Override
+	public List<TopicParam> findByTopicId(int topicClassId, PageQuery page) {
+		return new TopicBo().adapter(topicMapper.findByTopicClassId(topicClassId,page));
+	}
+
+	@Override
+	public List<TopicParam> findByHot(int topicClassId, PageQuery page) {
+		return new TopicBo().adapter(topicMapper.findByHot(topicClassId,page));
+	}
+
+	@Override
+	public List<TopicParam> search(String keyword, PageQuery page) {
+		return new TopicBo().adapter(topicMapper.search(keyword,page));
+	}
 
 }

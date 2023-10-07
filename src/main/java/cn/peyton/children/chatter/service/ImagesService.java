@@ -1,4 +1,9 @@
 package cn.peyton.children.chatter.service;
+
+import cn.peyton.children.chatter.param.ImagesParam;
+
+import java.util.List;
+
 /**
  * <h3> 图片 Service 接口</h3>
  * <pre>
@@ -10,4 +15,10 @@ package cn.peyton.children.chatter.service;
 */
 public interface ImagesService {
 
+    /**
+     * <h4>批量插入</h4>
+     * @param imagesList 图片对象集合
+     * @return 刚插入的图片对象集合
+     */
+    List<ImagesParam> insertBatch(List<ImagesParam> imagesList);
 }

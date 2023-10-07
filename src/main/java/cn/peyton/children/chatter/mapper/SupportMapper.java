@@ -57,5 +57,35 @@ public interface SupportMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h4>判断这条信息有没有顶踩过</h4>
+	 *
+	 * @param userId 用户编号
+	 * @param postId 文章编号
+	 * @return
+	 */
+	Support checkSupport(int userId, int postId);
+
+	/**
+	 * <h4>根据文章编号查找顶和踩的数量</h4>
+	 * @param postId 文章编号
+	 * @param type 查找类型0顶;1踩;
+	 * @return 返回 顶或踩的总数
+	 */
+	int findDingAndCaiByPostId(Integer postId, Integer type);
+
+	/**
+	 * <h4>根据文章编号查找顶的数量</h4>
+	 * @param postId 文章编号
+	 * @return 返回 顶的总数
+	 */
+	int findDingByPostId(Integer postId);
+
+	/**
+	 * <h4>根据文章编号查找踩的数量</h4>
+	 * @param postId 文章编号
+	 * @return 返回 踩的总数
+	 */
+	int findCaiByPostId(Integer postId);
 
 }

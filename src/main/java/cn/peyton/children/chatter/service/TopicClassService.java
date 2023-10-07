@@ -1,4 +1,9 @@
 package cn.peyton.children.chatter.service;
+
+import cn.peyton.children.chatter.param.TopicClassParam;
+
+import java.util.List;
+
 /**
  * <h3> 话题分类 Service 接口</h3>
  * <pre>
@@ -10,4 +15,9 @@ package cn.peyton.children.chatter.service;
 */
 public interface TopicClassService {
 
+    /**
+     * <h4>获取话题分类</h4>
+     * @return 话题对象集合
+     */
+    List<TopicClassParam> finds();
 }

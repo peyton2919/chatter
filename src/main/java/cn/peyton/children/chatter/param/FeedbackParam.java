@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Feedback;
+import cn.peyton.core.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 /**
@@ -21,6 +22,7 @@ public class FeedbackParam implements Serializable {
 	/** 发送id  */
 	private Integer fromId;
 	/** 数据  */
+	@NotBlank(message = "反馈信息不能为空!")
 	private String data;
 	/** 创建时间  */
 	private Integer createTime;

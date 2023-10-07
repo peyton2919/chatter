@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.AppUpdate;
+import cn.peyton.core.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 /**
@@ -19,6 +20,7 @@ public class AppUpdateParam implements Serializable {
 	/** 链接地址  */
 	private String url;
 	/** 版本号  */
+	@NotBlank(message = "版本号不能为空！")
 	private String version;
 	/** 0未上线 1上线  */
 	private Integer status;

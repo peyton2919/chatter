@@ -1,9 +1,10 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.AppUpdateService;
 import cn.peyton.children.chatter.mapper.AppUpdateMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.AppUpdateParam;
+import cn.peyton.children.chatter.service.AppUpdateService;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * <h3> 更新 Service 实现类</h3>
@@ -19,4 +20,14 @@ public class AppUpdateServiceImpl implements AppUpdateService {
 	@Resource
 	private AppUpdateMapper appUpdateMapper;
 
+	@Override
+	public AppUpdateParam findByNewApp() {
+		return new AppUpdateParam().compat(appUpdateMapper.findByNewApp());
+	}
+
+	@Override
+	public boolean update(AppUpdateParam param) {
+
+		return appUpdateMapper.updateByPrimaryKeySelective(param.convert()) > 0 ? true : false;
+	}
 }

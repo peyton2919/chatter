@@ -2,8 +2,10 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.PostClass;
+import cn.peyton.core.toolkit.DateTools;
 
 import java.io.Serializable;
+
 /**
  * <h3> 帖子分类 参数 传递类[用来展示数据]类</h3>
  * <pre>
@@ -21,7 +23,7 @@ public class PostClassParam implements Serializable {
 	/** 0 禁用 1启用  */
 	private Integer status;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -75,16 +77,17 @@ public class PostClassParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
+
 
 	/**
 	 * <h4>对象转成PostClass对象<h4> 
@@ -98,7 +101,7 @@ public class PostClassParam implements Serializable {
 		postClass.setId(id);
 		postClass.setClassName(className);
 		postClass.setStatus(status);
-		postClass.setCreateTime(createTime);
+		postClass.setCreateTime(DateTools.dateToTimestamp(createTime));
 		return postClass;
 	} 
 	/**
@@ -115,7 +118,9 @@ public class PostClassParam implements Serializable {
 		this.setId(postClass.getId());
 		this.setClassName(postClass.getClassName());
 		this.setStatus(postClass.getStatus());
-		this.setCreateTime(postClass.getCreateTime());
+		this.setCreateTime(DateTools.timestampToStrDate(postClass.getCreateTime()));
 		return this;
-	} 
+	}
+
+
 }

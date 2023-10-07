@@ -1,11 +1,11 @@
-package cn.peyton.children.chatter.controller.app.android;
+package cn.peyton.children.chatter.controller.app.android.v1;
 
-import cn.peyton.children.chatter.service.FollowService;
+import cn.peyton.children.chatter.service.SupportService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <h3> 关注 Controller 类</h3>
+ * <h3> 支持 Controller 类</h3>
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @mail <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  * </pre>
 */
 @RestController
-public class FollowController {
+public class SupportController {
 
 	@Resource
-	private FollowService followService;
+	private SupportService supportService;
 
 }

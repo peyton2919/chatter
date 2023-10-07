@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.UserInfo;
+import cn.peyton.core.validator.constraints.Size;
 
 import java.io.Serializable;
 /**
@@ -21,6 +22,7 @@ public class UserInfoParam implements Serializable {
 	/** 年龄  */
 	private Integer age;
 	/** 0 男 1女 2不限  */
+	@Size(min = 0,max = 2,message = "数值超出规定范围！")
 	private Integer sex;
 	/** 0不限  */
 	private Integer qg;
@@ -28,7 +30,7 @@ public class UserInfoParam implements Serializable {
 	private String job;
 	/** 地址  */
 	private String path;
-	/** 生日  */
+	/** 生日 格式: yyyy-MM-dd  */
 	private String birthday;
 
 	//================================== Constructor =======================================//
@@ -137,14 +139,14 @@ public class UserInfoParam implements Serializable {
 	}
 
 	/** 
-	 * @param birthday 生日 
+	 * @param birthday 生日 格式: yyyy-MM-dd
 	 */ 
 	public void setBirthday(String birthday){
 		this.birthday = birthday;
 	}
 
 	/** 
-	 * @return 生日 
+	 * @return 生日 格式: yyyy-MM-dd
 	 */ 
 	public String getBirthday(){
 		return birthday;

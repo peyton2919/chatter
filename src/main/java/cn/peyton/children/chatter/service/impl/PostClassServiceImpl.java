@@ -1,9 +1,16 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.PostClassService;
+import cn.peyton.children.chatter.aop.timestamp.Timestamp;
+import cn.peyton.children.chatter.bo.PostClassBo;
 import cn.peyton.children.chatter.mapper.PostClassMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.PostClassParam;
+import cn.peyton.children.chatter.service.PostClassService;
+import cn.peyton.core.validator.constraints.Date;
+import cn.peyton.core.validator.constraints.Phone;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 帖子分类 Service 实现类</h3>
@@ -19,4 +26,25 @@ public class PostClassServiceImpl implements PostClassService {
 	@Resource
 	private PostClassMapper postClassMapper;
 
+	@Timestamp
+	@Override
+	public List<PostClassParam> finds() {
+		return new PostClassBo().adapter(postClassMapper.finds());
+	}
+
+
+	@Timestamp
+	@Override
+	public int add(PostClassParam param) {
+
+		System.out.println("执行。。。。。。。");
+		//param.builder();
+		return postClassMapper.insertSelective(param.convert());
+	}
+
+	@Override
+	public PostClassParam findById(Integer id) {
+
+		return new PostClassBo().compat(postClassMapper.selectByPrimaryKey(id));
+	}
 }

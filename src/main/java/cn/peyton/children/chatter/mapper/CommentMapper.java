@@ -2,6 +2,8 @@ package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.Comment;
 
+import java.util.List;
+
 /**
  * <h3> 评论 Mapper 接口</h3>
  * <pre>
@@ -57,5 +59,42 @@ public interface CommentMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h4>判断评论父ID不为0</h4>
+	 * @param fId 评论父ID
+	 * @return 1 表示 该评论存在; 0 表示取反
+	 */
+	int checkCommentByFId(Integer fId);
 
+	/**
+	 * <h4>判断评论父ID与文章ID是否存在</h4>
+	 * <pre>
+	 *     条件 where id= fId and postId = postId
+	 * </pre>
+	 * @param fId 评论父ID
+	 * @param postId 文章ID
+	 * @return 1 表示 该评论存在; 0 表示取反
+	 */
+	int checkCommentByFIdAndPostId(Integer fId, Integer postId);
+
+	/**
+	 * <h4>更新评论被回复数</h4>
+	 * @param id 评论 ID
+	 * @return 1 表示 更新成功; 0 表示 取反
+	 */
+	int updateFnumInt(int id);
+
+	/**
+	 * <h4>根据文章ID 查找 评论对象集合</h4>
+	 * @param postId  文章ID
+	 * @return 评论对象集合
+	 */
+	List<Comment> findByPostId(Integer postId);
+
+	/**
+	 * <h4>根据文章ID 查找 评论数</h4>
+	 * @param postId
+	 * @return 条数
+	 */
+	int countByPostId(Integer postId);
 }

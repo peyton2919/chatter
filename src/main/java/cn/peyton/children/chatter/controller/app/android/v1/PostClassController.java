@@ -1,11 +1,11 @@
-package cn.peyton.children.chatter.controller.app.android;
+package cn.peyton.children.chatter.controller.app.android.v1;
 
-import cn.peyton.children.chatter.service.TopicPostService;
+import cn.peyton.children.chatter.service.PostClassService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <h3> 话题帖子关联 Controller 类</h3>
+ * <h3> 帖子分类 Controller 类</h3>
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @mail <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
  * </pre>
 */
 @RestController
-public class TopicPostController {
+public class PostClassController {
 
 	@Resource
-	private TopicPostService topicPostService;
+	private PostClassService postClassService;
 
 }

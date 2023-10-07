@@ -2,6 +2,8 @@ package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.TopicClass;
 
+import java.util.List;
+
 /**
  * <h3> 话题分类 Mapper 接口</h3>
  * <pre>
@@ -57,5 +59,10 @@ public interface TopicClassMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h4>获取话题分类</h4>
+	 * @return 话题对象集合
+	 */
+	List<TopicClass> finds();
 
 }

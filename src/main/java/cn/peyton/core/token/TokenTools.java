@@ -27,7 +27,7 @@ import java.util.Map;
  */
 @Component
 @Slf4j
-public class TokenUtil<T> implements Serializable {
+public class TokenTools<T> implements Serializable {
     /**
      * 过期时间一天， 24 * 60 * 60 * 1000
      * TODO 正式运行时修改为15分钟 15*60*1000

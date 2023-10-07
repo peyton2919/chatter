@@ -1,9 +1,15 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.FollowService;
+import cn.peyton.children.chatter.bo.FollowBo;
 import cn.peyton.children.chatter.mapper.FollowMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.FollowParam;
+import cn.peyton.children.chatter.pojo.Follow;
+import cn.peyton.children.chatter.service.FollowService;
+import cn.peyton.core.page.PageQuery;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 关注 Service 实现类</h3>
@@ -19,4 +25,37 @@ public class FollowServiceImpl implements FollowService {
 	@Resource
 	private FollowMapper followMapper;
 
+	@Override
+	public List<FollowParam> findByUserId(int userId) {
+		return new FollowBo().adapter(followMapper.findByUserId(userId));
+	}
+
+	@Override
+	public boolean isFollow(int followId, int userId) {
+		return followMapper.checkFollow(followId, userId) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean save(int userId,int followId) {
+		Follow _follow = new Follow();
+		_follow.getFollowUser().setId(followId);
+		_follow.setUserId(userId);
+		return followMapper.insertSelective(_follow) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean delete(int userId, int followId) {
+		return followMapper.deleteByUserIdAndFollowId(userId, followId) > 0 ? true : false;
+	}
+
+	@Override
+	public List<FollowParam> friends(Integer userId, PageQuery page) {
+		return new FollowBo().adapter(followMapper.friends(userId,page));
+	}
+
+	@Override
+	public List<FollowParam> follows(Integer userId, PageQuery page, boolean fens) {
+
+		return new FollowBo().adapter(followMapper.follows(userId, page, fens));
+	}
 }

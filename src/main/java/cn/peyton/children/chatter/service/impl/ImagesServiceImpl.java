@@ -1,9 +1,14 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.ImagesService;
+import cn.peyton.children.chatter.bo.ImagesBo;
 import cn.peyton.children.chatter.mapper.ImagesMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.ImagesParam;
+import cn.peyton.children.chatter.pojo.Images;
+import cn.peyton.children.chatter.service.ImagesService;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 图片 Service 实现类</h3>
@@ -19,4 +24,10 @@ public class ImagesServiceImpl implements ImagesService {
 	@Resource
 	private ImagesMapper imagesMapper;
 
+	@Override
+	public List<ImagesParam> insertBatch(List<ImagesParam> imagesList) {
+		List<Images> _oImages = new ImagesBo().reverse(imagesList);
+		imagesMapper.insertBatch(_oImages);
+		return new ImagesBo().adapter(_oImages);
+	}
 }

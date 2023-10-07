@@ -14,15 +14,19 @@ import java.io.Serializable;
 public class Follow implements Serializable {
 	/** 编号  */
 	private Integer id;
-	/** 关注id  */
-	private Integer followId;
+	/** 被关注用户  */
+	private User followUser;
 	/** 用户id  */
 	private Integer userId;
 	/** 创建时间  */
 	private Integer createTime;
 
 	//================================== Constructor =======================================//
-
+	public Follow() {
+		if (null == followUser) {
+			followUser = new User();
+		}
+	}
 	//================================== Method =======================================//
 
 
@@ -42,18 +46,17 @@ public class Follow implements Serializable {
 		return id;
 	}
 
-	/** 
-	 * @param followId 关注id 
-	 */ 
-	public void setFollowId(Integer followId){
-		this.followId = followId;
+	/**
+	 * @return 被关注用户
+	 */
+	public User getFollowUser() {
+		return followUser;
 	}
-
-	/** 
-	 * @return 关注id 
-	 */ 
-	public Integer getFollowId(){
-		return followId;
+	/**
+	 * @param followUser 被关注用户
+	 */
+	public void setFollowUser(User followUser) {
+		this.followUser = followUser;
 	}
 
 	/** 

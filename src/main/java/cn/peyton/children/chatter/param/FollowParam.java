@@ -1,6 +1,7 @@
 package cn.peyton.children.chatter.param;
 
 
+import cn.peyton.children.chatter.bo.UserBo;
 import cn.peyton.children.chatter.pojo.Follow;
 
 import java.io.Serializable;
@@ -16,8 +17,8 @@ import java.io.Serializable;
 public class FollowParam implements Serializable {
 	/** 编号  */
 	private Integer id;
-	/** 关注id  */
-	private Integer followId;
+	/** 被关注用户  */
+	private UserParam followUserParam;
 	/** 用户id  */
 	private Integer userId;
 	/** 创建时间  */
@@ -44,18 +45,18 @@ public class FollowParam implements Serializable {
 		return id;
 	}
 
-	/** 
-	 * @param followId 关注id 
-	 */ 
-	public void setFollowId(Integer followId){
-		this.followId = followId;
+	/**
+	 * @return 被关注用户
+	 */
+	public UserParam getFollowUserParam() {
+		return followUserParam;
 	}
 
-	/** 
-	 * @return 关注id 
-	 */ 
-	public Integer getFollowId(){
-		return followId;
+	/**
+	 * @param followUserParam 被关注用户
+	 */
+	public void setFollowUserParam(UserParam followUserParam) {
+		this.followUserParam = followUserParam;
 	}
 
 	/** 
@@ -96,7 +97,7 @@ public class FollowParam implements Serializable {
 	public Follow convert(){
 		Follow follow = new Follow(); 
 		follow.setId(id);
-		follow.setFollowId(followId);
+		follow.setFollowUser(new UserBo().convert(this.getFollowUserParam()));
 		follow.setUserId(userId);
 		follow.setCreateTime(createTime);
 		return follow;
@@ -113,7 +114,7 @@ public class FollowParam implements Serializable {
 			return new FollowParam();
 		}
 		this.setId(follow.getId());
-		this.setFollowId(follow.getFollowId());
+		this.setFollowUserParam(new UserBo().compat(follow.getFollowUser()));
 		this.setUserId(follow.getUserId());
 		this.setCreateTime(follow.getCreateTime());
 		return this;

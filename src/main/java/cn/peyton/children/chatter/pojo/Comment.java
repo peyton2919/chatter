@@ -14,11 +14,11 @@ import java.io.Serializable;
 public class Comment implements Serializable {
 	/** 编号  */
 	private Integer id;
-	/** 发布人  */
-	private Integer userId;
-	/** 回复id  */
+	/** 发布人 用户对象userId  */
+	private User user;
+	/** 评论父编号 0表示一级评论 不是0表示回复  */
 	private Integer fId;
-	/** 被回复数  */
+	/** 这条评论被回复数数 ;用来判断有没有下级  */
 	private Integer fnum;
 	/** 数据  */
 	private String data;
@@ -28,7 +28,11 @@ public class Comment implements Serializable {
 	private Integer postId;
 
 	//================================== Constructor =======================================//
-
+	public Comment() {
+		if (null == user) {
+			user = new User();
+		}
+	}
 	//================================== Method =======================================//
 
 
@@ -48,43 +52,42 @@ public class Comment implements Serializable {
 		return id;
 	}
 
-	/** 
-	 * @param userId 发布人 
-	 */ 
-	public void setUserId(Integer userId){
-		this.userId = userId;
+	/**
+	 * @return 发布人 用户对象userId
+	 */
+	public User getUser() {
+		return user;
+	}
+	/**
+	 * @param user 发布人 用户对象userId
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/** 
-	 * @return 发布人 
-	 */ 
-	public Integer getUserId(){
-		return userId;
-	}
-
-	/** 
-	 * @param fId 回复id 
+	 * @param fId 评论父编号 0表示一级评论 不是0表示回复
 	 */ 
 	public void setFId(Integer fId){
 		this.fId = fId;
 	}
 
 	/** 
-	 * @return 回复id 
+	 * @return 评论父编号 0表示一级评论 不是0表示回复
 	 */ 
 	public Integer getFId(){
 		return fId;
 	}
 
 	/** 
-	 * @param fnum 被回复数 
+	 * @param fnum 这条评论被回复数数 ;用来判断有没有下级
 	 */ 
 	public void setFnum(Integer fnum){
 		this.fnum = fnum;
 	}
 
 	/** 
-	 * @return 被回复数 
+	 * @return 这条评论被回复数数 ;用来判断有没有下级
 	 */ 
 	public Integer getFnum(){
 		return fnum;

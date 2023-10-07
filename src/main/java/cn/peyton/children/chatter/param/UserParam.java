@@ -1,8 +1,17 @@
 package cn.peyton.children.chatter.param;
 
 import cn.peyton.children.chatter.pojo.User;
+import cn.peyton.children.chatter.pojo.UserBind;
+import cn.peyton.children.chatter.pojo.UserInfo;
+import cn.peyton.core.toolkit.base.Lists;
+import cn.peyton.core.validator.constraints.Email;
+import cn.peyton.core.validator.constraints.Length;
+import cn.peyton.core.validator.constraints.NotBlank;
+import cn.peyton.core.validator.constraints.Phone;
 
 import java.io.Serializable;
+import java.util.List;
+
 /**
  * <h3> 用户信息 参数 传递类[用来展示数据]类</h3>
  * <pre>
@@ -16,21 +25,47 @@ public class UserParam implements Serializable {
 	/** 编号  */
 	private Integer id;
 	/** 名字  */
+	@NotBlank(message = "用户名称不能为空！")
+	@Length(min = 6,max = 30,message = "用户名称长度为6~30个字符！")
 	private String username;
 	/** 头像  */
 	private String userPic;
 	/** 密码  */
+	@NotBlank(message = "用户密码不能为空！")
+	@Length(min = 6,max=30,message = "用户密码长度为6~30个字符！")
 	private String password;
+	/** 确认密码  */
+	private String confirmPwd;
 	/** 手机  */
+	@Phone
 	private String phone;
 	/** 邮箱  */
+	@Email
 	private String email;
 	/** 0 禁用 1启用  */
 	private Integer status;
 	/** 创建时间  */
 	private Integer createTime;
 
+	// 附加
+	/** 用户登录类型 */
+	private String loginType;
+	/** token 值 */
+	private String token;
+	/** 用户扩展信息  */
+	private UserInfoParam userInfoParam;
+	/** 用户绑定对象 */
+	private List<UserBindParam> userBindParams;
+
 	//================================== Constructor =======================================//
+	public UserParam() {
+		if (null == userInfoParam) {
+			userInfoParam = new UserInfoParam();
+		}
+		if (null == userBindParams) {
+			userBindParams = Lists.newArrayList();
+		}
+	}
 
 	//================================== Method =======================================//
 
@@ -93,6 +128,19 @@ public class UserParam implements Serializable {
 		return password;
 	}
 
+	/**
+	 * @return 确认密码
+	 */
+	public String getConfirmPwd() {
+		return confirmPwd;
+	}
+
+	/**
+	 * @param confirmPwd 确认密码
+	 */
+	public void setConfirmPwd(String confirmPwd) {
+		this.confirmPwd = confirmPwd;
+	}
 	/** 
 	 * @param phone 手机 
 	 */ 
@@ -149,12 +197,67 @@ public class UserParam implements Serializable {
 		return createTime;
 	}
 
+	/**
+	 * @return 用户登录类型
+	 */
+	public String getLoginType() {
+		return loginType;
+	}
+
+	/**
+	 * @param loginType 用户登录类型
+	 */
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
+
+	/**
+	 * @return token 值
+	 */
+	public String getToken() {
+		return token;
+	}
+
+	/**
+	 * @param token token 值
+	 */
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	/**
+	 * @return 用户扩展信息
+	 */
+	public UserInfoParam getUserInfoParam() {
+		return userInfoParam;
+	}
+
+	/**
+	 * @param userInfoParam 用户扩展信息
+	 */
+	public void setUserInfoParam(UserInfoParam userInfoParam) {
+		this.userInfoParam = userInfoParam;
+	}
+
+	/**
+	 * @return 用户绑定对象
+	 */
+	public List<UserBindParam> getUserBindParams() {
+		return userBindParams;
+	}
+
+	/**
+	 * @param userBindParams 用户绑定对象
+	 */
+	public void setUserBindParams(List<UserBindParam> userBindParams) {
+		this.userBindParams = userBindParams;
+	}
 
 	/**
 	 * <h4>对象转成User对象<h4> 
 	 * <pre>
 	 * 	 转换字段如下:
-	 * 	 [id,username,userPic,password,phone,email,status,createTime,Host,User,SelectPriv,InsertPriv,UpdatePriv,DeletePriv,CreatePriv,DropPriv,ReloadPriv,ShutdownPriv,ProcessPriv,FilePriv,GrantPriv,ReferencesPriv,IndexPriv,AlterPriv,ShowDbPriv,SuperPriv,CreateTmpTablePriv,LockTablesPriv,ExecutePriv,ReplSlavePriv,ReplClientPriv,CreateViewPriv,ShowViewPriv,CreateRoutinePriv,AlterRoutinePriv,CreateUserPriv,EventPriv,TriggerPriv,CreateTablespacePriv,sslType,sslCipher,x509Issuer,x509Subject,maxQuestions,maxUpdates,maxConnections,maxUserConnections,plugin,authenticationString,passwordExpired,passwordLastChanged,passwordLifetime,accountLocked]
+	 * 	 [id,username,userPic,password,phone,email,status,createTime]
 	 * </pre>
 	 */
 	public User convert(){
@@ -167,13 +270,20 @@ public class UserParam implements Serializable {
 		user.setEmail(email);
 		user.setStatus(status);
 		user.setCreateTime(createTime);
+		user.setUserInfo((null != userInfoParam) ? userInfoParam.convert() : new UserInfo());
+		if (null != userBindParams) {
+			for (UserBindParam _param : userBindParams) {
+				// UserBindParam 转成 UserBind, 并添加到集合里
+				user.getUserBinds().add(_param.convert());
+			}
+		}
 		return user;
 	} 
 	/**
 	 * <h4>User对象转成UserParam对象<h4> 
 	 * <pre>
 	 * 	 转换字段如下:
-	 * 	 [id,username,userPic,password,phone,email,status,createTime,Host,User,SelectPriv,InsertPriv,UpdatePriv,DeletePriv,CreatePriv,DropPriv,ReloadPriv,ShutdownPriv,ProcessPriv,FilePriv,GrantPriv,ReferencesPriv,IndexPriv,AlterPriv,ShowDbPriv,SuperPriv,CreateTmpTablePriv,LockTablesPriv,ExecutePriv,ReplSlavePriv,ReplClientPriv,CreateViewPriv,ShowViewPriv,CreateRoutinePriv,AlterRoutinePriv,CreateUserPriv,EventPriv,TriggerPriv,CreateTablespacePriv,sslType,sslCipher,x509Issuer,x509Subject,maxQuestions,maxUpdates,maxConnections,maxUserConnections,plugin,authenticationString,passwordExpired,passwordLastChanged,passwordLifetime,accountLocked]
+	 * 	 [id,username,userPic,password,phone,email,status,createTime]
 	 * </pre>
 	 */
 	public UserParam compat(User user){ 
@@ -188,6 +298,13 @@ public class UserParam implements Serializable {
 		this.setEmail(user.getEmail());
 		this.setStatus(user.getStatus());
 		this.setCreateTime(user.getCreateTime());
+		this.setUserInfoParam(new UserInfoParam().compat(user.getUserInfo()));
+		if (null != user.getUserBinds()) {
+			for (UserBind _ub : user.getUserBinds()) {
+				// UserBind 转成 UserBindParam, 并添加到集合里
+				this.getUserBindParams().add(new UserBindParam().compat(_ub));
+			}
+		}
 		return this;
 	} 
 }

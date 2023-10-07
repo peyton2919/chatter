@@ -1,6 +1,9 @@
 package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.Topic;
+import cn.peyton.core.page.PageQuery;
+
+import java.util.List;
 
 /**
  * <h3> 话题 Mapper 接口</h3>
@@ -57,5 +60,34 @@ public interface TopicMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h4>获取热门话题</h4>
+	 * @return
+	 */
+	List<Topic> finds();
+
+	/**
+	 * <h4>获取指定话题分类下的话题列表</h4>
+	 * @param topicClassId 话题分类编号
+	 * @param page 分页对象
+	 * @return
+	 */
+	List<Topic> findByTopicClassId(int topicClassId, PageQuery page);
+
+	/**
+	 * <h4>获取 热门的话题 </h4>
+	 * @param topicClassId 话题分类编号
+	 * @param page 分页对象
+	 * @return
+	 */
+	List<Topic> findByHot(int topicClassId, PageQuery page);
+
+	/**
+	 * <h4>搜索话题</h4>
+	 * @param keyword 关键字
+	 * @param page 分页对象
+	 * @return
+	 */
+	List<Topic> search(String keyword, PageQuery page);
 
 }

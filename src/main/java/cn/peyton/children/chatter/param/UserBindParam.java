@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.UserBind;
+import cn.peyton.core.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 /**
@@ -16,9 +17,13 @@ import java.io.Serializable;
 public class UserBindParam implements Serializable {
 	/** 编号  */
 	private Integer id;
-	/** 类型  */
+	/**
+	 * 类型 对应第三方的 provider
+	 */
+	@NotBlank(message = "用户类型不能为空")
 	private String type;
 	/** 开放编号  */
+	@NotBlank(message = "用户编号不能为空")
 	private String openId;
 	/** 用户编号  */
 	private Integer userId;

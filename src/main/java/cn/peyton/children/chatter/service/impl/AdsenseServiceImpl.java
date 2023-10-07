@@ -1,10 +1,15 @@
 package cn.peyton.children.chatter.service.impl;
 
+import cn.peyton.children.chatter.bo.AdsenseBo;
+import cn.peyton.children.chatter.mapper.AdsenseMapper;
+import cn.peyton.children.chatter.param.AdsenseParam;
 import cn.peyton.children.chatter.pojo.Adsense;
 import cn.peyton.children.chatter.service.AdsenseService;
-import cn.peyton.children.chatter.mapper.AdsenseMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.core.page.PageQuery;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 广告 Service 实现类</h3>
@@ -20,6 +25,10 @@ public class AdsenseServiceImpl implements AdsenseService {
 	@Resource
 	private AdsenseMapper adsenseMapper;
 
+	@Override
+	public List<AdsenseParam> findByType(Integer type, PageQuery page) {
+		return new AdsenseBo().adapter(adsenseMapper.findByType(type,page));
+	}
 
 	@Override
 	public Adsense findById(Integer id) {

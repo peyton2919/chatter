@@ -1,9 +1,16 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.CommentService;
+import cn.peyton.children.chatter.bo.CommentBo;
 import cn.peyton.children.chatter.mapper.CommentMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.CommentParam;
+import cn.peyton.children.chatter.pojo.Comment;
+import cn.peyton.children.chatter.service.CommentService;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <h3> 评论 Service 实现类</h3>
@@ -19,4 +26,39 @@ public class CommentServiceImpl implements CommentService {
 	@Resource
 	private CommentMapper commentMapper;
 
+	@Override
+	public CommentParam findById(int id) {
+		return new CommentParam().compat(commentMapper.selectByPrimaryKey(id));
+	}
+
+	@Override
+	public boolean isCommentByFId(Integer fId) {
+		return commentMapper.checkCommentByFId(fId) > 0 ? true : false;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+	public CommentParam create(CommentParam param) {
+		Comment _comment = param.convert();
+		if ( commentMapper.insertSelective(_comment)> 0) {
+			commentMapper.updateFnumInt(param.getFId());
+			return new CommentParam().compat(_comment);
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isCommentByFIdAndPostId(Integer fId, Integer postId) {
+		return commentMapper.checkCommentByFIdAndPostId(fId,postId) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean updateFnumInt(int id) {
+		return commentMapper.updateFnumInt(id) > 0 ? true : false;
+	}
+
+	@Override
+	public List<CommentParam> findByPostId(Integer postId) {
+		return new CommentBo().adapter(commentMapper.findByPostId(postId));
+	}
 }

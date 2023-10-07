@@ -1,9 +1,13 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.TopicClassService;
+import cn.peyton.children.chatter.bo.TopicClassBo;
 import cn.peyton.children.chatter.mapper.TopicClassMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.TopicClassParam;
+import cn.peyton.children.chatter.service.TopicClassService;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 话题分类 Service 实现类</h3>
@@ -18,5 +22,8 @@ import jakarta.annotation.Resource;
 public class TopicClassServiceImpl implements TopicClassService {
 	@Resource
 	private TopicClassMapper topicClassMapper;
-
+	@Override
+	public List<TopicClassParam> finds() {
+		return new TopicClassBo().adapter(topicClassMapper.finds());
+	}
 }

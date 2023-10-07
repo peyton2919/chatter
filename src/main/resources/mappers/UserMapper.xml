@@ -12,8 +12,41 @@
 		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
 	</resultMap>
 
+	<resultMap id="ResultUserMaps" type="cn.peyton.children.chatter.pojo.User">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="username" property="username" jdbcType="VARCHAR"/>
+		<result column="user_pic" property="userPic" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="TINYINT"/>
+		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
+		<association property="userInfo" javaType="cn.peyton.children.chatter.pojo.UserInfo"
+					 column="id" select="cn.peyton.children.chatter.mapper.UserInfoMapper.findByUserId"/>
+		<collection property="userBinds" ofType="cn.peyton.children.chatter.pojo.UserBind"
+					column="id" select="cn.peyton.children.chatter.mapper.UserBindMapper.findByUserId"/>
+	</resultMap>
+
+	<resultMap id="ResultMapUserInfo" type="cn.peyton.children.chatter.pojo.User">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="username" property="username" jdbcType="VARCHAR"/>
+		<result column="user_pic" property="userPic" jdbcType="VARCHAR"/>
+		<result column="password" property="password" jdbcType="VARCHAR"/>
+		<result column="phone" property="phone" jdbcType="VARCHAR"/>
+		<result column="email" property="email" jdbcType="VARCHAR"/>
+		<result column="status" property="status" jdbcType="INTEGER"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<association property="userInfo" javaType="cn.peyton.children.chatter.pojo.UserInfo"
+					 column="id" select="cn.peyton.plum.chatter.mapper.UserInfoMapper.findByUserId">
+		</association>
+	</resultMap>
+
 	<sql id="Column_user_List">
 		id,username,user_pic,password,phone,email,status,create_time
+	</sql>
+
+	<sql id="Column_user_simple_List">
+		id,username,user_pic,phone,email,create_time
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.User" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
@@ -75,7 +108,7 @@
 		where id = #{id}
 	</update>
 
-	<select id="selectByPrimaryKey" resultMap="ResultUserMap"  parameterType="java.lang.Integer">
+	<select id="selectByPrimaryKey" resultMap="ResultUserMaps"  parameterType="java.lang.Integer">
 		select
 		<include refid="Column_user_List"/>
 		from user
@@ -83,5 +116,145 @@
 	</select>
 
 	<!-- new create method   -->
+
+	<select id="findSimpleById" resultMap="ResultUserMap">
+		select
+			id,username,user_pic,phone,email,create_time
+		from user
+		where id=#{id} and status = 1
+	</select>
+
+	<select id="findByExpand" resultMap="ResultMapUserInfo" parameterType="java.lang.Integer">
+		select
+		<include refid="Column_user_simple_List"/>
+		from user
+		where id = #{id} and status = 1
+	</select>
+
+	<select id="login" resultMap="ResultUserMaps" parameterType="java.lang.String">
+		select
+			id,username,user_pic,phone,email,create_time
+		from user
+		where
+			username=#{username}
+		  and
+			password=#{password}
+		  and
+			status=1
+	</select>
+
+	<select id="findByPhone" resultMap="ResultMapUserInfo" parameterType="java.lang.String">
+		select
+		<include refid="Column_user_simple_List"/>
+		from user
+		where phone = #{phone} and status = 1
+	</select>
+
+	<select id="checkStatus" parameterType="map" resultType="int">
+		select
+		count(id)
+		from user
+		where
+		status = #{status}
+		<if test="type == 'account'">
+			and username = #{keyword}
+		</if>
+		<if test="type == 'phone'">
+			and phone = #{keyword}
+		</if>
+	</select>
+
+	<select id="checkRename" resultType="java.lang.Integer">
+		select
+			count(id)
+		from user
+		where username = #{username}
+	</select>
+
+	<select id="checkPassword" resultType="java.lang.Integer">
+		select
+			COUNT(id)
+		from user
+		where username=#{username}
+		  and password=#{password}
+	</select>
+
+	<select id="checkLoginIsBindPhone" resultType="java.lang.Integer">
+		select
+			COUNT(id)
+		from user
+	</select>
+
+	<select id="search" resultMap="ResultMapUserInfo">
+		select
+		<include refid="Column_user_simple_List"/>
+		from user
+		where username like concat('%',#{keyword},'%')
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<update id="updatePhone" parameterType="cn.peyton.children.chatter.pojo.User">
+		update user
+		set
+			phone = #{phone}
+		where id = #{id}
+	</update>
+
+	<update id="updateEmail" parameterType="cn.peyton.children.chatter.pojo.User">
+		update user
+		set
+			email = #{email}
+		where id = #{id}
+	</update>
+
+	<update id="updateUserPic">
+		update user
+		set
+			user_pic = #{userPic}、
+		where id = #{id}
+	</update>
+
+	<update id="updatePassword">
+		update user
+		set
+			password = #{password}
+		where id = #{id}
+	</update>
+
+	<select id="checkBindPhone" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		FROM user
+		where id!=#{userId} and phone=#{phone}
+	</select>
+
+	<select id="checkBindEmail" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		FROM user
+		where id!=#{userId} and email=#{email}
+	</select>
+
+	<select id="findUserAndFollowByUserId" resultMap="ResultMapUserInfo">
+		select
+			u.id,username,user_pic,phone,email
+		from follow as f,user as u
+		where f.follow_id=u.id and f.user_id=#{userId}
+	</select>
+
+	<select id="checkUserId" resultType="java.lang.Integer">
+		select
+			count(id)
+		from user
+		where id=#{userId}
+	</select>
+
+	<select id="findPasswordById" resultType="java.lang.String">
+		select
+			password
+		from user
+		where id =#{id}
+	</select>
+
 
 </mapper>

@@ -2,7 +2,7 @@ package cn.peyton.children.chatter.config;/**
  * <h4></h4>
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
- * @email <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
+ * @mail <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
  * @name cn.peyton.children.chatter.config.TomcatCharsConfiguration
  * @date 2023年10月05日 23:29
  * @version 1.0.0

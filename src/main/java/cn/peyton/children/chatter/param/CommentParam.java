@@ -16,11 +16,11 @@ import java.io.Serializable;
 public class CommentParam implements Serializable {
 	/** 编号  */
 	private Integer id;
-	/** 发布人  */
-	private Integer userId;
-	/** 回复id  */
+	/** 发布人 用户对象userId  */
+	private UserParam userParam;
+	/** 评论父编号 0表示一级评论 不是0表示回复 */
 	private Integer fId;
-	/** 被回复数  */
+	/** 这条评论被回复数数 ;用来判断有没有下级  */
 	private Integer fnum;
 	/** 数据  */
 	private String data;
@@ -30,7 +30,11 @@ public class CommentParam implements Serializable {
 	private Integer postId;
 
 	//================================== Constructor =======================================//
-
+	public CommentParam() {
+		if (null == userParam) {
+			userParam = new UserParam();
+		}
+	}
 	//================================== Method =======================================//
 
 
@@ -50,44 +54,44 @@ public class CommentParam implements Serializable {
 		return id;
 	}
 
-	/** 
-	 * @param userId 发布人 
-	 */ 
-	public void setUserId(Integer userId){
-		this.userId = userId;
+	/**
+	 * @param userParam 发布人 用户对象userId
+	 */
+	public void setUserParam(UserParam userParam) {
+		this.userParam = userParam;
 	}
 
-	/** 
-	 * @return 发布人 
-	 */ 
-	public Integer getUserId(){
-		return userId;
+	/**
+	 * @return 发布人 用户对象userId
+	 */
+	public UserParam getUserParam() {
+		return userParam;
 	}
 
-	/** 
-	 * @param fId 回复id 
-	 */ 
-	public void setFId(Integer fId){
+	/**
+	 * @param fId 评论父编号 0表示一级评论 不是0表示回复
+	 */
+	public void setFId(Integer fId) {
 		this.fId = fId;
 	}
 
-	/** 
-	 * @return 回复id 
-	 */ 
-	public Integer getFId(){
+	/**
+	 * @return 评论父编号 0表示一级评论 不是0表示回复
+	 */
+	public Integer getFId() {
 		return fId;
 	}
 
-	/** 
-	 * @param fnum 被回复数 
-	 */ 
+	/**
+	 * @param fnum 这条评论被回复数数 ;用来判断有没有下级
+	 */
 	public void setFnum(Integer fnum){
 		this.fnum = fnum;
 	}
 
-	/** 
-	 * @return 被回复数 
-	 */ 
+	/**
+	 * @return 这条评论被回复数数 ;用来判断有没有下级
+	 */
 	public Integer getFnum(){
 		return fnum;
 	}
@@ -144,7 +148,7 @@ public class CommentParam implements Serializable {
 	public Comment convert(){
 		Comment comment = new Comment(); 
 		comment.setId(id);
-		comment.setUserId(userId);
+		comment.setUser(getUserParam().convert());
 		comment.setFId(fId);
 		comment.setFnum(fnum);
 		comment.setData(data);
@@ -164,7 +168,7 @@ public class CommentParam implements Serializable {
 			return new CommentParam();
 		}
 		this.setId(comment.getId());
-		this.setUserId(comment.getUserId());
+		this.setUserParam(new UserParam().compat(comment.getUser()));
 		this.setFId(comment.getFId());
 		this.setFnum(comment.getFnum());
 		this.setData(comment.getData());

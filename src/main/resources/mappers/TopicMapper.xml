@@ -78,5 +78,35 @@
 	</select>
 
 	<!-- new create method   -->
+	<select id="finds" resultMap="ResultTopicMap">
+		select
+		<include refid="Column_topic_List"/>
+		from topic
+	</select>
 
+	<select id="findByTopicClassId" resultMap="ResultTopicMap" parameterType="map">
+		select
+		<include refid="Column_topic_List"/>
+		from topic
+		where topic_class_id = #{topicClassId}
+		order by create_time desc
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<select id="findByHot" resultMap="ResultTopicMap">
+		select
+		<include refid="Column_topic_List"/>
+		from topic
+		where topic_class_id =#{topicClassId}
+		order by create_time desc
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<select id="search" resultMap="ResultTopicMap" parameterType="map">
+		select
+		<include refid="Column_topic_List"/>
+		from topic
+		where title like concat('%',#{keyword},'%')
+		limit #{page.offset},#{page.pageSize}
+	</select>
 </mapper>

@@ -56,6 +56,10 @@ public interface AppUpdateMapper {
 
 
 	// ==================================== new create method ==================================== //
-
+	/**
+	 * <h4>检查有上线的状态</h4>
+	 * @return
+	 */
+	AppUpdate findByNewApp();
 
 }

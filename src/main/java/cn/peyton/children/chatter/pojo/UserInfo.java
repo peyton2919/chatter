@@ -26,7 +26,7 @@ public class UserInfo implements Serializable {
 	private String job;
 	/** 地址  */
 	private String path;
-	/** 生日  */
+	/** 生日 格式: yyyy-MM-dd  */
 	private String birthday;
 
 	//================================== Constructor =======================================//
@@ -135,14 +135,14 @@ public class UserInfo implements Serializable {
 	}
 
 	/** 
-	 * @param birthday 生日 
+	 * @param birthday 生日 格式: yyyy-MM-dd
 	 */ 
 	public void setBirthday(String birthday){
 		this.birthday = birthday;
 	}
 
 	/** 
-	 * @return 生日 
+	 * @return 生日 格式: yyyy-MM-dd
 	 */ 
 	public String getBirthday(){
 		return birthday;

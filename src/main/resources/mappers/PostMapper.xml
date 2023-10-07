@@ -3,7 +3,7 @@
 <mapper namespace="cn.peyton.children.chatter.mapper.PostMapper">
 	<resultMap id="ResultPostMap" type="cn.peyton.children.chatter.pojo.Post">
 		<id column="id" property="id" jdbcType="INTEGER"/>
-		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<!--<result column="user_id" property="userId" jdbcType="INTEGER"/>-->
 		<result column="title" property="title" jdbcType="VARCHAR"/>
 		<result column="title_pic" property="titlePic" jdbcType="VARCHAR"/>
 		<result column="content" property="content" jdbcType="LONGVARCHAR"/>
@@ -12,8 +12,34 @@
 		<result column="type" property="type" jdbcType="TINYINT"/>
 		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
 		<result column="post_class_id" property="postClassId" jdbcType="INTEGER"/>
-		<result column="share_id" property="shareId" jdbcType="INTEGER"/>
+		<!--<result column="share_id" property="shareId" jdbcType="INTEGER"/>-->
 		<result column="is_open" property="isOpen" jdbcType="TINYINT"/>
+
+		<association property="user" javaType="cn.peyton.children.chatter.pojo.User"
+					 column="user_id" select="cn.peyton.children.chatter.mapper.UserMapper.findSimpleById">
+		</association>
+
+		<association property="sharePost" javaType="cn.peyton.children.chatter.pojo.Post"
+					 column="share_id" select="cn.peyton.children.chatter.mapper.PostMapper.findByShareId">
+		</association>
+
+		<association property="cai" javaType="int" column="id"
+					 select="cn.peyton.children.chatter.mapper.SupportMapper.findCaiByPostId">
+		</association>
+
+		<association property="commentCount" javaType="int" column="id"
+					 select="cn.peyton.children.chatter.mapper.CommentMapper.countByPostId">
+
+		</association>
+
+		<association property="ding" javaType="int" column="id"
+					 select="cn.peyton.children.chatter.mapper.SupportMapper.findDingByPostId">
+		</association>
+
+		<collection property="imageList" javaType="java.util.List"
+					column="id" select="cn.peyton.children.chatter.mapper.ImagesMapper.selectByExpand">
+
+		</collection>
 	</resultMap>
 
 	<sql id="Column_post_List">
@@ -103,5 +129,70 @@
 	</select>
 
 	<!-- new create method   -->
+	<select id="checkPost" resultType="java.lang.Integer">
+		select
+			count(id)
+		from post
+		where id = #{id}
+	</select>
 
+	<select id="findByShareId" resultMap="ResultPostMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Column_post_List"/>
+		from Post
+		where id = #{id}
+	</select>
+
+	<select id="findByClassId" resultMap="ResultPostMap" parameterType="map">
+		select
+		<include refid="Column_post_List"/>
+		from Post
+		where post_class_id = #{postClassId} and is_open=1
+		order by create_time desc
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<select id="search" resultMap="ResultPostMap" parameterType="map">
+		select
+		<include refid="Column_post_List"/>
+		from Post
+		where title like concat('%',#{keyword},'%')  and is_open=1
+		order by create_time desc
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<select id="findByTopicId" resultMap="ResultPostMap" parameterType="map">
+		select
+		p.id,user_id,title,title_pic,content,share_num,p.path,p.type,
+		p.create_time,p.post_class_id,p.share_id,is_open
+		from Post as p,topic_post as tp
+		where tp.post_id = p.id
+		and tp.topic_id=#{topicId}
+		and is_open=1
+		ORDER BY
+		<if test="type ==0">p.share_num</if>
+		<if test="type ==1">p.create_time</if>
+		DESC
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<select id="findByUserId" resultMap="ResultPostMap" parameterType="map">
+		select
+			id, user_id, title,title_pic,content,share_num,post.path,
+			post.type,create_time,post_class_id,share_id,is_open
+		from Post
+		where user_id=#{userId}  and is_open=1
+		ORDER BY create_time DESC
+		limit #{page.offset},#{page.pageSize}
+	</select>
+
+	<select id="findByPKUserId" resultMap="ResultPostMap" parameterType="map">
+		select
+			id, user_id, title,title_pic,content,share_num,post.path,
+			post.type,create_time,post_class_id,share_id,is_open
+		from Post
+		where user_id=#{userId}
+		ORDER BY create_time DESC
+		limit #{page.offset},#{page.pageSize}
+	</select>
 </mapper>

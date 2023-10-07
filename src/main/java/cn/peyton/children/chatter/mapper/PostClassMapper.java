@@ -2,6 +2,8 @@ package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.PostClass;
 
+import java.util.List;
+
 /**
  * <h3> 帖子分类 Mapper 接口</h3>
  * <pre>
@@ -57,5 +59,9 @@ public interface PostClassMapper {
 
 	// ==================================== new create method ==================================== //
 
-
+	/**
+	 * <h4>查找所有文章分类</h4>
+	 * @return 文章分类对象集合
+	 */
+	List<PostClass> finds();
 }

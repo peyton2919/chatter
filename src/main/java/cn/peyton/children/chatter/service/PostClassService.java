@@ -1,4 +1,9 @@
 package cn.peyton.children.chatter.service;
+
+import cn.peyton.children.chatter.param.PostClassParam;
+
+import java.util.List;
+
 /**
  * <h3> 帖子分类 Service 接口</h3>
  * <pre>
@@ -9,5 +14,15 @@ package cn.peyton.children.chatter.service;
  * </pre>
 */
 public interface PostClassService {
+
+    /**
+     * <h4>查找所有文章分类</h4>
+     * @return 文章分类传递类对象集合
+     */
+    List<PostClassParam> finds();
+
+    int add(PostClassParam param);
+
+    PostClassParam findById(Integer id);
 
 }

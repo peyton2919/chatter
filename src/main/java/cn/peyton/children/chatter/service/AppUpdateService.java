@@ -1,4 +1,7 @@
 package cn.peyton.children.chatter.service;
+
+import cn.peyton.children.chatter.param.AppUpdateParam;
+
 /**
  * <h3> 更新 Service 接口</h3>
  * <pre>
@@ -10,4 +13,15 @@ package cn.peyton.children.chatter.service;
 */
 public interface AppUpdateService {
 
+    /**
+     * <h4>检查有上线的状态</h4>
+     * @return
+     */
+    AppUpdateParam findByNewApp();
+
+    /**
+     * <h4>更新版本号</h4>
+     * @return true 表示 更新成功; false 表示 取反
+     */
+    boolean update(AppUpdateParam param);
 }

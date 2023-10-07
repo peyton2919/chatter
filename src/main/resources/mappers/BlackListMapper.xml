@@ -64,4 +64,15 @@
 
 	<!-- new create method   -->
 
+	<select id="checkUserIdAndBlackId" resultType="java.lang.Integer">
+		SELECT
+			count(id)
+		FROM black_list
+		WHERE user_id=#{userId} and black_id=#{blackId}
+	</select>
+
+	<delete id="deleteByUserIdAndBlackId">
+		delete from black_list
+		where user_id = #{userId} and black_id = #{blackId}
+	</delete>
 </mapper>

@@ -1,9 +1,14 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.UserBindService;
+import cn.peyton.children.chatter.bo.UserBindBo;
 import cn.peyton.children.chatter.mapper.UserBindMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.UserBindParam;
+import cn.peyton.children.chatter.pojo.UserBind;
+import cn.peyton.children.chatter.service.UserBindService;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <h3> 第三方登录信息 Service 实现类</h3>
@@ -19,4 +24,30 @@ public class UserBindServiceImpl implements UserBindService {
 	@Resource
 	private UserBindMapper userBindMapper;
 
+	@Override
+	public boolean isBindOther(int userId, String openId, String type) {
+
+		return userBindMapper.checkBindOther(userId, openId, type) > 0 ? true : false;
+	}
+
+	@Override
+	public UserBindParam create(UserBindParam param) {
+		UserBind userBind = param.convert();
+		int result = userBindMapper.insertSelective(userBind);
+		if (result > 0) {
+			return param.compat(userBind);
+		}
+		return null;
+	}
+
+	@Override
+	public List<UserBindParam> findByUserId(Integer id) {
+		return new UserBindBo().adapter(userBindMapper.findByUserId(id));
+	}
+
+	@Override
+	public UserBindParam findByOpenIdAndType(String openId, String type) {
+		UserBind _userBind = userBindMapper.findByOpenIdAndType(openId, type);
+		return (null != _userBind) ? new UserBindParam().compat(_userBind) : null;
+	}
 }

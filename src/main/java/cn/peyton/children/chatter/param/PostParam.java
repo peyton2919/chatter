@@ -1,9 +1,18 @@
 package cn.peyton.children.chatter.param;
 
 
+import cn.peyton.children.chatter.bo.PostBo;
+import cn.peyton.children.chatter.pojo.Images;
 import cn.peyton.children.chatter.pojo.Post;
+import cn.peyton.core.toolkit.CheckedTools;
+import cn.peyton.core.toolkit.base.Lists;
+import cn.peyton.core.validator.constraints.NotBlank;
+import cn.peyton.core.validator.constraints.Size;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <h3> 帖子 参数 传递类[用来展示数据]类</h3>
  * <pre>
@@ -17,12 +26,13 @@ public class PostParam implements Serializable {
 	/** 编号  */
 	private Integer id;
 	/** 发布人  */
-	private Integer userId;
+	private UserParam userParam;
 	/** 标题  */
 	private String title;
 	/** 标题图片  */
 	private String titlePic;
 	/** 内容  */
+	@NotBlank(message = "内容不能为空！")
 	private String content;
 	/** 分享数  */
 	private Integer shareNum;
@@ -34,13 +44,33 @@ public class PostParam implements Serializable {
 	private Integer createTime;
 	/** post类型编号  */
 	private Integer postClassId;
-	/** 共享编号  */
-	private Integer shareId;
+	/** 分享文章对象 当type类型为1时,在查找文章  */
+	private PostParam sharePostParam;
 	/** 1开放，0仅自己可见  */
+	@NotBlank(message = "可见方式不能为空！")
+	@Size(min = 0,max = 1,message = "数字超出限制范围!")
 	private Integer isOpen;
+	/** 图片集合 */
+	private List<Images> imageList;
+	/** 评论数 */
+	private Integer commentCount;
+	/** 顶  */
+	private Integer ding;
+	/** 踩  */
+	private Integer cai;
 
 	//================================== Constructor =======================================//
-
+	public PostParam() {
+		if (!CheckedTools.isNull(userParam)) {
+			userParam = new UserParam();
+		}
+		if (!CheckedTools.isNull(sharePostParam)) {
+			sharePostParam = new PostParam();
+		}
+		if (null == imageList) {
+			imageList = new ArrayList<>();
+		}
+	}
 	//================================== Method =======================================//
 
 
@@ -60,18 +90,18 @@ public class PostParam implements Serializable {
 		return id;
 	}
 
-	/** 
-	 * @param userId 发布人 
-	 */ 
-	public void setUserId(Integer userId){
-		this.userId = userId;
+	/**
+	 * @param userParam 发布人
+	 */
+	public void setUserParam(UserParam userParam) {
+		this.userParam = userParam;
 	}
 
-	/** 
-	 * @return 发布人 
-	 */ 
-	public Integer getUserId(){
-		return userId;
+	/**
+	 * @return 发布人
+	 */
+	public UserParam getUserParam() {
+		return userParam;
 	}
 
 	/** 
@@ -186,32 +216,88 @@ public class PostParam implements Serializable {
 		return postClassId;
 	}
 
-	/** 
-	 * @param shareId 共享编号 
-	 */ 
-	public void setShareId(Integer shareId){
-		this.shareId = shareId;
+	/**
+	 * @param sharePostParam 分享文章对象 当type类型为1时,在查找文章
+	 */
+	public void setSharePostParam(PostParam sharePostParam) {
+		this.sharePostParam = sharePostParam;
 	}
 
-	/** 
-	 * @return 共享编号 
-	 */ 
-	public Integer getShareId(){
-		return shareId;
+	/**
+	 * @return 分享文章对象 当type类型为1时,在查找文章
+	 */
+	public PostParam getSharePostParam() {
+		return sharePostParam;
 	}
 
-	/** 
-	 * @param isOpen 1开放，0仅自己可见 
-	 */ 
+	/**
+	 * @param isOpen 1开放，0仅自己可见
+	 */
 	public void setIsOpen(Integer isOpen){
 		this.isOpen = isOpen;
 	}
 
-	/** 
-	 * @return 1开放，0仅自己可见 
-	 */ 
+	/**
+	 * @return 1开放，0仅自己可见
+	 */
 	public Integer getIsOpen(){
 		return isOpen;
+	}
+
+	/**
+	 * @return 图片集合
+	 */
+	public List<Images> getImageList() {
+		return imageList;
+	}
+
+	/**
+	 * @param imageList 图片集合
+	 */
+	public void setImageList(List<Images> imageList) {
+		if (null == imageList){ imageList= Lists.newArrayList(); }
+		this.imageList = imageList;
+	}
+
+	/**
+	 * @return 顶
+	 */
+	public Integer getDing() {
+		return ding;
+	}
+
+	/**
+	 * @param ding 顶
+	 */
+	public void setDing(Integer ding) {
+		this.ding = ding;
+	}
+	/**
+	 * @return 踩
+	 */
+	public Integer getCai() {
+		return cai;
+	}
+
+	/**
+	 * @param cai 踩
+	 */
+	public void setCai(Integer cai) {
+		this.cai = cai;
+	}
+
+	/**
+	 * @return 评论数
+	 */
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	/**
+	 * @param commentCount 评论数
+	 */
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
 	}
 
 	/**
@@ -224,7 +310,7 @@ public class PostParam implements Serializable {
 	public Post convert(){
 		Post post = new Post(); 
 		post.setId(id);
-		post.setUserId(userId);
+		post.setUser(userParam.convert());
 		post.setTitle(title);
 		post.setTitlePic(titlePic);
 		post.setContent(content);
@@ -233,8 +319,12 @@ public class PostParam implements Serializable {
 		post.setType(type);
 		post.setCreateTime(createTime);
 		post.setPostClassId(postClassId);
-		post.setShareId(shareId);
+		post.setSharePost(new PostBo().convert(getSharePostParam()));
 		post.setIsOpen(isOpen);
+		post.setImageList(imageList);
+		post.setCommentCount(commentCount);
+		post.setDing(ding);
+		post.setCai(cai);
 		return post;
 	} 
 	/**
@@ -249,7 +339,7 @@ public class PostParam implements Serializable {
 			return new PostParam();
 		}
 		this.setId(post.getId());
-		this.setUserId(post.getUserId());
+		this.setUserParam(this.userParam.compat(post.getUser()));
 		this.setTitle(post.getTitle());
 		this.setTitlePic(post.getTitlePic());
 		this.setContent(post.getContent());
@@ -258,8 +348,12 @@ public class PostParam implements Serializable {
 		this.setType(post.getType());
 		this.setCreateTime(post.getCreateTime());
 		this.setPostClassId(post.getPostClassId());
-		this.setShareId(post.getShareId());
+		this.setSharePostParam(new PostBo().compat(post.getSharePost()));
 		this.setIsOpen(post.getIsOpen());
+		this.setImageList(post.getImageList());
+		this.setCommentCount(post.getCommentCount());
+		this.setDing(post.getDing());
+		this.setCai(post.getCai());
 		return this;
 	} 
 }

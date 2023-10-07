@@ -83,5 +83,11 @@
 	</select>
 
 	<!-- new create method   -->
+	<select id="findByUserId" resultMap="ResultUserInfoMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Column_user_info_List"/>
+		from user_info
+		where user_id = #{userId}
+	</select>
 
 </mapper>

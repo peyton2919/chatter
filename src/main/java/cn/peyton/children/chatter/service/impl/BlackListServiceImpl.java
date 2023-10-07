@@ -1,9 +1,10 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.service.BlackListService;
 import cn.peyton.children.chatter.mapper.BlackListMapper;
-import org.springframework.stereotype.Service;
+import cn.peyton.children.chatter.param.BlackListParam;
+import cn.peyton.children.chatter.service.BlackListService;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 /**
  * <h3> 拉黑集 Service 实现类</h3>
@@ -18,5 +19,21 @@ import jakarta.annotation.Resource;
 public class BlackListServiceImpl implements BlackListService {
 	@Resource
 	private BlackListMapper blackListMapper;
+
+
+	@Override
+	public boolean add(BlackListParam param) {
+		return blackListMapper.insertSelective(param.convert()) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean isUserIdAndBlackId(Integer userId, Integer blackId) {
+		return blackListMapper.checkUserIdAndBlackId(userId,blackId) > 0 ? true : false;
+	}
+
+	@Override
+	public boolean delete(Integer userId, Integer blackId) {
+		return blackListMapper.deleteByUserIdAndBlackId(userId, blackId) > 0 ? true : false;
+	}
 
 }

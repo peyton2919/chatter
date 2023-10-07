@@ -57,5 +57,20 @@ public interface BlackListMapper {
 
 	// ==================================== new create method ==================================== //
 
+	/**
+	 * <h4>判断 是否已拉黑</h4>
+	 * @param userId 用户ID
+	 * @param blackId 拉黑用户ID
+	 * @return true 表示 已拉黑; false 表示 取反
+	 */
+	int checkUserIdAndBlackId(Integer userId, Integer blackId);
+
+	/**
+	 * <h4>删除已拉黑</h4>
+	 * @param userId 用户ID
+	 * @param blackId 拉黑用户ID
+	 * @return true 表示 删除成功; false 表示 取反
+	 */
+	int deleteByUserIdAndBlackId(Integer userId, Integer blackId);
 
 }
