@@ -3,7 +3,7 @@
 <mapper namespace="cn.peyton.children.chatter.mapper.CommentMapper">
 	<resultMap id="ResultCommentMap" type="cn.peyton.children.chatter.pojo.Comment">
 		<id column="id" property="id" jdbcType="INTEGER"/>
-		<result column="user_id" property="userId" jdbcType="INTEGER"/>
+		<!--<result column="user_id" property="userId" jdbcType="INTEGER"/>-->
 		<result column="f_id" property="fId" jdbcType="INTEGER"/>
 		<result column="fnum" property="fnum" jdbcType="INTEGER"/>
 		<result column="data" property="data" jdbcType="VARCHAR"/>

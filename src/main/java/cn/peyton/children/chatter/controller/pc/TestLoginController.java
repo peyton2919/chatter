@@ -9,6 +9,7 @@ package cn.peyton.children.chatter.controller.pc;/**
  * </pre>
  */
 
+import cn.peyton.children.chatter.controller.base.AppController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * </pre>
  */
 @Controller
-public class TestLoginController {
+public class TestLoginController extends AppController {
 
     @GetMapping("/login")
     public String login() {

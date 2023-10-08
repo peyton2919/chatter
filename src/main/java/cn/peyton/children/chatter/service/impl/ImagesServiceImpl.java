@@ -1,5 +1,6 @@
 package cn.peyton.children.chatter.service.impl;
 
+import cn.peyton.children.chatter.aop.timestamp.Timestamp;
 import cn.peyton.children.chatter.bo.ImagesBo;
 import cn.peyton.children.chatter.mapper.ImagesMapper;
 import cn.peyton.children.chatter.param.ImagesParam;
@@ -24,8 +25,10 @@ public class ImagesServiceImpl implements ImagesService {
 	@Resource
 	private ImagesMapper imagesMapper;
 
+	@Timestamp
 	@Override
 	public List<ImagesParam> insertBatch(List<ImagesParam> imagesList) {
+		//todo
 		List<Images> _oImages = new ImagesBo().reverse(imagesList);
 		imagesMapper.insertBatch(_oImages);
 		return new ImagesBo().adapter(_oImages);

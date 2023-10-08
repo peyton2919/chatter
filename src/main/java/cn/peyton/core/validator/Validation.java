@@ -31,15 +31,6 @@ public final class Validation implements Serializable {
     }
 
     /**
-     * <h4>验证对象全部错误</h4>
-     * @param obj 对象
-     * @return 错误集合
-     */
-    public static Map<String, String> valid(Object obj) {
-        return validator.validate(obj);
-    }
-
-    /**
      * <h4>验证对象错误</h4>
      * @param obj 对象
      * @param single 为true时表示验证对象单一属性[遇到验证有错误时就返回,只返回一组错误或没有错误]
@@ -51,6 +42,16 @@ public final class Validation implements Serializable {
         }
         check(obj);
     }
+
+    /**
+     * <h4>验证对象全部错误</h4>
+     * @param obj 对象
+     * @return 错误集合
+     */
+    public static Map<String, String> valid(Object obj) {
+        return validator.validate(obj);
+    }
+
 
     /**
      * <h4>验证对象错误</h4>
@@ -81,6 +82,7 @@ public final class Validation implements Serializable {
                            String name, String type, String value,
                            boolean single) {
         if (single) {
+
             valid(errMap, annotations, name, type, value);
         } else {
             validator.validate(errMap, annotations, name, type, value,single);

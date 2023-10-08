@@ -4,6 +4,7 @@ package cn.peyton.children.chatter.param;
 import cn.peyton.children.chatter.bo.PostBo;
 import cn.peyton.children.chatter.pojo.Images;
 import cn.peyton.children.chatter.pojo.Post;
+import cn.peyton.core.inf.BaseConvertBo;
 import cn.peyton.core.toolkit.CheckedTools;
 import cn.peyton.core.toolkit.base.Lists;
 import cn.peyton.core.validator.constraints.NotBlank;
@@ -41,7 +42,7 @@ public class PostParam implements Serializable {
 	/** 0 图文 1分享  */
 	private Integer type;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 	/** post类型编号  */
 	private Integer postClassId;
 	/** 分享文章对象 当type类型为1时,在查找文章  */
@@ -191,14 +192,14 @@ public class PostParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -317,7 +318,7 @@ public class PostParam implements Serializable {
 		post.setShareNum(shareNum);
 		post.setPath(path);
 		post.setType(type);
-		post.setCreateTime(createTime);
+		post.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		post.setPostClassId(postClassId);
 		post.setSharePost(new PostBo().convert(getSharePostParam()));
 		post.setIsOpen(isOpen);
@@ -346,7 +347,7 @@ public class PostParam implements Serializable {
 		this.setShareNum(post.getShareNum());
 		this.setPath(post.getPath());
 		this.setType(post.getType());
-		this.setCreateTime(post.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(post.getCreateTime()));
 		this.setPostClassId(post.getPostClassId());
 		this.setSharePostParam(new PostBo().compat(post.getSharePost()));
 		this.setIsOpen(post.getIsOpen());

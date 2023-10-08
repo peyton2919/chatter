@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Feedback;
+import cn.peyton.core.inf.BaseConvertBo;
 import cn.peyton.core.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -25,7 +26,7 @@ public class FeedbackParam implements Serializable {
 	@NotBlank(message = "反馈信息不能为空!")
 	private String data;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -93,14 +94,14 @@ public class FeedbackParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -117,7 +118,7 @@ public class FeedbackParam implements Serializable {
 		feedback.setToId(toId);
 		feedback.setFromId(fromId);
 		feedback.setData(data);
-		feedback.setCreateTime(createTime);
+		feedback.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return feedback;
 	} 
 	/**
@@ -135,7 +136,7 @@ public class FeedbackParam implements Serializable {
 		this.setToId(feedback.getToId());
 		this.setFromId(feedback.getFromId());
 		this.setData(feedback.getData());
-		this.setCreateTime(feedback.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(feedback.getCreateTime()));
 		return this;
 	} 
 }

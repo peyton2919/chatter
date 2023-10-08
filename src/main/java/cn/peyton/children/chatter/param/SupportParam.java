@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Support;
+import cn.peyton.core.inf.BaseConvertBo;
 import cn.peyton.core.validator.constraints.Size;
 
 import java.io.Serializable;
@@ -25,7 +26,7 @@ public class SupportParam implements Serializable {
 	@Size(min = 0,max = 1,message = "数值超出规定范围！")
 	private Integer type;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -93,14 +94,14 @@ public class SupportParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -117,7 +118,7 @@ public class SupportParam implements Serializable {
 		support.setUserId(userId);
 		support.setPostId(postId);
 		support.setType(type);
-		support.setCreateTime(createTime);
+		support.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return support;
 	} 
 	/**
@@ -135,7 +136,7 @@ public class SupportParam implements Serializable {
 		this.setUserId(support.getUserId());
 		this.setPostId(support.getPostId());
 		this.setType(support.getType());
-		this.setCreateTime(support.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(support.getCreateTime()));
 		return this;
 	} 
 }

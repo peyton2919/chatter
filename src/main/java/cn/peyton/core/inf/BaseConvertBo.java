@@ -1,6 +1,7 @@
 package cn.peyton.core.inf;
 
 import cn.peyton.core.toolkit.CheckedTools;
+import cn.peyton.core.toolkit.DateTools;
 import cn.peyton.core.toolkit.base.Lists;
 
 import java.io.Serializable;
@@ -68,4 +69,21 @@ public abstract class BaseConvertBo<P,T> implements Serializable {
     }
 
 
+    /**
+     * <h4>时间格式转换: 字符串时间 转 10 位时间数字</h4>
+     * @param date 字符串时间
+     * @return 10 位时间数字
+     */
+    public static Integer convertStrToInt(String date) {
+        return DateTools.dateToTimestamp(date);
+    }
+
+    /**
+     * <h4>时间格式转换: 10 位时间数字 转 字符串时间</h4>
+     * @param time 10 位时间数字
+     * @return 字符串时间
+     */
+    public static String convertIntToStr(Integer time) {
+        return DateTools.timestampToStrDate(time);
+    }
 }

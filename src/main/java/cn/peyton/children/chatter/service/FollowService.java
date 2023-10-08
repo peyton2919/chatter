@@ -37,7 +37,7 @@ public interface FollowService {
      * @param followId
      * @return true 表示 成功; false 表示 取反;
      */
-    boolean save(int userId,int followId);
+    boolean add(int userId, int followId);
     /**
      * <h4>删除 关注对象</h4>
      * @param userId

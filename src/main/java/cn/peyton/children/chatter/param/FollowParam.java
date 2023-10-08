@@ -3,6 +3,7 @@ package cn.peyton.children.chatter.param;
 
 import cn.peyton.children.chatter.bo.UserBo;
 import cn.peyton.children.chatter.pojo.Follow;
+import cn.peyton.core.inf.BaseConvertBo;
 
 import java.io.Serializable;
 /**
@@ -22,7 +23,7 @@ public class FollowParam implements Serializable {
 	/** 用户id  */
 	private Integer userId;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -76,14 +77,14 @@ public class FollowParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -99,7 +100,7 @@ public class FollowParam implements Serializable {
 		follow.setId(id);
 		follow.setFollowUser(new UserBo().convert(this.getFollowUserParam()));
 		follow.setUserId(userId);
-		follow.setCreateTime(createTime);
+		follow.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return follow;
 	} 
 	/**
@@ -116,7 +117,7 @@ public class FollowParam implements Serializable {
 		this.setId(follow.getId());
 		this.setFollowUserParam(new UserBo().compat(follow.getFollowUser()));
 		this.setUserId(follow.getUserId());
-		this.setCreateTime(follow.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(follow.getCreateTime()));
 		return this;
 	} 
 }

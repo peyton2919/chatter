@@ -1,6 +1,7 @@
 package cn.peyton.core.validator.strategy;
 
 
+import cn.peyton.core.validator.constraints.Alike;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
@@ -62,7 +63,7 @@ public final class BaseValidator implements Serializable {
      * @param single false表示对象全部字段, true表示单个字段[有一个错误信息就返回]
      */
     public void validate(Map<String,String> errMap,Annotation[] annotations,
-                                       String name,String type,String value,
+                                       String name,String type,Object value,
                                        boolean single){
         ERROR = false;
         _validate(errMap,annotations,name,type,value,single);
@@ -78,11 +79,10 @@ public final class BaseValidator implements Serializable {
      * @return
      */
     public void validate(Map<String,String> errMap,Annotation[] annotations,
-                                       String name,String type,String value){
+                                       String name,String type,Object value){
         ERROR = false;
         _validate(errMap,annotations,name,type,value,true);
     }
-
 
     /**
      * <h4>验证单一错误</h4>
@@ -125,8 +125,9 @@ public final class BaseValidator implements Serializable {
 
             //判断 注解类型
             for (Annotation annotation : annotations) {
+
                 //调用工厂,返回 map 数据
-                factory.valid(annotation ,name,type,value,map);
+                factory.valid(annotation, name, type, (annotation instanceof Alike ? obj : value), map);
                 if (!map.isEmpty()&&single){break;}
             }
         }
@@ -149,7 +150,7 @@ public final class BaseValidator implements Serializable {
      * @param single false表示对象全部字段, true表示单个字段[有一个错误信息就返回]
      */
     private void _validate(Map<String,String> errMap,Annotation[] annotations,
-                                         String name,String type,String value,
+                                         String name,String type,Object value,
                                          boolean single) {
         if (factory == null) {
             factory = ValidatorFactory.getInstance();
@@ -158,7 +159,7 @@ public final class BaseValidator implements Serializable {
         //判断 注解类型
         for (Annotation annotation : annotations) {
             //调用工厂,返回 map 数据
-            factory.valid(annotation ,name,type,value,errMap);
+            factory.valid(annotation, name, type, value, errMap);
             if (!errMap.isEmpty()&&single){break;}
         }
         if (!errMap.isEmpty()) {

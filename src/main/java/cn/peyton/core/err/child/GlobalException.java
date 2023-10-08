@@ -4,6 +4,9 @@ import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.json.JsonMapper;
 import cn.peyton.core.toolkit.HttpServletResponseTools;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
 
 
 /**
@@ -15,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @version: 1.0.0
  * </pre>
  */
+@Slf4j
 public class GlobalException extends RuntimeException {
 
 
@@ -48,7 +52,28 @@ public class GlobalException extends RuntimeException {
                 response, JsonMapper.toJSon(jsonResult));
     }
 
-    public GlobalException(HttpServletResponse response, JSONResult result, Object obj, String url) {
+    /**
+     * <h4>异常构造</h4>
+     * @param response
+     * @param result 要返回的包装好的JSON数据
+     * @param url  链接地址 如: /err 或 /app/add
+     */
+    public GlobalException(HttpServletResponse response, JSONResult result, String url) {
 
+        try {
+            StringBuilder _sb = new StringBuilder();
+            if (null != url) {
+                _sb.append(url);
+                if (null != result) {
+                    _sb.append("?result=" + result);
+                }
+                response.sendRedirect(_sb.toString());
+            }else {
+                HttpServletResponseTools.returnJson(
+                        response, JsonMapper.toJSon(result));
+            }
+        } catch (IOException e) {
+            log.error("异常在【cn.peyton.core.err.child.GlobelException】 构造方法。");
+        }
     }
 }

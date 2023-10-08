@@ -112,7 +112,7 @@ public class ParameterInterceptor implements HandlerInterceptor {
             if (null != _errMap && _errMap.size() >0){
                 // 写到页面
                 HttpServletResponseTools.returnJson(
-                        response, JsonMapper.toJSon(JSONResult.fail(_errMap)));
+                        response, JsonMapper.toJSon(JSONResult.error(HttpStatusCode.get(HttpStatusCode.ERR_VALID.getCode()),_errMap)));
                 return false;
             }
         }

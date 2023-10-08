@@ -22,6 +22,7 @@ import java.util.List;
 public class TopicClassServiceImpl implements TopicClassService {
 	@Resource
 	private TopicClassMapper topicClassMapper;
+	
 	@Override
 	public List<TopicClassParam> finds() {
 		return new TopicClassBo().adapter(topicClassMapper.finds());

@@ -45,7 +45,7 @@ public interface CommentService {
      * @param param 评论传递对象
      * @return 返回带ID 评论传递对象
      */
-    CommentParam create(CommentParam param);
+    CommentParam add(CommentParam param);
 
     /**
      * <h4>更新评论被回复数</h4>

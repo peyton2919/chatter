@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.AppUpdate;
+import cn.peyton.core.inf.BaseConvertBo;
 import cn.peyton.core.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -25,7 +26,7 @@ public class AppUpdateParam implements Serializable {
 	/** 0未上线 1上线  */
 	private Integer status;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -93,14 +94,14 @@ public class AppUpdateParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -117,7 +118,7 @@ public class AppUpdateParam implements Serializable {
 		appUpdate.setUrl(url);
 		appUpdate.setVersion(version);
 		appUpdate.setStatus(status);
-		appUpdate.setCreateTime(createTime);
+		appUpdate.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return appUpdate;
 	} 
 	/**
@@ -135,7 +136,7 @@ public class AppUpdateParam implements Serializable {
 		this.setUrl(appUpdate.getUrl());
 		this.setVersion(appUpdate.getVersion());
 		this.setStatus(appUpdate.getStatus());
-		this.setCreateTime(appUpdate.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(appUpdate.getCreateTime()));
 		return this;
 	} 
 }

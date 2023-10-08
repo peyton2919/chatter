@@ -5,8 +5,6 @@ import cn.peyton.children.chatter.bo.PostClassBo;
 import cn.peyton.children.chatter.mapper.PostClassMapper;
 import cn.peyton.children.chatter.param.PostClassParam;
 import cn.peyton.children.chatter.service.PostClassService;
-import cn.peyton.core.validator.constraints.Date;
-import cn.peyton.core.validator.constraints.Phone;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +24,17 @@ public class PostClassServiceImpl implements PostClassService {
 	@Resource
 	private PostClassMapper postClassMapper;
 
-	@Timestamp
+
 	@Override
 	public List<PostClassParam> finds() {
 		return new PostClassBo().adapter(postClassMapper.finds());
 	}
 
-
 	@Timestamp
 	@Override
 	public int add(PostClassParam param) {
 
-		System.out.println("执行。。。。。。。");
+		System.out.println("执行[add]。。。。。。。");
 		//param.builder();
 		return postClassMapper.insertSelective(param.convert());
 	}

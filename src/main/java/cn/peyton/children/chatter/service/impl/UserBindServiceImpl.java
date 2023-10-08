@@ -31,7 +31,7 @@ public class UserBindServiceImpl implements UserBindService {
 	}
 
 	@Override
-	public UserBindParam create(UserBindParam param) {
+	public UserBindParam add(UserBindParam param) {
 		UserBind userBind = param.convert();
 		int result = userBindMapper.insertSelective(userBind);
 		if (result > 0) {

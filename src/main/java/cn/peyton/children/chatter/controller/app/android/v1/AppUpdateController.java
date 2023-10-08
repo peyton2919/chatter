@@ -31,10 +31,10 @@ public class AppUpdateController {
 		//查询 最新一条数据并 status =1
 		AppUpdateParam _param = appUpdateService.findByNewApp();
 		if (null == _param) {
-			return JSONResult.fail(HttpStatusCode.ERR_NOT_UPDATE_APP);
+			return JSONResult.fail(HttpStatusCode.ERR_NOT_UPDATE_APP.getMsg());
 		}
 		if (_param.getVersion().equals(param.getVersion())) {
-			return JSONResult.fail(HttpStatusCode.ERR_NOT_UPDATE_APP);
+			return JSONResult.fail(HttpStatusCode.ERR_NOT_UPDATE_APP.getMsg());
 		}
 		//todo 逻辑需要处理数值大小
 		_param.setVersion(param.getVersion());
@@ -44,6 +44,6 @@ public class AppUpdateController {
 			return JSONResult.success(HttpStatusCode.SUCCESS_OPERATE_UPDATE.getMsg());
 		}
 
-		return JSONResult.fail(HttpStatusCode.ERR_OPERATE_UPDATE);
+		return JSONResult.fail(HttpStatusCode.ERR_OPERATE_UPDATE.getMsg());
 	}
 }

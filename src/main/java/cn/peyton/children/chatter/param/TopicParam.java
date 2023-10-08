@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Topic;
+import cn.peyton.core.inf.BaseConvertBo;
 
 import java.io.Serializable;
 /**
@@ -25,7 +26,7 @@ public class TopicParam implements Serializable {
 	/** 0 禁用 1启用  */
 	private Integer type;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 	/** 话题类型编号  */
 	private Integer topicClassId;
 
@@ -109,14 +110,14 @@ public class TopicParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -148,7 +149,7 @@ public class TopicParam implements Serializable {
 		topic.setTitlePic(titlePic);
 		topic.setDesc(desc);
 		topic.setType(type);
-		topic.setCreateTime(createTime);
+		topic.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		topic.setTopicClassId(topicClassId);
 		return topic;
 	} 
@@ -168,7 +169,7 @@ public class TopicParam implements Serializable {
 		this.setTitlePic(topic.getTitlePic());
 		this.setDesc(topic.getDesc());
 		this.setType(topic.getType());
-		this.setCreateTime(topic.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(topic.getCreateTime()));
 		this.setTopicClassId(topic.getTopicClassId());
 		return this;
 	} 

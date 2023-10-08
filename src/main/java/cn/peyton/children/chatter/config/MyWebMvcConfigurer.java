@@ -71,7 +71,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         //        .addPathPatterns("/personal/updateInfo")
         //        .addPathPatterns("/selectPayType")
         //        .addPathPatterns("/payPage");
-        registry.addInterceptor(parameterInterceptor()).excludePathPatterns(excludePath).addPathPatterns("/**");
+
+        //registry.addInterceptor(parameterInterceptor()).excludePathPatterns(excludePath).addPathPatterns("/**");
     }
 
     @Override

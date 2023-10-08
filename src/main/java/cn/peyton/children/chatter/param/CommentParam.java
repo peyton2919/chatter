@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Comment;
+import cn.peyton.core.inf.BaseConvertBo;
 
 import java.io.Serializable;
 /**
@@ -25,7 +26,7 @@ public class CommentParam implements Serializable {
 	/** 数据  */
 	private String data;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 	/** post编号  */
 	private Integer postId;
 
@@ -113,14 +114,14 @@ public class CommentParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -152,7 +153,7 @@ public class CommentParam implements Serializable {
 		comment.setFId(fId);
 		comment.setFnum(fnum);
 		comment.setData(data);
-		comment.setCreateTime(createTime);
+		comment.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		comment.setPostId(postId);
 		return comment;
 	} 
@@ -172,7 +173,7 @@ public class CommentParam implements Serializable {
 		this.setFId(comment.getFId());
 		this.setFnum(comment.getFnum());
 		this.setData(comment.getData());
-		this.setCreateTime(comment.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(comment.getCreateTime()));
 		this.setPostId(comment.getPostId());
 		return this;
 	} 

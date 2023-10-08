@@ -1,6 +1,8 @@
 package cn.peyton.core.toolkit;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,5 +41,17 @@ public final class HttpServletResponseTools implements Serializable {
                 writer.close();
             }
         }
+    }
+
+    /**
+     * <h4>获取当前的response</h4>
+     * <pre>
+     *      必需引用 spring-web.jar 包
+     * </pre>
+     * @return
+     */
+    public static HttpServletResponse getResponse() {
+        ServletRequestAttributes _sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return  _sra.getResponse();
     }
 }

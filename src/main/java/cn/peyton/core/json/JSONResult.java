@@ -58,8 +58,8 @@ public final  class JSONResult<T> implements Serializable {
      * @return JSONResult对象
      */
     public static <T> JSONResult<T> success() {
-        return new JSONResult<T>(HttpStatusCode.SUCCESS.getCode(),
-                null,null,null,null,null);
+        return new JSONResult<T>
+                (HttpStatusCode.SUCCESS.getCode(),null,null,null,null,null);
     }
 
     /**
@@ -69,8 +69,8 @@ public final  class JSONResult<T> implements Serializable {
      * @return JSONResult对象
      */
     public static <T> JSONResult<T> success(String msg) {
-        return new JSONResult<T>(HttpStatusCode.SUCCESS.getCode(),
-                null, msg,null,null,null);
+        return new JSONResult<T>
+                (HttpStatusCode.SUCCESS.getCode(), msg,null,null,null,null);
     }
 
     /**
@@ -80,8 +80,8 @@ public final  class JSONResult<T> implements Serializable {
      * @return JSONResult对象
      */
     public static <T> JSONResult<T> success(T data) {
-        return new JSONResult<T>(HttpStatusCode.SUCCESS.getCode(),
-                data,null,null,null,null);
+        return new JSONResult<T>
+        (HttpStatusCode.SUCCESS.getCode(),null,data,null,null,null);
     }
 
     /**
@@ -93,8 +93,8 @@ public final  class JSONResult<T> implements Serializable {
      * @return JSONResult对象
      */
     public static <T> JSONResult<T> success(String msg, T data) {
-        return new JSONResult<T>(HttpStatusCode.SUCCESS.getCode(),data,
-                msg,null,null,null);
+        return new JSONResult<T>
+                (HttpStatusCode.SUCCESS.getCode(), msg,data,null,null,null);
     }
 
     /**
@@ -103,11 +103,12 @@ public final  class JSONResult<T> implements Serializable {
      * @param msg    消息
      * @return JSONResult对象
      */
-    public static JSONResult success(Object expand, String msg) {
-        return new JSONResult(HttpStatusCode.SUCCESS.getCode(),
-                null, msg,null,expand,null);
+    public static <T> JSONResult<T> success(String msg,T data,Object expand ) {
+        return new JSONResult
+                (HttpStatusCode.SUCCESS.getCode(), msg, data,expand,null,null);
     }
 
+    // -----------------------------------------> fail begin <-----------------------------------------
     /**
      * <h4>错误</h4>
      * @param msg 消息
@@ -115,121 +116,158 @@ public final  class JSONResult<T> implements Serializable {
      * @return JSONResult对象
      */
     public static <T> JSONResult<T> fail(String msg) {
-        return new JSONResult<T>(HttpStatusCode.FAIL.getCode(),
-                null, msg,null,null,null);
-    }
-
-    /**
-     * <h4>错误</h4>
-     * @param httpStatusCode 状态码枚举,规定好给的提示
-     * @param <T> 申明泛型数据类型
-     * @return JSONResult对象
-     */
-    public static <T> JSONResult<T> fail(HttpStatusCode httpStatusCode) {
-        return new JSONResult<T>(HttpStatusCode.FAIL.getCode(),
-                null, httpStatusCode.getMsg(),httpStatusCode.getCode(),null,null);
-    }
-
-
-    /**
-     * <h4>错误</h4>
-     * <pre>
-     *     默认 code: HttpStatusCode.FAIL.getCode
-     *          errorCode: HttpStatusCode.FAIL_PARAM.getCode()
-     * </pre>
-     * @param data  消息
-     * @return JSONResult对象
-     */
-    public static <T> JSONResult fail(T data) {
-        return new JSONResult<T>(HttpStatusCode.FAIL.getCode(),
-                data,null,HttpStatusCode.FAIL.getCode(),null,null);
-    }
-
-    /**
-     * <h4>错误</h4>
-     * @param httpStatusCode 状态码枚举,规定好给的提示
-     * @param expand 扩展数据
-     * @param <T> 申明泛型数据类型
-     * @return JSONResult对象
-     */
-    public static <T> JSONResult<T> fail(HttpStatusCode httpStatusCode,Object expand) {
-        return new JSONResult<T>(HttpStatusCode.FAIL.getCode(),
-                null, httpStatusCode.getMsg(),httpStatusCode.getCode(),expand,null);
-    }
-
-    /**
-     * <h4>错误</h4>
-     * @param errorCode 失败时,规定好给的提示
-     * @param msg  消息
-     * @return JSONResult对象
-     */
-    public static <T> JSONResult<T> fail(Integer errorCode, String msg) {
-        return new JSONResult<T>(HttpStatusCode.FAIL.getCode(),
-                null,msg,errorCode,null,null);
-    }
-
-    /**
-     * <h4>错误</h4>
-     * @param errorCode 失败时,规定好给的提示
-     * @param expand 扩展对象
-     * @param msg    消息
-     * @return JSONResult对象
-     */
-    public static <T> JSONResult<T> fail(Integer errorCode, Object expand, String msg) {
-        return new JSONResult<T>(HttpStatusCode.FAIL.getCode(),
-                null,msg,errorCode, expand, null);
+        return new JSONResult<T>
+                (HttpStatusCode.FAIL_500.getCode(), msg,null,null,null,null);
     }
 
     /**
      * <h4>错误</h4>
      * @param code 状态码
      * @param msg 消息
+     * @param <T> 申明泛型数据类型
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult<T> fail(Integer code,String msg) {
+        return new JSONResult<T>(code, msg,null,null,code,null);
+    }
+
+    /**
+     * <h4>错误</h4>
+     * @param hsc 状态码对象
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult fail(HttpStatusCode hsc) {
+        return new JSONResult<T>(hsc.getCode(), hsc.getMsg(), null, null, hsc.getCode(), null);
+    }
+
+    /**
+     * <h4>错误</h4>
+     * @param hsc 状态码对象
+     * @param data 错误后要带回的数据
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult fail(HttpStatusCode hsc,T data) {
+        return new JSONResult<T>(hsc.getCode(), hsc.getMsg(), data, null, hsc.getCode(), null);
+    }
+
+    /**
+     * <h4>错误</h4>
+     * @param code 状态码
+     * @param data 错误后要带回的数据
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult fail(Integer code,T data) {
+        return new JSONResult<T>(code, null, data, null, code, null);
+    }
+
+    /**
+     * <h4>错误</h4>
+     * @param code 状态码
+     * @param msg 消息
+     * @param data 错误后要带回的数据
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult fail(Integer code,String msg,T data) {
+        return new JSONResult<T>(code, msg, data, null, code, null);
+    }
+
+    /**
+     * <h4>错误</h4>
+     * @param code 状态码
+     * @param msg 消息
+     * @param data 错误后要带回的数据
+     * @param httpStatusCode response 状态码
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult fail(Integer code,String msg,T data,Integer httpStatusCode) {
+        return new JSONResult<T>(code, msg, data, null, code, httpStatusCode);
+    }
+
+    /**
+     * <h4>错误</h4>
+     * @param code 状态码
+     * @param msg 消息
+     * @param data 错误后要带回的数据
      * @param errorCode 自定义状态码
      * @param expand    扩展自定对象
      * @param httpStatusCode response 状态码
      * @return JSONResult对象
      * @param <T> T 对象
      */
-    public static <T> JSONResult<T> fail(Integer code, String msg, Integer errorCode, Object expand, Integer httpStatusCode) {
-        return new JSONResult<T>(code, null, msg, errorCode, expand, httpStatusCode);
+    public static <T> JSONResult<T> fail(Integer code, String msg,T data, Integer errorCode, Object expand, Integer httpStatusCode) {
+        return new JSONResult<T>(code, msg, data, expand, errorCode, httpStatusCode);
+    }
+
+    // -----------------------------------------> fail end <-----------------------------------------
+
+    // -----------------------------------------> error begin <-----------------------------------------
+    /**
+     * <h4>异常</h4>
+     * @param msg 消息
+     * @param <T> 申明泛型数据类型
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult<T> error(String msg) {
+        return new JSONResult<T>(HttpStatusCode.ERROR.getCode(), msg, null, null,null,null);
     }
 
     /**
      * <h4>异常</h4>
-     * @param errorCode 异常时,规定好给的提示
-     * @param msg    消息
+     * @param code 状态码
+     * @param msg 消息
      * @param <T> 申明泛型数据类型
      * @return JSONResult对象
      */
-    public static <T> JSONResult<T> error(Integer errorCode,String msg) {
-        return new JSONResult<T>(HttpStatusCode.ERROR.getCode(),
-                null, msg, errorCode, null, null);
+    public static <T> JSONResult<T> error(Integer code,String msg) {
+        return new JSONResult<T>(code, msg, null, null, code, null);
     }
 
     /**
      * <h4>异常</h4>
-     * @param httpStatusCode 状态码枚举,规定好给的提示
-     * @param <T> 申明泛型数据类型
+     * @param hsc 状态码对象
+     * @param data 错误后要带回的数据
      * @return JSONResult对象
      */
-    public static <T> JSONResult<T> error(HttpStatusCode httpStatusCode) {
-        return new JSONResult<T>(HttpStatusCode.ERROR.getCode(),
-                null, httpStatusCode.getMsg(), httpStatusCode.getCode(), null, null);
+    public static <T> JSONResult error(HttpStatusCode hsc,T data) {
+        return new JSONResult<T>(hsc.getCode(), hsc.getMsg(), data, null, hsc.getCode(), null);
     }
 
     /**
      * <h4>异常</h4>
-     * @param errorCode 异常时,规定好给的提示
-     * @param msg    消息
-     * @param expand 扩展对象
-     * @param <T> 申明泛型数据类型
+     * @param code 状态码
+     * @param data 错误后要带回的数据
      * @return JSONResult对象
      */
-    public static <T> JSONResult<T> error(Integer errorCode,String msg,Object expand) {
-        return new JSONResult<T>(HttpStatusCode.ERROR.getCode(),
-                null, msg, errorCode, expand, null);
+    public static <T> JSONResult error(Integer code,T data) {
+        return new JSONResult<T>(code, null, data, null, code, null);
     }
 
+    /**
+     * <h4>异常</h4>
+     * @param code 状态码
+     * @param msg 消息
+     * @param data 错误后要带回的数据
+     * @return JSONResult对象
+     */
+    public static <T> JSONResult error(Integer code,String msg,T data) {
+        return new JSONResult<T>(code, msg, data, null, code, null);
+    }
+
+    /**
+     * <h4>异常</h4>
+     * @param code 状态码
+     * @param msg 消息
+     * @param data 错误后要带回的数据
+     * @param errorCode 自定义状态码
+     * @param expand    扩展自定对象
+     * @param httpStatusCode response 状态码
+     * @return JSONResult对象
+     * @param <T> T 对象
+     */
+    public static <T> JSONResult<T> error(Integer code, String msg,T data, Integer errorCode, Object expand, Integer httpStatusCode) {
+        return new JSONResult<T>(code, msg, data, expand, errorCode, httpStatusCode);
+    }
+    // -----------------------------------------> error end <-----------------------------------------
 
     // ====================================== external method end ====================================== //
 
@@ -326,8 +364,8 @@ public final  class JSONResult<T> implements Serializable {
     public JSONResult() { }
 
     /** 构造函数 */
-    private JSONResult(Integer code,T data,String msg,
-                       Integer errorCode,Object expand,Integer httpStatusCode){
+    private JSONResult(Integer code,String msg,T data,
+                       Object expand,Integer errorCode,Integer httpStatusCode){
         this.code = code;
         if(null != data){ this.data = data;}
         if(null != msg){  this.msg = msg;}

@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
-	public CommentParam create(CommentParam param) {
+	public CommentParam add(CommentParam param) {
 		Comment _comment = param.convert();
 		if ( commentMapper.insertSelective(_comment)> 0) {
 			commentMapper.updateFnumInt(param.getFId());

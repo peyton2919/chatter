@@ -3,11 +3,9 @@ package cn.peyton.children.chatter.param;
 import cn.peyton.children.chatter.pojo.User;
 import cn.peyton.children.chatter.pojo.UserBind;
 import cn.peyton.children.chatter.pojo.UserInfo;
+import cn.peyton.core.toolkit.DateTools;
 import cn.peyton.core.toolkit.base.Lists;
-import cn.peyton.core.validator.constraints.Email;
-import cn.peyton.core.validator.constraints.Length;
-import cn.peyton.core.validator.constraints.NotBlank;
-import cn.peyton.core.validator.constraints.Phone;
+import cn.peyton.core.validator.constraints.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,6 +33,8 @@ public class UserParam implements Serializable {
 	@Length(min = 6,max=30,message = "用户密码长度为6~30个字符！")
 	private String password;
 	/** 确认密码  */
+	@NotBlank(message = "确认密码不能为空！")
+	@Alike(fieldName = "password")
 	private String confirmPwd;
 	/** 手机  */
 	@Phone
@@ -45,7 +45,7 @@ public class UserParam implements Serializable {
 	/** 0 禁用 1启用  */
 	private Integer status;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	// 附加
 	/** 用户登录类型 */
@@ -186,14 +186,14 @@ public class UserParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -269,7 +269,7 @@ public class UserParam implements Serializable {
 		user.setPhone(phone);
 		user.setEmail(email);
 		user.setStatus(status);
-		user.setCreateTime(createTime);
+		user.setCreateTime(DateTools.dateToTimestamp(createTime));
 		user.setUserInfo((null != userInfoParam) ? userInfoParam.convert() : new UserInfo());
 		if (null != userBindParams) {
 			for (UserBindParam _param : userBindParams) {
@@ -297,7 +297,7 @@ public class UserParam implements Serializable {
 		this.setPhone(user.getPhone());
 		this.setEmail(user.getEmail());
 		this.setStatus(user.getStatus());
-		this.setCreateTime(user.getCreateTime());
+		this.setCreateTime(DateTools.timestampToStrDate(user.getCreateTime()));
 		this.setUserInfoParam(new UserInfoParam().compat(user.getUserInfo()));
 		if (null != user.getUserBinds()) {
 			for (UserBind _ub : user.getUserBinds()) {

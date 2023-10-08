@@ -38,6 +38,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ValidationException.class)
     public JSONResult exceptionHandle(ValidationException e, HttpServletResponse response) {
-        return JSONResult.fail(HttpStatusCode.FAIL);
+        return JSONResult.fail(HttpStatusCode.FAIL.getMsg());
     }
 }

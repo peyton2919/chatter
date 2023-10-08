@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Images;
+import cn.peyton.core.inf.BaseConvertBo;
 
 import java.io.Serializable;
 /**
@@ -19,7 +20,7 @@ public class ImagesParam implements Serializable {
 	/** 链接地址  */
 	private String url;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 	/** 用户编号  */
 	private Integer userId;
 
@@ -61,14 +62,14 @@ public class ImagesParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -97,7 +98,7 @@ public class ImagesParam implements Serializable {
 		Images images = new Images(); 
 		images.setId(id);
 		images.setUrl(url);
-		images.setCreateTime(createTime);
+		images.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		images.setUserId(userId);
 		return images;
 	} 
@@ -114,7 +115,7 @@ public class ImagesParam implements Serializable {
 		}
 		this.setId(images.getId());
 		this.setUrl(images.getUrl());
-		this.setCreateTime(images.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(images.getCreateTime()));
 		this.setUserId(images.getUserId());
 		return this;
 	} 

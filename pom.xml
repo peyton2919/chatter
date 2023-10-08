@@ -64,7 +64,21 @@
             <version>3.4.1</version>
         </dependency>
 
+        <!-- 图片处理工具  -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.14</version>
+        </dependency>
+
         <!--  必选项 支持 core 结束 -->
+
+        <!--  阿里大于{短信}  -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.5.16</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,6 +1,8 @@
 package cn.peyton.core.toolkit;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -170,9 +172,9 @@ public final class HttpServletRequestTools implements Serializable {
      * @return 返回 true 表示 基础类型 ; false 表示 对象
      */
     public static boolean isBaseType(String typeName) {
-        String baseType ="int,java.lang.Integer,float,java.lang.Float,java.lang.Character" +
-                "long,java.lang.Long,java.lang.String,double,java.lang.Double," +
-                "short,java.lang.Short,char,byte,boolean,java.lang.Boolean,java.util.Date";
+        String baseType ="int,java.lang.Integer,float,java.lang.Float,java.lang.Character"
+                + "long,java.lang.Long,java.lang.String,double,java.lang.Double,"
+                + "short,java.lang.Short,char,byte,boolean,java.lang.Boolean,java.util.Date";
         return baseType.contains(typeName);
 
     }
@@ -196,7 +198,19 @@ public final class HttpServletRequestTools implements Serializable {
         if (null == typeName || "".equals(typeName)) {
             return false;
         }
-        return typeName.contains("javax") || typeName.contains("org.springframework");
+        return typeName.contains("jakarta") || typeName.contains("org.springframework");
+    }
+
+    /**
+     * <h4>获取当前的request</h4>
+     * <pre>
+     *      必需引用 spring-web.jar 包
+     * </pre>
+     * @return
+     */
+    public static HttpServletRequest getRequest() {
+        ServletRequestAttributes _sra = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        return  _sra.getRequest();
     }
 
 }

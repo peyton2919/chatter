@@ -1,7 +1,11 @@
 package cn.peyton.children.chatter.controller.app.android.v1;
 
+import cn.peyton.children.chatter.param.PostClassParam;
 import cn.peyton.children.chatter.service.PostClassService;
+import cn.peyton.core.json.JSONResult;
+import cn.peyton.core.validator.Valid;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,5 +22,11 @@ public class PostClassController {
 
 	@Resource
 	private PostClassService postClassService;
+
+	@Valid
+	@PostMapping("/add1")
+	public JSONResult add(PostClassParam param) {
+		return JSONResult.success(postClassService.add(param));
+	}
 
 }

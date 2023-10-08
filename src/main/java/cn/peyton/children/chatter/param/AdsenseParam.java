@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.Adsense;
+import cn.peyton.core.inf.BaseConvertBo;
 
 import java.io.Serializable;
 /**
@@ -23,7 +24,7 @@ public class AdsenseParam implements Serializable {
 	/** 0 动态轮播图 1个人中心  */
 	private Integer type;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -91,14 +92,14 @@ public class AdsenseParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -115,7 +116,7 @@ public class AdsenseParam implements Serializable {
 		adsense.setSrc(src);
 		adsense.setUrl(url);
 		adsense.setType(type);
-		adsense.setCreateTime(createTime);
+		adsense.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return adsense;
 	} 
 	/**
@@ -133,7 +134,7 @@ public class AdsenseParam implements Serializable {
 		this.setSrc(adsense.getSrc());
 		this.setUrl(adsense.getUrl());
 		this.setType(adsense.getType());
-		this.setCreateTime(adsense.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(adsense.getCreateTime()));
 		return this;
 	} 
 }

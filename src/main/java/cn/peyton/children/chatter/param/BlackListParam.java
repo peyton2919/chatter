@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.BlackList;
+import cn.peyton.core.inf.BaseConvertBo;
 
 import java.io.Serializable;
 /**
@@ -21,7 +22,7 @@ public class BlackListParam implements Serializable {
 	/** 用户id  */
 	private Integer userId;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -75,14 +76,14 @@ public class BlackListParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -98,7 +99,7 @@ public class BlackListParam implements Serializable {
 		blackList.setId(id);
 		blackList.setBlackId(blackId);
 		blackList.setUserId(userId);
-		blackList.setCreateTime(createTime);
+		blackList.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return blackList;
 	} 
 	/**
@@ -115,7 +116,7 @@ public class BlackListParam implements Serializable {
 		this.setId(blackList.getId());
 		this.setBlackId(blackList.getBlackId());
 		this.setUserId(blackList.getUserId());
-		this.setCreateTime(blackList.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(blackList.getCreateTime()));
 		return this;
 	} 
 }

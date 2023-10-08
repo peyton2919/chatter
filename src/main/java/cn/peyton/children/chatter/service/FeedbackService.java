@@ -20,7 +20,7 @@ public interface FeedbackService {
      * @param param 反馈对象
      * @return true 表示 添加成功; false 表示 取反
      */
-    boolean create(FeedbackParam param);
+    boolean add(FeedbackParam param);
 
     /**
      * <h4>获取用户反馈列表</h4>

@@ -2,6 +2,7 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.PostImage;
+import cn.peyton.core.inf.BaseConvertBo;
 
 import java.io.Serializable;
 /**
@@ -21,7 +22,7 @@ public class PostImageParam implements Serializable {
 	/** 图片id  */
 	private Integer imageId;
 	/** 创建时间  */
-	private Integer createTime;
+	private String createTime;
 
 	//================================== Constructor =======================================//
 
@@ -75,14 +76,14 @@ public class PostImageParam implements Serializable {
 	/** 
 	 * @param createTime 创建时间 
 	 */ 
-	public void setCreateTime(Integer createTime){
+	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
 	/** 
 	 * @return 创建时间 
 	 */ 
-	public Integer getCreateTime(){
+	public String getCreateTime(){
 		return createTime;
 	}
 
@@ -98,7 +99,7 @@ public class PostImageParam implements Serializable {
 		postImage.setId(id);
 		postImage.setPostId(postId);
 		postImage.setImageId(imageId);
-		postImage.setCreateTime(createTime);
+		postImage.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return postImage;
 	} 
 	/**
@@ -115,7 +116,7 @@ public class PostImageParam implements Serializable {
 		this.setId(postImage.getId());
 		this.setPostId(postImage.getPostId());
 		this.setImageId(postImage.getImageId());
-		this.setCreateTime(postImage.getCreateTime());
+		this.setCreateTime(BaseConvertBo.convertIntToStr(postImage.getCreateTime()));
 		return this;
 	} 
 }

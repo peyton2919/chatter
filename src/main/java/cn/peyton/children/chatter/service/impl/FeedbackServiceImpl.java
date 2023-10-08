@@ -1,5 +1,6 @@
 package cn.peyton.children.chatter.service.impl;
 
+import cn.peyton.children.chatter.aop.timestamp.Timestamp;
 import cn.peyton.children.chatter.bo.FeedbackBo;
 import cn.peyton.children.chatter.mapper.FeedbackMapper;
 import cn.peyton.children.chatter.param.FeedbackParam;
@@ -24,8 +25,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 	@Resource
 	private FeedbackMapper feedbackMapper;
 
+	@Timestamp
 	@Override
-	public boolean create(FeedbackParam param) {
+	public boolean add(FeedbackParam param) {
 		return feedbackMapper.insertSelective(param.convert()) > 0 ? true : false;
 	}
 

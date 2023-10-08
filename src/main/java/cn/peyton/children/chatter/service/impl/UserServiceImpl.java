@@ -1,5 +1,6 @@
 package cn.peyton.children.chatter.service.impl;
 
+import cn.peyton.children.chatter.aop.timestamp.Timestamp;
 import cn.peyton.children.chatter.bo.UserBo;
 import cn.peyton.children.chatter.mapper.UserMapper;
 import cn.peyton.children.chatter.param.UserParam;
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
 		return BaseCipher.encoderMD5(pw,KEY_PASSWORD_ENCODER);
 	}
 
+	@Timestamp
 	@Override
 	public UserParam reg(UserParam param) {
 		// 密码加密

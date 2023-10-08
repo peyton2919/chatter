@@ -2,7 +2,8 @@ package cn.peyton.children.chatter.param;
 
 
 import cn.peyton.children.chatter.pojo.PostClass;
-import cn.peyton.core.toolkit.DateTools;
+import cn.peyton.core.inf.BaseConvertBo;
+import cn.peyton.core.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 
@@ -19,6 +20,7 @@ public class PostClassParam implements Serializable {
 	/** 编号  */
 	private Integer id;
 	/** 类型名称  */
+	@NotBlank(message = "名称不能为空")
 	private String className;
 	/** 0 禁用 1启用  */
 	private Integer status;
@@ -101,7 +103,7 @@ public class PostClassParam implements Serializable {
 		postClass.setId(id);
 		postClass.setClassName(className);
 		postClass.setStatus(status);
-		postClass.setCreateTime(DateTools.dateToTimestamp(createTime));
+		postClass.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return postClass;
 	} 
 	/**
@@ -118,7 +120,7 @@ public class PostClassParam implements Serializable {
 		this.setId(postClass.getId());
 		this.setClassName(postClass.getClassName());
 		this.setStatus(postClass.getStatus());
-		this.setCreateTime(DateTools.timestampToStrDate(postClass.getCreateTime()));
+		this.setCreateTime(BaseConvertBo.convertIntToStr(postClass.getCreateTime()));
 		return this;
 	}
 

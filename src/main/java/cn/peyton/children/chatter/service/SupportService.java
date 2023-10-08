@@ -25,7 +25,7 @@ public interface SupportService {
      * <h4>创建顶踩</h4>
      * @return true 表示 创建成功  false 表示 取反
      */
-    SupportParam create(SupportParam param);
+    SupportParam add(SupportParam param);
 
     /**
      * <h4>更新顶踩</h4>

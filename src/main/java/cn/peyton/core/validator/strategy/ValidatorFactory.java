@@ -85,6 +85,8 @@ public final class ValidatorFactory implements Serializable {
             comparer = new TelephoneStrategy();
         }else if (annotation instanceof Time) {
             comparer = new TimeStrategy();
+        } else if (annotation instanceof Alike) {
+            comparer = new AlikeStrategy();
         }
         if (null != comparer) {
             comparer.compare(annotation, name, type, value, map);

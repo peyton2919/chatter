@@ -50,14 +50,14 @@ public class TokenInterceptor implements HandlerInterceptor {
                 response.setStatus(200);
 
                 HttpServletResponseTools.returnJson(
-                        response, JsonMapper.toJSon(JSONResult.error(HttpStatusCode.ERR_ILLEGAL_TOKEN)));
+                        response, JsonMapper.toJSon(JSONResult.error(HttpStatusCode.ERR_ILLEGAL_TOKEN.getMsg())));
                 return false;
             } else {
                 if (!tokenTools.verify(accessToken)) {
                     //
                     response.setStatus(200);
                     HttpServletResponseTools.returnJson(
-                            response, JsonMapper.toJSon(JSONResult.fail(HttpStatusCode.ERR_TOKEN_EXPIRE)));
+                            response, JsonMapper.toJSon(JSONResult.fail(HttpStatusCode.ERR_TOKEN_EXPIRE.getMsg())));
                     return false;
                 }
             }
