@@ -28,7 +28,7 @@ public @interface Length {
     /**
      * @return 值元素长度必须大于或等于
      */
-    long min() default 0;
+    long min() default 1;
     /**
      * @return 值元素长度必须小于或等于
      */

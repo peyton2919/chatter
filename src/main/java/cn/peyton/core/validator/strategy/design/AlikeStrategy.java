@@ -1,5 +1,6 @@
 package cn.peyton.core.validator.strategy.design;
 
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.validator.constraints.Alike;
 import cn.peyton.core.validator.strategy.AbstractValidator;
 
@@ -31,6 +32,7 @@ public class AlikeStrategy  extends AbstractValidator {
             pwField = clazz.getDeclaredField(_cName);
             cpwField = clazz.getDeclaredField(name);
         } catch (NoSuchFieldException e) {
+            LogTools.error(e.getMessage());
             map.put(name, "[异常] 名称获取错误。");
         }
         pwField.setAccessible(true);
@@ -39,6 +41,7 @@ public class AlikeStrategy  extends AbstractValidator {
             _pw = (String) pwField.get(value);
             _cpw = (String) cpwField.get(value);
         } catch (IllegalAccessException e) {
+            LogTools.error(e.getMessage());
             map.put(name, "[异常] 属性值获取错误。");
         }
         if(null == _cpw || !(_cpw).equals(_pw)) {

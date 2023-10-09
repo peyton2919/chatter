@@ -5,6 +5,7 @@ import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.toolkit.DateTools;
 import cn.peyton.core.toolkit.HttpServletRequestTools;
 import cn.peyton.core.toolkit.HttpServletResponseTools;
+import cn.peyton.core.toolkit.LogTools;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +27,11 @@ import java.util.Date;
  * <h4>aop 创建 10位的时间戳 切面类</h4>
  * <pre>
  *     处理流程:
- *     1. 数据库 创建为 int(11) 时间 字段;
+ *     1. 数据库 创建为 int(10) 时间 字段;
  *     2. 对象有 pojo (对应数据层)与param（对应视图层)：
  *          pojo 对象 时间字段为 int 类型;
  *          param 对象 时间字段为 String 类型;
- *     3. 切面 注解{@Timestamp}在 service.impl 下的方法 添加或更新 上;
+ *     3. 切面 注解{@AutoWriteTimestamp}在 service.impl 下的方法 添加add或更新update 上;
  *     4. @Timestamp 下 value 值为要创建的时间戳 的字段;
  * </pre>
  * <pre>
@@ -44,23 +45,20 @@ import java.util.Date;
 @Aspect
 @Component
 @Slf4j
-public class TimestampAspect {
+public class AutoWriteTimestampAspect {
 
-    @Pointcut("@annotation(cn.peyton.children.chatter.aop.timestamp.Timestamp)")
+    @Pointcut("@annotation(cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp)")
     public void timePointCut() {  }
 
     @Around("timePointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
-        HttpServletResponse response = HttpServletResponseTools.getResponse();
-        HttpServletRequest request = HttpServletRequestTools.getRequest();
-
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Annotation[] _annos = method.getAnnotations();
         String fieldName = null;
         for (Annotation _anno : _annos) {
-            if (_anno instanceof Timestamp){
-                Timestamp _tt = (Timestamp) _anno;
+            if (_anno instanceof AutoWriteTimestamp){
+                AutoWriteTimestamp _tt = (AutoWriteTimestamp) _anno;
                 if (null == _tt.value() || "".equals(_tt.value())) {
                     fieldName = "createTime";
                 }
@@ -83,7 +81,7 @@ public class TimestampAspect {
             try {
                 field.set(_args[0], DateTools.timestampToStrDate(new Date()));
             } catch (IllegalAccessException e) {
-                log.error("cn.peyton.children.chatter.aop.timestamp.TimestampAspect -> 异常 【IllegalAccessException】");
+                LogTools.error(e.getMessage());
                 return JSONResult.fail(400999, "设置当前对象{" + _name + "}的{" + fieldName + "}属性值错误");
             }
         }
@@ -103,8 +101,8 @@ public class TimestampAspect {
         Annotation[] _annos = method.getAnnotations();
         String fieldName = null;
         for (Annotation _anno : _annos) {
-            if (_anno instanceof Timestamp){
-                Timestamp _tt = (Timestamp) _anno;
+            if (_anno instanceof AutoWriteTimestamp){
+                AutoWriteTimestamp _tt = (AutoWriteTimestamp) _anno;
                 if (null == _tt.value() || "".equals(_tt.value())) {
                     fieldName = "createTime";
                 }

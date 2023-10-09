@@ -64,4 +64,11 @@ public interface PostClassMapper {
 	 * @return 文章分类对象集合
 	 */
 	List<PostClass> finds();
+
+	/**
+	 * <ht>判断重名</ht>
+	 * @param className 分类名称
+	 * @return 重名 返回1
+	 */
+	int isRename(String className);
 }

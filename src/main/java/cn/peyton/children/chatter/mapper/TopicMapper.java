@@ -61,6 +61,14 @@ public interface TopicMapper {
 	// ==================================== new create method ==================================== //
 
 	/**
+	 * <h4>判断 重名</h4>
+	 * @param title 标题
+	 * @param classId 话题分类id
+	 * @return 重名返回 true
+	 */
+	int isRename(String title, Integer classId);
+
+	/**
 	 * <h4>获取热门话题</h4>
 	 * @return
 	 */

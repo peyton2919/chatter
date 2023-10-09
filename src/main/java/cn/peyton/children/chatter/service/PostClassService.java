@@ -21,7 +21,19 @@ public interface PostClassService {
      */
     List<PostClassParam> finds();
 
-    int add(PostClassParam param);
+    /**
+     * <h4>添加帖子分类</h4>
+     * @param param 帖子分类对象
+     * @return 添加成功 true
+     */
+    boolean add(PostClassParam param);
+
+    /**
+     * <ht>判断第一名</ht>
+     * @param className 分类名称
+     * @return 重名返回 true
+     */
+    boolean isRename(String className);
 
     PostClassParam findById(Integer id);
 

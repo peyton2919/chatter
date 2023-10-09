@@ -41,10 +41,11 @@ public class TokenInterceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
         Token methodAnnotation = method.getAnnotation(Token.class);
 
-        TokenTools tokenTools = new TokenTools();
+
         // 有 @Token 注解，需要认证
         if (null != methodAnnotation) {
             response.setCharacterEncoding("UTF-8");
+            TokenTools tokenTools = new TokenTools();
             String accessToken = request.getHeader(TokenTools.Property.ACCESS_TOKEN);
             if (null == accessToken) {
                 response.setStatus(200);

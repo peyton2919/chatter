@@ -1,5 +1,6 @@
 package cn.peyton.core.img;
 
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.toolkit.UUIDTools;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -79,7 +80,7 @@ public final class MultipartFileImageOperation implements Serializable {
 			ImageIO.write(ImageRotateUtil.rotate(ImageIO.read(file), angle),
 					FORMAT_JPG, file);
 		} catch (IOException e) {
-			e.printStackTrace();
+			LogTools.error(e.getMessage());
 		}
 		return file.getName();
 	}

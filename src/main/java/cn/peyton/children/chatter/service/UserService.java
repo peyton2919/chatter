@@ -39,11 +39,13 @@ public interface UserService {
 
     /**
      * <h4>用户账户 登录 </h4>
+     *
      * @param username 用户名
      * @param password 密码
+     * @param loginType 登录类型
      * @return 用户传参对象
      */
-    UserParam login(String username, String password);
+    UserParam login(String username, String password, String loginType);
 
     /**
      * <h>判断用户是否被禁用</h>
@@ -56,10 +58,17 @@ public interface UserService {
 
     /**
      * <h4>判断用户是否重命名</h4>
-     * @param username 用户名称
+     * @param userParam 用户名称
      * @return true 表示 重名 ; false 表示 没重名;
      */
-    boolean isRename(String username);
+    boolean isRename(UserParam userParam);
+
+    /**
+     * <h4>判断用户是否重命名</h4>
+     * @param userParam 关键字
+     * @return 为null 表示 不重, 不为 null 表示 重复并将 错误信息带回
+     */
+    String isSimpleRename(UserParam userParam);
 
     /**
      * <h4>判断 用户密码</h4>
@@ -68,6 +77,8 @@ public interface UserService {
      * @return true 表示 密码正确; false 表示 取反;
      */
     boolean isPassword(String username, String password);
+
+
 
     /**
      * <h4>验证第三方登录是否绑定手机</h4>

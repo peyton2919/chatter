@@ -17,6 +17,21 @@ import java.util.List;
 public interface TopicService {
 
     /**
+     * <h4>添加话题</h4>
+     * @param param 话题对象
+     * @return
+     */
+    boolean add(TopicParam param);
+
+    /**
+     * <h4>判断 重名</h4>
+     * @param title 标题
+     * @param classId 话题分类id
+     * @return 重名返回 true
+     */
+    boolean isRename(String title, Integer classId);
+
+    /**
      * <h4>获取指定话题分类下的话题列表</h4>
      * @param topicClassId 话题分类编号
      * @param page 分页对象

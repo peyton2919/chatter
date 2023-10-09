@@ -1,5 +1,6 @@
 package cn.peyton.core.img;
 
+import cn.peyton.core.toolkit.LogTools;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -59,7 +60,9 @@ public final class ImageOperation {
             BufferedImage bi = reader.read(0, param);
             // 保存新图片
             ImageIO.write(bi, writeImageFormat, new File(toPath));
-        } finally {
+        } catch (Exception e){
+            LogTools.error(e.getMessage());
+        }finally {
             if (fis != null) {
                 fis.close();
             }
@@ -87,7 +90,7 @@ public final class ImageOperation {
             BufferedImage src = ImageIO.read(file);
             insideReduceImageEqualProportion(src, toImagePath, widthRatio, heightRatio);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -100,12 +103,11 @@ public final class ImageOperation {
      * @param heightRatio   高度缩小比例
      * @throws IOException
      */
-    public void reduceImageByRatio(MultipartFile multipartFile, String toImagePath, int widthRatio, int heightRatio)
-            throws IOException {
+    public void reduceImageByRatio(MultipartFile multipartFile, String toImagePath, int widthRatio, int heightRatio){
         try {
             insideReduceImageEqualProportion(ImageIO.read(multipartFile.getInputStream()), toImagePath, widthRatio, heightRatio);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -126,7 +128,7 @@ public final class ImageOperation {
             BufferedImage src = ImageIO.read(file);
             insideReduceImageEqualProportion(src, toImagePath, ratio, ratio);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -142,7 +144,7 @@ public final class ImageOperation {
         try {
             insideReduceImageEqualProportion(ImageIO.read(multipartFile.getInputStream()), toImagePath, ratio, ratio);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -194,7 +196,7 @@ public final class ImageOperation {
             out = new FileOutputStream(toImagePath);
             ImageIO.write(tag, "JPEG", out);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (out != null) {
                 out.close();
@@ -226,7 +228,7 @@ public final class ImageOperation {
             out = new FileOutputStream(toImagePath);
             ImageIO.write(tag, "JPEG", out);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (out != null) {
                 out.close();
@@ -257,7 +259,7 @@ public final class ImageOperation {
             out = new FileOutputStream(toImagePath);
             ImageIO.write(tag, "JPEG", out);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (out != null) {
                 out.close();
@@ -306,7 +308,7 @@ public final class ImageOperation {
             // 写图片
             ImageIO.write(imageNew, imageFormat, outFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -359,7 +361,7 @@ public final class ImageOperation {
             // 写图片
             ImageIO.write(imageNew, type, outFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
             return false;
         }
         return true;
@@ -406,7 +408,7 @@ public final class ImageOperation {
             // 写图片
             ImageIO.write(imageNew, imageFormat, outFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -459,7 +461,7 @@ public final class ImageOperation {
             // 写图片
             ImageIO.write(imageNew, type, outFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
             return false;
         }
         return true;
@@ -490,7 +492,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -542,7 +544,7 @@ public final class ImageOperation {
             // 写图片
             ImageIO.write(image, imageFormat, os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -579,7 +581,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -616,7 +618,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -653,7 +655,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -690,7 +692,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -728,7 +730,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -765,7 +767,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -803,7 +805,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -840,7 +842,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -878,7 +880,7 @@ public final class ImageOperation {
             os = new FileOutputStream(toPath);
             ImageIO.write(image, "JPEG", os);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (os != null) {
                 os.close();
@@ -907,7 +909,7 @@ public final class ImageOperation {
             src = op.filter(src, null);
             ImageIO.write(src, imageFormat, new File(toPath));
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -949,7 +951,7 @@ public final class ImageOperation {
             fos = new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -990,7 +992,7 @@ public final class ImageOperation {
             fos = new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -1025,7 +1027,7 @@ public final class ImageOperation {
             fos = new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -1066,7 +1068,7 @@ public final class ImageOperation {
             fos = new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -1100,7 +1102,7 @@ public final class ImageOperation {
             fos = new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -1135,7 +1137,7 @@ public final class ImageOperation {
             fos = new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -1184,7 +1186,7 @@ public final class ImageOperation {
             fos = new FileOutputStream(toPath);
             ImageIO.write(image, imageFormat, fos);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -1218,7 +1220,7 @@ public final class ImageOperation {
             ImageIO.write(image, imageFormat, fos);
             g2d.dispose();
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();
@@ -1256,7 +1258,7 @@ public final class ImageOperation {
             ImageIO.write(image, imageFormat, fos);
             g2d.dispose();
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         } finally {
             if (fos != null) {
                 fos.close();

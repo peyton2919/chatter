@@ -1,5 +1,6 @@
 package cn.peyton.core.img;
 
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.toolkit.UUIDTools;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,7 +51,7 @@ public final class ImageUtil implements Serializable {
         try {
             insideScale(ImageIO.read(new File(srcImageFile)), destImageFile, scale, flag);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -67,7 +68,7 @@ public final class ImageUtil implements Serializable {
         try {
             insideScale(ImageIO.read(multipartFile.getInputStream()), destImageFileAndName, scale, flag);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -84,7 +85,7 @@ public final class ImageUtil implements Serializable {
         try {
             insideScale(ImageIO.read(new File(srcImageFile)), destImageFile, height, width, bb);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -101,7 +102,7 @@ public final class ImageUtil implements Serializable {
         try {
             insideScale(ImageIO.read(multipartFile.getInputStream()), destImageFile, height, width, bb);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -140,7 +141,7 @@ public final class ImageUtil implements Serializable {
                 ImageIO.write(tag, IMAGE_TYPE_JPEG, new File(destImageFile));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -192,7 +193,7 @@ public final class ImageUtil implements Serializable {
                 ImageIO.write(tag, IMAGE_TYPE_JPEG, new File(destImageFile));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -229,7 +230,7 @@ public final class ImageUtil implements Serializable {
             // 输出到文件流
             ImageIO.write((BufferedImage) image, IMAGE_TYPE_JPEG, new File(destImageFile));
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -265,7 +266,7 @@ public final class ImageUtil implements Serializable {
             g.dispose();
             ImageIO.write((BufferedImage) image, IMAGE_TYPE_JPEG, new File(destImageFile));
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -301,7 +302,7 @@ public final class ImageUtil implements Serializable {
             g.dispose();
             ImageIO.write((BufferedImage) image, IMAGE_TYPE_JPEG, new File(destImageFile));
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
     }
 
@@ -508,7 +509,7 @@ public final class ImageUtil implements Serializable {
                 }
 
             } catch (IOException e) {
-                e.printStackTrace();
+                LogTools.error(e.getMessage());
             }
         }
 
@@ -544,7 +545,7 @@ public final class ImageUtil implements Serializable {
             ImageIO.write((BufferedImage) iTemp, "jpg", outFile);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
             throw new Exception(e);
         }
     }

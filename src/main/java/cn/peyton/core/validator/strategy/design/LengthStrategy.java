@@ -23,12 +23,16 @@ public class LengthStrategy extends AbstractValidator {
     public void compare(Annotation annotation, String name, String type, Object value, Map<String, String> map) {
         Length length = (Length) annotation;
         message = length.message();
-        long min = length.min() < 0 ? 0: length.min();
+        long min = length.min() < 1 ? 1: length.min();
         long max = length.max();
+        if (min > max) {
+            map.put(name, "设置值错误,max值 要大于 min值");
+            return;
+        }
         if (CheckedTools.isEmpty(value)) {
             long le = value.toString().trim().length();
             if (le < min || le > max) {
-                map.put(name, message);
+                map.put(name, message + "[取值范围:" + min + " ~ " + max + "之间]");
             }
         }
     }

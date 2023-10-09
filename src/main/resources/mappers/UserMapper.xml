@@ -131,16 +131,22 @@
 		where id = #{id} and status = 1
 	</select>
 
-	<select id="login" resultMap="ResultUserMaps" parameterType="java.lang.String">
+	<select id="login" resultMap="ResultUserMaps">
 		select
 			id,username,user_pic,phone,email,create_time
 		from user
 		where
-			username=#{username}
-		  and
-			password=#{password}
-		  and
-			status=1
+			<if test="loginType == 'account'">
+				username = #{username}
+			</if>
+			<if test="loginType == 'phone'">
+				phone = #{username}
+			</if>
+			<if test="loginType == 'email'">
+				email = #{username}
+			</if>
+			and password=#{password}
+			and status=1
 	</select>
 
 	<select id="findByPhone" resultMap="ResultMapUserInfo" parameterType="java.lang.String">
@@ -162,13 +168,29 @@
 		<if test="type == 'phone'">
 			and phone = #{keyword}
 		</if>
+		<if test="type == 'email'">
+			and email = #{keyword}
+		</if>
 	</select>
 
-	<select id="checkRename" resultType="java.lang.Integer">
+	<select id="checkRename" parameterType="cn.peyton.children.chatter.pojo.User" resultType="java.lang.Integer">
 		select
 			count(id)
 		from user
-		where username = #{username}
+		where 1!=1
+		<if test="username != null"> or username = #{username}</if>
+		<if test="phone != null"> or phone = #{phone}</if>
+		<if test="email != null"> or email = #{email}</if>
+	</select>
+
+	<select id="checkSimpleRename" resultType="java.lang.Integer">
+		select
+		count(id)
+		from user
+		where status = 1 and
+		<if test="'username' == type"> username = #{keyword}</if>
+		<if test="'phone' == type"> phone = #{keyword}</if>
+		<if test="'email' == type"> email = #{keyword}</if>
 	</select>
 
 	<select id="checkPassword" resultType="java.lang.Integer">

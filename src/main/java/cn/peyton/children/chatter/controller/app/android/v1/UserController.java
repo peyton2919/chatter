@@ -12,13 +12,17 @@ import cn.peyton.core.enums.PROPERTY;
 import cn.peyton.core.img.ImageProcessing;
 import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.page.PageQuery;
+import cn.peyton.core.token.Token;
 import cn.peyton.core.token.TokenTools;
 import cn.peyton.core.toolkit.AliSMSUtil;
 import cn.peyton.core.toolkit.FileTools;
 import cn.peyton.core.toolkit.MessageTools;
 import cn.peyton.core.validator.Regulation;
 import cn.peyton.core.validator.Valid;
-import cn.peyton.core.validator.constraints.*;
+import cn.peyton.core.validator.constraints.Length;
+import cn.peyton.core.validator.constraints.Min;
+import cn.peyton.core.validator.constraints.NotBlank;
+import cn.peyton.core.validator.constraints.Phone;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -133,13 +137,14 @@ public class UserController extends AppController {
 
 	// 用户注册
 	@PostMapping("/reg")
-	@Valid
+	@Valid(single = false)
 	public JSONResult<UserParam> reg(UserParam userParam) {
+
+		String _msg = userService.isSimpleRename(userParam);
 		//todo
 		//判断是否重名
-		if (userService.isRename(userParam.getUsername())) {
-
-			return JSONResult.fail(HttpStatusCode.ERR_USER_NAME_BE_USED);
+		if (null != _msg) {
+			return JSONResult.fail(HttpStatusCode.ERR_USER_NAME_BE_USED.getCode(),_msg);
 		}
 		UserParam _user = userService.reg(userParam);
 		return (null != _user) ?
@@ -150,6 +155,7 @@ public class UserController extends AppController {
 	// 手机登录
 	@PostMapping("/phonelogin")
 	@Valid
+	@Token
 	public JSONResult<UserParam> phoneLogin(@NotBlank(message = "手机号不能为空！") String phone,
 											@NotBlank(message = "验证码不能为空！") String code,
 											HttpServletRequest request) {
@@ -158,6 +164,8 @@ public class UserController extends AppController {
 
 			return JSONResult.fail(HttpStatusCode.ERR_USER_DISABLED);
 		}
+
+
 		//用手机号码 查找 为空表示该用户不存在
 		UserParam _param = userService.findByPhone(phone);
 		if (null == _param){
@@ -167,6 +175,7 @@ public class UserController extends AppController {
 		HttpSession session = request.getSession();
 		//获取手机号码
 		Object _phone = session.getAttribute(KEY_SESSION_PHONE);
+		//获取 验证码
 		//获取 验证码
 		Object _code = session.getAttribute(KEY_SESSION_PHONE_CODE);
 		// 重复 判断 从 session 中找到相应的数据
@@ -196,18 +205,26 @@ public class UserController extends AppController {
 	public JSONResult<UserParam> login(@NotBlank(message = "用户名不能为空！") String username,
 									   @NotBlank(message = "密码不能为空！") String password,
 									   HttpServletRequest request) {
-		// 判断是否可用 ,返回 true 表示应该手机被禁用
-		if (userService.isStatus(username, PROPERTY.ACCOUNT, PROPERTY.STATUS_0)) {
+		String _loginType;
 
+		if (Regulation.regex(Regulation.REGEX_EMAIL_ALL ,username)){
+			_loginType = PROPERTY.EMAIL;
+		} else if ((Regulation.regex(Regulation.REGEX_PHONE, username))) {
+			_loginType = PROPERTY.PHONE;
+		} else {
+			_loginType = PROPERTY.ACCOUNT;
+		}
+		// 判断是否可用 ,返回 true 表示应该手机被禁用
+		if (!userService.isStatus(username, _loginType, PROPERTY.STATUS_1)) {
 			return JSONResult.fail(HttpStatusCode.ERR_USER_DISABLED);
 		}
 		// 根据用户 和 密码 查找 ; 返回 为空表示 应该用户账号密码不正确 ;
-		UserParam _param = userService.login(username, password);
+		UserParam _param = userService.login(username, password,_loginType);
 		if (null == _param) {
 			return JSONResult.fail(HttpStatusCode.ERR_USERNAME_PASSWORD_WRONG);
 		}
 		//设置登录 类型
-		_param.setLoginType(PROPERTY.ACCOUNT);
+		_param.setLoginType(_loginType);
 		// token 工具类
 		TokenTools tokenTools = new TokenTools();
 		//创建 token
@@ -218,15 +235,19 @@ public class UserController extends AppController {
 		HttpSession session = request.getSession();
 		// 把 _param 对象存在 session 中
 		session.setAttribute(PROPERTY.SESSION_USER,_param);
-		return JSONResult.success(username + HttpStatusCode.SUCCESS_LOGIN.getMsg(), _param);
-
+		return JSONResult.success((username + HttpStatusCode.SUCCESS_LOGIN.getMsg()), _param);
 	}
 
-	// 第三方 登录
+	// 第三方 登录(APP 端)
 	@PostMapping("/otherlogin")
 	@Valid
 	public JSONResult<UserParam> otherLogin(UserBindParam param, HttpServletRequest request) {
 		//todo
+		// 1. 账号密码登录 和 第三方登录
+		// 2. 判断第三方登录是否绑定了手机号码
+		// 3. 查找 user 表, 判断 status
+		//
+
 		HttpSession _session = request.getSession();
 		// 第一次绑定,用户表没有记录,需要强制绑定手机号码;
 		UserBindParam _ubp = userBindService.findByOpenIdAndType(param.getOpenId(), param.getType());
@@ -260,6 +281,7 @@ public class UserController extends AppController {
 
 		return JSONResult.fail(HttpStatusCode.ERR_BINDING);
 	}
+
 	// 创建用户对象 方法
 	private void createUserParam(UserParam _userParam, UserBindParam param, HttpSession session) {
 		_userParam.setLoginType(PROPERTY.OTHER);

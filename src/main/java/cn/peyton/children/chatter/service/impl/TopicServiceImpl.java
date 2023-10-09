@@ -1,8 +1,10 @@
 package cn.peyton.children.chatter.service.impl;
 
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.TopicBo;
 import cn.peyton.children.chatter.mapper.TopicMapper;
 import cn.peyton.children.chatter.param.TopicParam;
+import cn.peyton.children.chatter.pojo.Topic;
 import cn.peyton.children.chatter.service.TopicService;
 import cn.peyton.core.page.PageQuery;
 import jakarta.annotation.Resource;
@@ -23,6 +25,23 @@ import java.util.List;
 public class TopicServiceImpl implements TopicService {
 	@Resource
 	private TopicMapper topicMapper;
+
+	@AutoWriteTimestamp
+	@Override
+	public boolean add(TopicParam param) {
+		Topic _topic = param.convert();
+		int result = topicMapper.insertSelective(_topic);
+		if (result > 0) {
+			param.compat(_topic);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isRename(String title, Integer classId) {
+		return topicMapper.isRename(title, classId) > 0 ? true : false;
+	}
 
 	@Override
 	public List<TopicParam> findByTopicId(int topicClassId, PageQuery page) {

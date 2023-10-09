@@ -1,9 +1,10 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.aop.timestamp.Timestamp;
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.PostClassBo;
 import cn.peyton.children.chatter.mapper.PostClassMapper;
 import cn.peyton.children.chatter.param.PostClassParam;
+import cn.peyton.children.chatter.pojo.PostClass;
 import cn.peyton.children.chatter.service.PostClassService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -30,13 +31,21 @@ public class PostClassServiceImpl implements PostClassService {
 		return new PostClassBo().adapter(postClassMapper.finds());
 	}
 
-	@Timestamp
+	@AutoWriteTimestamp
 	@Override
-	public int add(PostClassParam param) {
+	public boolean add(PostClassParam param) {
+		PostClass _pc =  param.convert();
+		int _result = postClassMapper.insertSelective(_pc);
+		if (_result > 0) {
+			param.compat(_pc);
+			return true;
+		}
+		return false;
+	}
 
-		System.out.println("执行[add]。。。。。。。");
-		//param.builder();
-		return postClassMapper.insertSelective(param.convert());
+	@Override
+	public boolean isRename(String className) {
+		return postClassMapper.isRename(className) > 0 ? true : false;
 	}
 
 	@Override

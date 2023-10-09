@@ -1,8 +1,10 @@
 package cn.peyton.children.chatter.service.impl;
 
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.TopicClassBo;
 import cn.peyton.children.chatter.mapper.TopicClassMapper;
 import cn.peyton.children.chatter.param.TopicClassParam;
+import cn.peyton.children.chatter.pojo.TopicClass;
 import cn.peyton.children.chatter.service.TopicClassService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -26,5 +28,22 @@ public class TopicClassServiceImpl implements TopicClassService {
 	@Override
 	public List<TopicClassParam> finds() {
 		return new TopicClassBo().adapter(topicClassMapper.finds());
+	}
+
+	@AutoWriteTimestamp
+	@Override
+	public boolean add(TopicClassParam param) {
+		TopicClass _tc = param.convert();
+		int _result = topicClassMapper.insertSelective(_tc);
+		if (_result > 0) {
+			param.compat(_tc);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean isRename(String className) {
+		return topicClassMapper.isRename(className) > 0 ? true : false;
 	}
 }

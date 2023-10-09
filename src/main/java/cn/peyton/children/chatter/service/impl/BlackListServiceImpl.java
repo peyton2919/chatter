@@ -1,6 +1,6 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.aop.timestamp.Timestamp;
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.mapper.BlackListMapper;
 import cn.peyton.children.chatter.param.BlackListParam;
 import cn.peyton.children.chatter.service.BlackListService;
@@ -21,7 +21,7 @@ public class BlackListServiceImpl implements BlackListService {
 	@Resource
 	private BlackListMapper blackListMapper;
 
-	@Timestamp
+	@AutoWriteTimestamp
 	@Override
 	public boolean add(BlackListParam param) {
 		return blackListMapper.insertSelective(param.convert()) > 0 ? true : false;

@@ -1,6 +1,7 @@
 package cn.peyton.core.img;
 
 
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.toolkit.UUIDTools;
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
 
 /**
  * <h3>图片处理类</h3>
@@ -41,7 +43,7 @@ public final class ImageProcessing  implements Serializable {
         try {
             file.transferTo(newFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
         return newFile;
     }
@@ -135,7 +137,7 @@ public final class ImageProcessing  implements Serializable {
                         .toFile(dest);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
         }
         // return relativeAddr;
         return realFileName + extension;

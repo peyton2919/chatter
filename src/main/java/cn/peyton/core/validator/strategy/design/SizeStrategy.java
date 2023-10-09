@@ -1,6 +1,7 @@
 package cn.peyton.core.validator.strategy.design;
 
 import cn.peyton.core.toolkit.CheckedTools;
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.validator.constraints.Size;
 import cn.peyton.core.validator.strategy.AbstractValidator;
 
@@ -24,6 +25,10 @@ public class SizeStrategy extends AbstractValidator {
         message = size.message();
         long min = size.min();
         long max = size.max();
+        if (min > max) {
+            map.put(name, "设置值错误,max值 要大于 min值");
+            return;
+        }
         if (CheckedTools.isEmpty(value)) {
             if (existInt(type)) {
                 map.put(name,"数据类型不正确");
@@ -32,11 +37,12 @@ public class SizeStrategy extends AbstractValidator {
             try {
                 Integer va = Integer.valueOf(value.toString());
                 if (va < min || va > max) {
-                    map.put(name, message);
+                    map.put(name, message + "[取值范围:" + min + " ~ " + max + "之间]");
                 }
 
             } catch (Exception e) {
                 map.put(name,"数据转换异常了!");
+                LogTools.error(e.getMessage());
             }
 
         }

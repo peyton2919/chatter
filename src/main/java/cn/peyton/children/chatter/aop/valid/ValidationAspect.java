@@ -46,24 +46,21 @@ public class ValidationAspect {
 
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
+        // 初始化数据
+        MethodSignature _signature = (MethodSignature) point.getSignature();
+        Method _method = _signature.getMethod();
+        Object[] _args = point.getArgs();
+        HttpServletResponse _response = HttpServletResponseTools.getResponse();
+        HttpServletRequest _request = HttpServletRequestTools.getRequest();
 
-        MethodSignature signature = (MethodSignature) point.getSignature();
-        Method _method = signature.getMethod();
-
-        HttpServletResponse response = HttpServletResponseTools.getResponse();
-        HttpServletRequest request = HttpServletRequestTools.getRequest();
-
-
-
-
-        //获取参数集合
+        // 获取参数类型集合
         Class<?>[] _parameterTypes = _method.getParameterTypes();
 
-        //判断 是否有参数; 如果 没有参数 就不做验证
-        if (!(null != _parameterTypes && _parameterTypes.length > 0)){ return true; }
+        // 判断 是否有参数; 如果 没有参数 就不做验证,程序继续
+        if (!(null != _parameterTypes && _parameterTypes.length > 0)){ return point.proceed(_args); }
 
-        //获取request [post,get] 请求参数 key value
-        Map<String, String[]> _parameterMap = request.getParameterMap();
+        // 获取request [post,get] 请求参数 key value
+        Map<String, String[]> _parameterValueMap = _request.getParameterMap();
 
         // 判断基础类型参数
         Parameter[] _parameters = _method.getParameters();
@@ -74,12 +71,12 @@ public class ValidationAspect {
             if (!HttpServletRequestTools.isBaseType(_filedType)) { continue; }
 
             String _filedName = _p.getName();
-            String[] _ps = _parameterMap.get(_filedName);
+            String[] _ps = _parameterValueMap.get(_filedName);
             if (null == _ps||"".equals(_ps[0])||"undefined".equals(_ps[0])) {
                 String _errMsg = "参数名称: [" + _filedName + "]不能为空值;";
-                //HttpServletResponseTools.returnJson(response
+                // HttpServletResponseTools.returnJson(response
                 //        , JsonMapper.toJSon(JSONResult.fail(HttpStatusCode.FAIL.getCode(), _errMsg, null, response.getStatus())));
-                return JSONResult.fail(HttpStatusCode.FAIL.getCode(), _errMsg, null, response.getStatus());
+                return JSONResult.fail(HttpStatusCode.FAIL.getCode(), _errMsg, null, _response.getStatus());
             }
         }
 
@@ -89,14 +86,15 @@ public class ValidationAspect {
         // 有 @Valid 注解，需要验证
         if (null != _validAnnotation && _validAnnotation.require()) {
             Map<String,String> _errMap = Maps.createLinkHashMap();
+
             //验证参数 true: 验证单个错误就返回当前错误信息; false: 验证全部完全后返回全部错误信息;
             boolean _single = _validAnnotation.single();
-            //判断逻辑
+            // 判断逻辑
             for (Parameter _pm : _parameters) {
-                //Java 基础属性验证方法
+                // Java 基础属性验证方法
                 String _typeName = _pm.getType().getName();
 
-                //去除不要request,response,session
+                // 去除不要request,response,session
                 if (HttpServletRequestTools.isExclude(_typeName)) {
                     continue;
                 }
@@ -104,7 +102,7 @@ public class ValidationAspect {
 
                 if (HttpServletRequestTools.isBaseType(_typeName)) {// 验证基础 类型
                     String _val = null;
-                    String[] _ps = _parameterMap.get(_filedName);
+                    String[] _ps = _parameterValueMap.get(_filedName);
                     if (null != _ps && _ps.length > 0) {
                         _val = _ps[0];
                     }
@@ -115,8 +113,7 @@ public class ValidationAspect {
                     }
                 } else { // 验证 对象
                     //调用赋值方法: HttpServletRequestUtil.voluation，并验证方法: Validation.valid
-                    _errMap = Validation.valid(HttpServletRequestTools.voluation(_parameterMap,_typeName),
-                            _validAnnotation.single());
+                    _errMap = Validation.valid(HttpServletRequestTools.voluation(_parameterValueMap,_typeName), _single);
                 }
                 //_single 为 true 时表示单一验证，有一个验证不通过就直接跳出
                 if (_single && _errMap.size() >0) {
@@ -130,7 +127,6 @@ public class ValidationAspect {
                 return JSONResult.error(HttpStatusCode.ERR_VALID,_errMap);
             }
         }
-
         return point.proceed();
     }
 

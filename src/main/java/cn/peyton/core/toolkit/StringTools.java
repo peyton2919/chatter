@@ -22,7 +22,7 @@ public final class StringTools implements Serializable {
     /**
      * 判断字符串是否为空
      * @param str 字符串
-     * @return
+     * @return true 为空, 否则 取反
      */
     public static boolean isEmpty(String str) {
         return str == null || str.trim().length() == 0;
@@ -31,7 +31,7 @@ public final class StringTools implements Serializable {
     /**
      * 判断是否空格
      * @param str 字符串
-     * @return
+     * @return true 为空, 否则 取反
      */
     public static boolean isBlank(String str) {
         int strLen = length(str);

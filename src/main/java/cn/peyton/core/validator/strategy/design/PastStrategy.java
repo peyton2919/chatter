@@ -1,6 +1,7 @@
 package cn.peyton.core.validator.strategy.design;
 
 import cn.peyton.core.toolkit.CheckedTools;
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.validator.Regulation;
 import cn.peyton.core.validator.constraints.Past;
 import cn.peyton.core.validator.strategy.AbstractValidator;
@@ -42,7 +43,7 @@ public class PastStrategy extends AbstractValidator {
                 }
             } catch (ParseException e) {
                 map.put(name, "比对数据出错了!");
-                e.printStackTrace();
+                LogTools.error(e.getMessage());
             }
         }
     }

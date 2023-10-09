@@ -1,5 +1,7 @@
 package cn.peyton.core.file;
 
+import cn.peyton.core.toolkit.LogTools;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.Serializable;
@@ -34,7 +36,7 @@ public class FolderOperation implements Serializable {
            // 删除空文件夹
 		    myFilePath.delete();
 	   } catch (Exception e) {
-		   e.printStackTrace();
+		   LogTools.error(e.getMessage());
 	   }
 	}
 
@@ -115,7 +117,7 @@ public class FolderOperation implements Serializable {
 			try {
 				result = file.createNewFile();
 			} catch (Exception e) {
-				e.printStackTrace();
+				LogTools.error(e.getMessage());
 			}
 		}
     	return result;

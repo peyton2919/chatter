@@ -190,7 +190,7 @@ public final class HttpServletRequestTools implements Serializable {
     }
 
     /**
-     * <h4>排除一些javax 下的类</h4>
+     * <h4>排除一些javax 下的类 不做验证</h4>
      * @param typeName 类型名称
      * @return 返回 true 表示 是javax或spring自带 包下对象 ; false 表示 不是 javax或spring自带 包下对象
      */

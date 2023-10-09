@@ -3,6 +3,7 @@ package cn.peyton.children.chatter.param;
 
 import cn.peyton.children.chatter.pojo.Topic;
 import cn.peyton.core.inf.BaseConvertBo;
+import cn.peyton.core.validator.constraints.Length;
 
 import java.io.Serializable;
 /**
@@ -17,7 +18,11 @@ import java.io.Serializable;
 public class TopicParam implements Serializable {
 	/** 编号  */
 	private Integer id;
-	/** 标题  */
+	/**
+	 * 标题
+	 */
+	//@NotBlank(message = "标题不能为空")
+	@Length(min = 3, max = 70, message = "标题长度超出取值范围。")
 	private String title;
 	/** 标题图片  */
 	private String titlePic;

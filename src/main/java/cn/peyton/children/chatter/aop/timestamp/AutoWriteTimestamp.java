@@ -3,7 +3,11 @@ package cn.peyton.children.chatter.aop.timestamp;
 import java.lang.annotation.*;
 
 /**
- * <h4>aop 创建 10位的时间戳 注解</h4>
+ * <h4>自动创建 10位的时间戳 注解</h4>
+ * <pre>
+ *     通过 aop 注解方式;
+ *     配合 AutoWriteTimestampAspect 类使用;
+ * </pre>
  * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @mail <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
@@ -15,7 +19,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Timestamp {
+public @interface AutoWriteTimestamp {
     /**
      * <h4>需要创建时间(10 位 int 类型)的属性名称</h4>
      * <pre>

@@ -1,6 +1,7 @@
 package cn.peyton.core.validator.strategy;
 
 
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.validator.constraints.Alike;
 import lombok.extern.slf4j.Slf4j;
 
@@ -119,7 +120,7 @@ public final class BaseValidator implements Serializable {
             try {
                 value = field.get(obj);
             } catch (Exception e) {
-                // value = null;
+                LogTools.error(e.getMessage());
             }
             Annotation[] annotations = field.getDeclaredAnnotations();
 

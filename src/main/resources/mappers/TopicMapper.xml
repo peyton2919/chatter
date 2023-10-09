@@ -12,11 +12,11 @@
 	</resultMap>
 
 	<sql id="Column_topic_List">
-		id,title,title_pic,desc,type,create_time,topic_class_id
+		`id`,title,title_pic,`desc`,type,create_time,topic_class_id
 	</sql>
 
 	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Topic" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into topic(title,title_pic,desc,type,create_time,topic_class_id)
+		insert into topic(title,title_pic,`desc`,type,create_time,topic_class_id)
 		values (#{title},#{titlePic},#{desc},#{type},#{createTime},#{topicClassId})
 	</insert>
 
@@ -25,7 +25,7 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="title != null">title,</if>
 			<if test="titlePic != null">title_pic,</if>
-			<if test="desc != null">desc,</if>
+			<if test="desc != null">`desc`,</if>
 			<if test="type != null">type,</if>
 			<if test="createTime != null">create_time,</if>
 			<if test="topicClassId != null">topic_class_id,</if>
@@ -50,7 +50,7 @@
 		<set>
 			<if test="title != null">title = #{title},</if>
 			<if test="titlePic != null">title_pic = #{titlePic},</if>
-			<if test="desc != null">desc = #{desc},</if>
+			<if test="desc != null">`desc` = #{desc},</if>
 			<if test="type != null">type = #{type},</if>
 			<if test="createTime != null">create_time = #{createTime},</if>
 			<if test="topicClassId != null">topic_class_id = #{topicClassId},</if>
@@ -63,7 +63,7 @@
 		set 
 			title = #{title},
 			title_pic = #{titlePic},
-			desc = #{desc},
+			`desc` = #{desc},
 			type = #{type},
 			create_time = #{createTime},
 			topic_class_id = #{topicClassId}
@@ -78,6 +78,14 @@
 	</select>
 
 	<!-- new create method   -->
+
+	<select id="isRename" resultType="java.lang.Integer" parameterType="map">
+		select
+			count(id)
+		from topic
+		where title = #{title} and topic_class_id =#{classId} and type =1
+	</select>
+
 	<select id="finds" resultMap="ResultTopicMap">
 		select
 		<include refid="Column_topic_List"/>

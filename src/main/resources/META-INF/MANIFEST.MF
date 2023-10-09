@@ -1,0 +1,40 @@
+Manifest-Version: 1.0
+Main-Class: cn.peyton.children.chatter.ChatterApplication
+Class-Path: hutool-captcha-5.8.7.jar spring-beans-6.0.12.jar spring-web-
+ 6.0.12.jar opentracing-util-0.33.0.jar spring-webmvc-6.0.12.jar java-jw
+ t-3.4.1.jar activation-1.1.jar lettuce-core-6.2.6.RELEASE.jar spring-ox
+ m-6.0.12.jar reactor-core-3.5.10.jar spring-boot-3.1.4.jar snakeyaml-1.
+ 33.jar jedis-4.3.2.jar spring-data-keyvalue-3.1.4.jar spring-session-co
+ re-3.1.2.jar mybatis-3.5.13.jar jackson-annotations-2.15.2.jar spring-c
+ ore-6.0.12.jar unbescape-1.1.6.RELEASE.jar jakarta.annotation-api-2.1.1
+ .jar httpclient-4.5.13.jar spring-boot-starter-thymeleaf-3.1.4.jar mcha
+ nge-commons-java-0.2.15.jar httpcore-4.4.16.jar log4j-api-2.20.0.jar th
+ umbnailator-0.4.14.jar spring-boot-autoconfigure-3.1.4.jar commons-logg
+ ing-1.2.jar mysql-connector-j-8.0.33.jar HikariCP-5.0.1.jar tomcat-embe
+ d-el-10.1.13.jar jackson-datatype-jsr310-2.15.2.jar mybatis-spring-boot
+ -starter-3.0.2.jar netty-transport-4.1.97.Final.jar jackson-core-2.15.2
+ .jar netty-transport-native-unix-common-4.1.97.Final.jar netty-codec-4.
+ 1.97.Final.jar attoparser-2.0.7.RELEASE.jar mybatis-spring-3.0.2.jar sp
+ ring-boot-starter-data-redis-3.1.4.jar log4j-to-slf4j-2.20.0.jar quartz
+ -2.3.2.jar spring-boot-starter-aop-3.1.4.jar spring-context-6.0.12.jar 
+ opentracing-noop-0.33.0.jar spring-aop-6.0.12.jar json-20220320.jar asp
+ ectjweaver-1.9.20.jar logback-core-1.4.11.jar netty-resolver-4.1.97.Fin
+ al.jar jackson-module-parameter-names-2.15.2.jar jul-to-slf4j-2.0.9.jar
+  commons-pool2-2.11.1.jar spring-boot-starter-quartz-3.1.4.jar gson-2.1
+ 0.1.jar org.jacoco.agent-0.8.6-runtime.jar spring-boot-starter-json-3.1
+ .4.jar spring-context-support-6.0.12.jar commons-email-1.5.jar spring-d
+ ata-commons-3.1.4.jar spring-boot-starter-logging-3.1.4.jar netty-buffe
+ r-4.1.97.Final.jar spring-jdbc-6.0.12.jar opentracing-api-0.33.0.jar sp
+ ring-boot-starter-web-3.1.4.jar tomcat-embed-websocket-10.1.13.jar spri
+ ng-jcl-6.0.12.jar aliyun-java-sdk-core-4.5.16.jar spring-expression-6.0
+ .12.jar spring-boot-starter-tomcat-3.1.4.jar netty-handler-4.1.97.Final
+ .jar spring-boot-starter-jdbc-3.1.4.jar javax.mail-1.5.6.jar netty-comm
+ on-4.1.97.Final.jar jackson-datatype-jdk8-2.15.2.jar micrometer-observa
+ tion-1.11.4.jar spring-boot-starter-3.1.4.jar spring-tx-6.0.12.jar huto
+ ol-core-5.8.7.jar commons-codec-1.15.jar javax.activation-api-1.2.0.jar
+  ini4j-0.5.4.jar lombok-1.18.30.jar spring-data-redis-3.1.4.jar jackson
+ -databind-2.15.2.jar thymeleaf-spring6-3.1.2.RELEASE.jar thymeleaf-3.1.
+ 2.RELEASE.jar micrometer-commons-1.11.4.jar tomcat-embed-core-10.1.13.j
+ ar reactive-streams-1.0.4.jar slf4j-api-2.0.9.jar logback-classic-1.4.1
+ 1.jar jaxb-api-2.3.1.jar mybatis-spring-boot-autoconfigure-3.0.2.jar
+

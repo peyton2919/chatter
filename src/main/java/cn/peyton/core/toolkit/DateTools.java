@@ -190,12 +190,15 @@ public final class DateTools implements Serializable {
      * @return 10位 时间戳
      */
     private static Integer _dateToTimestamp(String date,String format){
+        if (null == date) {
+            return 0;
+        }
         SimpleDateFormat simpleDateFormat =
                 new SimpleDateFormat(format == null?FORMAT.DATE_FORMAT_TIME:format);
         try {
             return (int) (simpleDateFormat.parse(date).getTime()/1000);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogTools.error(e.getMessage());
             return 0;
         }
     }

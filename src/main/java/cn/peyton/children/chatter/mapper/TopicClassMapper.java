@@ -65,4 +65,11 @@ public interface TopicClassMapper {
 	 */
 	List<TopicClass> finds();
 
+	/**
+	 * <h4>判断重名</h4>
+	 * @param className 分类名称
+	 * @return 重名返回 true
+	 */
+	int isRename(String className);
+
 }

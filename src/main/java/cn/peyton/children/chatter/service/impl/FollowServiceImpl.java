@@ -1,6 +1,6 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.aop.timestamp.Timestamp;
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.FollowBo;
 import cn.peyton.children.chatter.mapper.FollowMapper;
 import cn.peyton.children.chatter.param.FollowParam;
@@ -36,7 +36,7 @@ public class FollowServiceImpl implements FollowService {
 		return followMapper.checkFollow(followId, userId) > 0 ? true : false;
 	}
 
-	@Timestamp
+	@AutoWriteTimestamp
 	@Override
 	public boolean add(int userId, int followId) {
 		Follow _follow = new Follow();

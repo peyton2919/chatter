@@ -1,6 +1,6 @@
 package cn.peyton.children.chatter.param;
 
-import java.lang.reflect.Field;
+import java.util.regex.Pattern;
 
 /**
  * <h4></h4>
@@ -15,20 +15,14 @@ import java.lang.reflect.Field;
 public class Demo {
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        UserParam param = new UserParam();
-        param.setConfirmPwd("1234");
-        param.setPassword("5678");
-        param.setId(1);
+        String reg = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+        String username ="968875";
+        //Pattern pattern = Pattern.compile(username);
+        //Matcher matcher = pattern.matcher(Regulation.REGEX_EMAIL_ALL);
+        //boolean b = matcher.matches();
+        //System.out.println(b);
 
-        Class<?> clazz = param.getClass();
-        Field pwField = clazz.getDeclaredField("password");
-        pwField.setAccessible(true);
-        String _pw = (String) pwField.get(param);
-
-        Field cpwField = clazz.getDeclaredField("confirmPwd");
-        cpwField.setAccessible(true);
-        String _cpw = (String) cpwField.get(param);
-        System.out.println(_pw);
-        System.out.println(_cpw);
+        Boolean bbb = Pattern.matches(reg, username);
+        System.out.println(bbb);
     }
 }

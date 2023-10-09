@@ -1,6 +1,5 @@
 package cn.peyton.core.validator;
 
-
 import cn.peyton.core.err.child.ValidationException;
 import cn.peyton.core.validator.strategy.BaseValidator;
 

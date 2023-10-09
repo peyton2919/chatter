@@ -67,7 +67,14 @@
 	<select id="finds" resultMap="ResultPostClassMap" >
 		select
 			id,class_name
-		from post_class
+		from post_class where status = 1
 		order by create_time desc
+	</select>
+
+	<select id="isRename" resultType="java.lang.Integer"  parameterType="java.lang.String">
+		select
+			count(id)
+		from post_class
+		where class_name = #{className} and status = 1
 	</select>
 </mapper>

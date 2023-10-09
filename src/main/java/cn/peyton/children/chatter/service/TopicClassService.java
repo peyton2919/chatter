@@ -20,4 +20,19 @@ public interface TopicClassService {
      * @return 话题对象集合
      */
     List<TopicClassParam> finds();
+
+    /**
+     * <pre>添加</pre>
+     * @param param 话题分类对象
+     * @return 添加成功 true
+     */
+    boolean add(TopicClassParam param);
+
+    /**
+     * <h4>判断重名</h4>
+     * @param className 分类名称
+     * @return 重名返回 true
+     */
+    boolean isRename(String className);
+
 }

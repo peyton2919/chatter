@@ -5,7 +5,6 @@ import cn.peyton.core.err.child.GlobalException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -242,12 +241,9 @@ public final class Regulation implements Serializable {
      * @param valiField 要校验的字符
      * @return true 表示校验通过 ; false 表示没校验通过;
      */
-    public final static Boolean regex(String check, String valiField) {
+    public static Boolean regex(String check, String valiField) {
         try {
-            Pattern pattern = Pattern.compile(check);
-            Matcher matcher = pattern.matcher(valiField);
-            Boolean res = matcher.matches();
-            return res;
+            return  Pattern.matches(check,valiField);
         } catch (GlobalException e) {
             log.error("正则匹配异常: 匹配规则:{} , 匹配字段:{}",check,valiField);
         }

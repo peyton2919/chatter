@@ -1,14 +1,8 @@
 package cn.peyton.core.commons;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <h3></h3>
@@ -24,17 +18,17 @@ import java.util.List;
 @Component
 public class Jackson2JsonView  implements Serializable {
 
-    @Bean
-    public MappingJackson2JsonView jsonView() {
-        return new MappingJackson2JsonView();
-    }
-
-    @Bean
-    public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
-        ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
-        List<View> list = new ArrayList<>();
-        list.add(jsonView());
-        resolver.setDefaultViews(list);
-        return  resolver;
-    }
+    //@Bean
+    //public MappingJackson2JsonView jsonView() {
+    //    return new MappingJackson2JsonView();
+    //}
+    //
+    //@Bean
+    //public ContentNegotiatingViewResolver contentNegotiatingViewResolver() {
+    //    ContentNegotiatingViewResolver resolver = new ContentNegotiatingViewResolver();
+    //    List<View> list = new ArrayList<>();
+    //    list.add(jsonView());
+    //    resolver.setDefaultViews(list);
+    //    return  resolver;
+    //}
 }

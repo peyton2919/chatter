@@ -2,6 +2,7 @@ package cn.peyton.core.token;
 
 import cn.peyton.core.json.JsonMapper;
 import cn.peyton.core.toolkit.DateTools;
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.toolkit.base.Maps;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -35,7 +36,7 @@ public class TokenTools<T> implements Serializable {
     private long expireTime = 900000l;
     /** 发行者 */
     private String issuer = "peyton.yu";
-
+    /** token 密钥 */
     private String tokenSecret = "y1u2p3DefaultPrivateProjectTestChatterPlumCom";
 
 
@@ -158,6 +159,7 @@ public class TokenTools<T> implements Serializable {
 
             return (T) JsonMapper.readValue(value,t.getClass());
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
     }
@@ -179,6 +181,7 @@ public class TokenTools<T> implements Serializable {
                     .build().verify(token);
             return jwt.getExpiresAt();
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
     }
@@ -203,6 +206,7 @@ public class TokenTools<T> implements Serializable {
             long _curr = System.currentTimeMillis();
             return (_curr>_date);
         }catch (Exception e) {
+            LogTools.error(e.getMessage());
             return false;
         }
     }
@@ -224,6 +228,7 @@ public class TokenTools<T> implements Serializable {
                     .build().verify(token);
             return jwt.getIssuer();
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
     }
@@ -245,6 +250,7 @@ public class TokenTools<T> implements Serializable {
 
             return jwt.getClaim(Property.USERID).asString();
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
     }
@@ -266,6 +272,7 @@ public class TokenTools<T> implements Serializable {
                     .build().verify(token);
             return jwt.getClaim(Property.USERNAME).asString();
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
     }
@@ -286,6 +293,7 @@ public class TokenTools<T> implements Serializable {
                     .build().verify(token);
             return Long.parseLong(jwt.getClaim(Property.TIMESTAMP).toString());
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
     }
@@ -307,6 +315,7 @@ public class TokenTools<T> implements Serializable {
                     .build().verify(token);
             return jwt.getClaim(key).asString();
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
     }
@@ -337,6 +346,7 @@ public class TokenTools<T> implements Serializable {
             map.put(Property.TIMESTAMP, jwt.getClaim(Property.TIMESTAMP).asString());
             return map;
         } catch (Exception e) {
+            LogTools.error(e.getMessage());
             return null;
         }
 

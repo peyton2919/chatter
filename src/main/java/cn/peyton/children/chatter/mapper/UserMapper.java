@@ -8,6 +8,11 @@ import java.util.List;
 /**
  * <h3> 用户信息 Mapper 接口</h3>
  * <pre>
+ *     1. 创建时间 create_time 需要自动创建 int（10)类
+ *     2. 状态 status {0,1} 0不可用 1可用
+ *     3.
+ * </pre>
+ * <pre>
  * @author <a href="http://www.peyton.cn">peyton</a>
  * @mail <a href="mailto:fz2919@tom.com">fz2919@tom.com</a>
  * @date 2023年10月04日 20:11:31
@@ -90,11 +95,13 @@ public interface UserMapper {
 
 	/**
 	 * <h4>用户账户 登录 </h4>
+	 *
 	 * @param username 用户名
 	 * @param password 密码
+	 * @param loginType 登录类型
 	 * @return 用户对象
 	 */
-	User login(String username, String password);
+	User login(String username, String password, String loginType);
 
 	/**
 	 * <h4>判断用户是否被禁用</h4>
@@ -103,14 +110,22 @@ public interface UserMapper {
 	 * @param status 状态 0 表示 禁用 ; 1 表示 可用 ;
 	 * @return 0 表示 没查到数据行 ; 大于 0 表示 有查到数据行;
 	 */
-	int checkStatus(String keyword, String type,int status);
+	int checkStatus(String keyword, String type,Integer status);
 
 	/**
 	 * <h4>判断用户是否重命名</h4>
-	 * @param username 用户名称
+	 * @param user 用户对象
 	 * @return 0 表示 没查到数据行 ; 大于 0 表示 有查到数据行;
 	 */
-	int checkRename(String username);
+	int checkRename(User user);
+
+	/**
+	 * <h4>判断用户是否重命名</h4>
+	 * @param keyword 关键字
+	 * @param type 三种 username phone email
+	 * @return
+	 */
+	int checkSimpleRename(String keyword, String type);
 	/**
 	 * <h4>判断 用户密码</h4>
 	 * @param username 用户名称

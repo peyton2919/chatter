@@ -1,6 +1,7 @@
 package cn.peyton.children.chatter.config;
 
 import cn.peyton.core.interceptor.ParameterInterceptor;
+import cn.peyton.core.interceptor.TokenInterceptor;
 import cn.peyton.core.toolkit.base.Lists;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,11 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
     @Bean
     public HandlerInterceptor parameterInterceptor() {
         return new ParameterInterceptor();
+    }
+
+    @Bean
+    public HandlerInterceptor tokenInterceptor(){
+        return new TokenInterceptor();
     }
 
     @Override
@@ -73,6 +79,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         //        .addPathPatterns("/payPage");
 
         //registry.addInterceptor(parameterInterceptor()).excludePathPatterns(excludePath).addPathPatterns("/**");
+
+        // token 拦截器
+        //registry.addInterceptor(tokenInterceptor()).excludePathPatterns(excludePath).addPathPatterns("/**");
     }
 
     @Override

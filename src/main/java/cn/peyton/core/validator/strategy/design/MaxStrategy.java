@@ -1,6 +1,7 @@
 package cn.peyton.core.validator.strategy.design;
 
 import cn.peyton.core.toolkit.CheckedTools;
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.validator.constraints.Max;
 import cn.peyton.core.validator.strategy.AbstractValidator;
 
@@ -36,6 +37,7 @@ public class MaxStrategy extends AbstractValidator {
                 }
             } catch (Exception e) {
                 map.put(name, "数据转换超限!");
+                LogTools.error(e.getMessage());
             }
 
         }

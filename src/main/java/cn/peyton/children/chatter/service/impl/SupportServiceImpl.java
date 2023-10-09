@@ -1,6 +1,6 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.aop.timestamp.Timestamp;
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.mapper.SupportMapper;
 import cn.peyton.children.chatter.param.SupportParam;
 import cn.peyton.children.chatter.pojo.Support;
@@ -31,7 +31,7 @@ public class SupportServiceImpl implements SupportService {
 		return null;
 	}
 
-	@Timestamp
+	@AutoWriteTimestamp
 	@Override
 	public SupportParam add(SupportParam param) {
 		Support _support = param.convert();

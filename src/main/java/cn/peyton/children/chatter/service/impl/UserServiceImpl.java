@@ -1,15 +1,20 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.aop.timestamp.Timestamp;
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.UserBo;
+import cn.peyton.children.chatter.mapper.UserInfoMapper;
 import cn.peyton.children.chatter.mapper.UserMapper;
+import cn.peyton.children.chatter.param.UserInfoParam;
 import cn.peyton.children.chatter.param.UserParam;
 import cn.peyton.children.chatter.pojo.User;
+import cn.peyton.children.chatter.pojo.UserInfo;
 import cn.peyton.children.chatter.service.UserService;
 import cn.peyton.core.cipher.BaseCipher;
 import cn.peyton.core.page.PageQuery;
+import cn.peyton.core.toolkit.StringTools;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,14 +35,18 @@ public class UserServiceImpl implements UserService {
 
 	@Resource
 	private UserMapper userMapper;
+	@Resource
+	private UserInfoMapper userInfoMapper;
+
 
 	@Override
 	public String encryptPW(String pw) {
 		return BaseCipher.encoderMD5(pw,KEY_PASSWORD_ENCODER);
 	}
 
-	@Timestamp
+	@AutoWriteTimestamp
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public UserParam reg(UserParam param) {
 		// 密码加密
 		param.setPassword(BaseCipher.encoderMD5(param.getPassword(),KEY_PASSWORD_ENCODER));
@@ -45,11 +54,14 @@ public class UserServiceImpl implements UserService {
 		int result = userMapper.insertSelective(user);
 		//判断插入数据成功，给用户参数对象赋值，其中把密码 设 空
 		if(result>0){
-			param.setId(user.getId());
-			param.setPassword("");
-			param.setConfirmPwd("");
+			//param.setId(user.getId());
+			//param.setPassword("");
+			//param.setConfirmPwd("");
 			//todo 并注册 userInfo
-
+			UserInfo _info = new UserInfo();
+			_info.setUserId(user.getId());
+			result = userInfoMapper.insertSelective(_info);
+			param.setUserInfoParam(new UserInfoParam().compat(_info));
 		}
 		return (result>0)?param:null;
 	}
@@ -61,8 +73,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserParam login(String username, String password) {
-		User user = userMapper.login(username, BaseCipher.encoderMD5(password, KEY_PASSWORD_ENCODER));
+	public UserParam login(String username, String password, String loginType) {
+		User user = userMapper.login(username, BaseCipher.encoderMD5(password, KEY_PASSWORD_ENCODER), loginType);
 		if (null == user) {
 			return null;
 		}
@@ -71,12 +83,33 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean isStatus(String keyword, String type,Integer status) {
-		return userMapper.checkStatus(keyword,type,status) > 0 ? true : false;
+		return userMapper.checkStatus(keyword, type, status) > 0 ? true : false;
 	}
 
 	@Override
-	public boolean isRename(String username) {
-		return userMapper.checkRename(username) > 0 ? true:false;
+	public boolean isRename(UserParam userParam) {
+		return userMapper.checkRename(userParam.convert()) > 0 ? true:false;
+	}
+
+	@Override
+	public String isSimpleRename(UserParam userParam) {
+		int result = userMapper.checkSimpleRename(userParam.getUsername(), "username");
+		if (result >0){
+			return "该用户名称已经存在,请重新输入。";
+		}
+		if (!StringTools.isEmpty(userParam.getPhone())) {
+			result = userMapper.checkSimpleRename(userParam.getPhone(), "phone");
+		}
+		if (result >0){
+			return "该手机号码已经存在,请重新输入。";
+		}
+		if (!StringTools.isEmpty(userParam.getEmail())) {
+			result = userMapper.checkSimpleRename(userParam.getEmail(), "email");
+		}
+		if (result > 0) {
+			return "该邮箱号已经存在,请重新输入。";
+		}
+		return null;
 	}
 
 	@Override
