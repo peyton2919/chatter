@@ -1,6 +1,5 @@
 package cn.peyton.children.chatter.aop.timestamp;
 
-import cn.peyton.core.err.child.GlobalException;
 import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.toolkit.DateTools;
 import cn.peyton.core.toolkit.HttpServletRequestTools;
@@ -22,6 +21,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <h4>aop 创建 10位的时间戳 切面类</h4>
@@ -53,8 +53,8 @@ public class AutoWriteTimestampAspect {
     @Around("timePointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
-        Method method = signature.getMethod();
-        Annotation[] _annos = method.getAnnotations();
+        Method _method = signature.getMethod();
+        Annotation[] _annos = _method.getAnnotations();
         String fieldName = null;
         for (Annotation _anno : _annos) {
             if (_anno instanceof AutoWriteTimestamp){
@@ -66,26 +66,54 @@ public class AutoWriteTimestampAspect {
                 break;
             }
         }
+        // 获取参数类型集合
+        Class<?>[] _parameterTypes = _method.getParameterTypes();
+        // 只处理含 cn.peyton 类 和 java.util.List -> ArrayList 类
         Object[] _args = point.getArgs();
         if (null != _args && _args.length > 0) {
-            Field field = null;
-            String _name = _args[0].getClass().getName();
-            _name = _name.substring(_name.lastIndexOf('.') + 1);
-            try {
-                field = _args[0].getClass().getDeclaredField(fieldName);
-            } catch (NoSuchFieldException e) {
-                log.error("cn.peyton.children.chatter.aop.timestamp.TimestampAspect -> 异常 【NoSuchFieldException】");
-                return JSONResult.fail(400999, "获取当前对象{" + _name + "}的{" + fieldName + "}属性名称错误");
-            }
-            field.setAccessible(true);
-            try {
-                field.set(_args[0], DateTools.timestampToStrDate(new Date()));
-            } catch (IllegalAccessException e) {
-                LogTools.error(e.getMessage());
-                return JSONResult.fail(400999, "设置当前对象{" + _name + "}的{" + fieldName + "}属性值错误");
+            // 处理参数类型
+            for (int i = 0; i < _parameterTypes.length; i++) {
+                Class<?> _pt = _parameterTypes[i];
+                String _className = _pt.getName();
+                if ("java.util.List".equals(_className)) {
+                    List _list = (List) _args[i];
+                    for (Object _obj : _list) {
+                        createTimestamp(fieldName, _obj);
+                    }
+
+                } else if (_className != null && _className.contains("cn.peyton")) {
+                    createTimestamp(fieldName, _args[i]);
+                }
             }
         }
         return point.proceed();
+    }
+
+    /**
+     * <h4>创建时间戳</h4>
+     * @param fieldName 时间戳字段（createTime/updateTime)
+     * @param obj  要创建含时间戳的类
+     * @return
+     */
+    private JSONResult createTimestamp(String fieldName,Object obj) {
+        Field field = null;
+        String _name = obj.getClass().getName();
+        _name = _name.substring(_name.lastIndexOf('.') + 1);
+        try {
+            field = obj.getClass().getDeclaredField(fieldName);
+        } catch (NoSuchFieldException e) {
+            //todo
+            LogTools.error(obj);
+            return JSONResult.fail(400999, "获取当前对象{" + _name + "}的{" + fieldName + "}属性名称错误");
+        }
+        field.setAccessible(true);
+        try {
+            field.set(obj, DateTools.timestampToStrDate(new Date()));
+        } catch (IllegalAccessException e) {
+            LogTools.error(obj);
+            return JSONResult.fail(400999, "设置当前对象{" + _name + "}的{" + fieldName + "}属性值错误");
+        }
+        return null;
     }
 
     //@Before("execution(* cn.peyton.children.*.add*(..))")
@@ -116,15 +144,13 @@ public class AutoWriteTimestampAspect {
             try {
                 field = _args[0].getClass().getDeclaredField(fieldName);
             } catch (NoSuchFieldException e) {
-                log.error("cn.peyton.children.chatter.aop.timestamp.Timestamp -> 异常 【NoSuchFieldException】");
-                throw new GlobalException(response,null,null);
+                log.error("获取字段错误");
             }
             field.setAccessible(true);
             try {
                 field.set(_args[0], DateTools.timestampToStrDate(new Date()));
             } catch (IllegalAccessException e) {
-                log.error("cn.peyton.children.chatter.aop.timestamp.Timestamp -> 异常 【IllegalAccessException】");
-                throw new GlobalException(e);
+                log.error("字段赋值错误");
             }
         }
         log.info("<=====================================================");

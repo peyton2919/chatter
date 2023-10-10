@@ -1,8 +1,10 @@
 package cn.peyton.children.chatter.service.impl;
 
+import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.PostBo;
 import cn.peyton.children.chatter.mapper.PostMapper;
 import cn.peyton.children.chatter.param.PostParam;
+import cn.peyton.children.chatter.pojo.Post;
 import cn.peyton.children.chatter.service.PostService;
 import cn.peyton.children.chatter.service.SupportService;
 import cn.peyton.core.page.PageQuery;
@@ -27,6 +29,18 @@ public class PostServiceImpl implements PostService {
 
 	@Resource
 	private SupportService supportService;
+
+	@AutoWriteTimestamp
+	@Override
+	public boolean add(PostParam param) {
+		Post _post = param.convert();
+		int result = postMapper.insertSelective(_post);
+		if (result > 0) {
+			param.compat(_post);
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public boolean isPost(Integer id) {

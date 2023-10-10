@@ -29,6 +29,7 @@ import java.util.Random;
  * </pre>
  */
 public final class ImageProcessing  implements Serializable {
+
     private static String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
     private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
     private static final Random RANDOM = new Random();
@@ -125,6 +126,7 @@ public final class ImageProcessing  implements Serializable {
         //相对路径
         String relativeAddr = targetAddr + realFileName + extension;
         File dest = new File(relativeAddr);
+
         try {
             if (null != watermarkName) {
                 Thumbnails.of(thumbnailInputStream).size(width, height)
@@ -136,6 +138,7 @@ public final class ImageProcessing  implements Serializable {
                         .outputQuality(outputQuality)
                         .toFile(dest);
             }
+            System.out.println("图片上传的路径: " + relativeAddr);
         } catch (IOException e) {
             LogTools.error(e.getMessage());
         }

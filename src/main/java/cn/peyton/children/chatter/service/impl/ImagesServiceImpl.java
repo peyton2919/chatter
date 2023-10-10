@@ -4,6 +4,7 @@ import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.ImagesBo;
 import cn.peyton.children.chatter.mapper.ImagesMapper;
 import cn.peyton.children.chatter.param.ImagesParam;
+import cn.peyton.children.chatter.param.UserParam;
 import cn.peyton.children.chatter.pojo.Images;
 import cn.peyton.children.chatter.service.ImagesService;
 import jakarta.annotation.Resource;
@@ -27,7 +28,7 @@ public class ImagesServiceImpl implements ImagesService {
 
 	@AutoWriteTimestamp
 	@Override
-	public List<ImagesParam> insertBatch(List<ImagesParam> imagesList) {
+	public List<ImagesParam> insertBatch(List<ImagesParam> imagesList, UserParam userParam, String name, Integer num) {
 		//todo
 		List<Images> _oImages = new ImagesBo().reverse(imagesList);
 		imagesMapper.insertBatch(_oImages);

@@ -71,6 +71,15 @@
             <version>0.4.14</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <!-- 图片上传 -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+
+
         <!--  必选项 支持 core 结束 -->
 
         <!--  阿里大于{短信}  -->

@@ -59,9 +59,9 @@ public class Post implements Serializable {
 	 */
 	private Integer postClassId;
 	/**
-	 * 分享文章对象 当type类型为1时,在查找文章
+	 * 分享文章Id 当type类型为1时,在查找文章
 	 */
-	private Post sharePost;
+	private Integer shareId;
 	/**
 	 * 1开放，0仅自己可见
 	 */
@@ -85,11 +85,8 @@ public class Post implements Serializable {
 
 	//================================== Constructor =======================================//
 	public Post() {
-		if (!CheckedTools.isNull(user)) {
-			user = new User();
-		}
-		if (!CheckedTools.isNull(sharePost)) {
-			sharePost = new Post();
+		if (!CheckedTools.isNull(this.user)) {
+			this.user = new User();
 		}
 		if (null == imageList) {
 			imageList = new ArrayList<>();
@@ -119,6 +116,7 @@ public class Post implements Serializable {
 	 * @param user 发布人
 	 */
 	public void setUser(User user) {
+
 		this.user = user;
 	}
 
@@ -242,17 +240,17 @@ public class Post implements Serializable {
 	}
 
 	/**
-	 * @param sharePost 分享文章对象 当type类型为1时,在查找文章
+	 * @return 分享文章Id 当type类型为1时,在查找文章
 	 */
-	public void setSharePost(Post sharePost) {
-		this.sharePost = sharePost;
+	public Integer getShareId() {
+		return shareId;
 	}
 
 	/**
-	 * @return 共享编号 分享文章对象 当type类型为1时,在查找文章
+	 * @param shareId 分享文章Id 当type类型为1时,在查找文章
 	 */
-	public Post getSharePost() {
-		return sharePost;
+	public void setShareId(Integer shareId) {
+		this.shareId = shareId;
 	}
 
 	/**

@@ -16,6 +16,12 @@ import java.util.List;
 */
 public interface PostService {
     /**
+     * <h4>添加 帖子</h4>
+     * @param param 帖子对象
+     * @return 成功返回 true
+     */
+    boolean add(PostParam param);
+    /**
      * <h4>判断文章是否存在</h4>
      * @param id 文章编号
      * @return true 表示存在 ; 否则取反

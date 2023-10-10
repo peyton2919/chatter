@@ -64,10 +64,10 @@
 
 	<!-- new create method   -->
 	<insert id="insertBatch" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into images(url,user_id)
+		insert into images(url,user_id,create_time)
 		values
 		<foreach collection="imagesList" item="images" separator=",">
-			(#{images.url},#{images.userId})
+			(#{images.url},#{images.userId},#{images.createTime})
 		</foreach>
 	</insert>
 

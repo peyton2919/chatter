@@ -9,8 +9,8 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" action="dashboard.html">
-    <h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">Please sign in</h1>
+<form class="form-signin" action="/api/user/imgs/uploadmore" enctype="multipart/form-data" method="post">
+    <!--<h1 class="h3 mb-3 font-weight-normal" th:text="#{login.tip}">Please sign in</h1>
     <label th:text="#{login.username}"></label>
     <input type="text" class="form-control" th:placeholder="#{login.username}" required="" autofocus=""><br>
 
@@ -26,6 +26,12 @@
     <div>
         <a class="btn btn-sm" th:href="@{/login(lang='zh_CN')}" style="margin-right: 30px;">中文</a>
         <a class="btn btn-sm" th:href="@{/login(lang='en_US')}">English</a>
+    </div>-->
+    <div>
+        <input type="file" name="files" value="上传图片">
+        <input type="file" name="files" value="上传图片">
+        <input type="submit" value="上传">
+        <img src="/images/product/1fEN6969421213B2B9uo.jpg">
     </div>
 
 </form>

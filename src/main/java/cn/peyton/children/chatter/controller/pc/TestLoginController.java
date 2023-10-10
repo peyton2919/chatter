@@ -10,6 +10,7 @@ package cn.peyton.children.chatter.controller.pc;/**
  */
 
 import cn.peyton.children.chatter.controller.base.AppController;
+import cn.peyton.core.toolkit.LogTools;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -28,6 +29,7 @@ public class TestLoginController extends AppController {
 
     @GetMapping("/login")
     public String login() {
+        LogTools.error("测试");
 
         return "login";
     }

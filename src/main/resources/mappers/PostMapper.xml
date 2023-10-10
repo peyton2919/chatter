@@ -12,15 +12,11 @@
 		<result column="type" property="type" jdbcType="TINYINT"/>
 		<result column="create_time" property="createTime" jdbcType="INTEGER"/>
 		<result column="post_class_id" property="postClassId" jdbcType="INTEGER"/>
-		<!--<result column="share_id" property="shareId" jdbcType="INTEGER"/>-->
+		<result column="share_id" property="shareId" jdbcType="INTEGER"/>
 		<result column="is_open" property="isOpen" jdbcType="TINYINT"/>
 
 		<association property="user" javaType="cn.peyton.children.chatter.pojo.User"
 					 column="user_id" select="cn.peyton.children.chatter.mapper.UserMapper.findSimpleById">
-		</association>
-
-		<association property="sharePost" javaType="cn.peyton.children.chatter.pojo.Post"
-					 column="share_id" select="cn.peyton.children.chatter.mapper.PostMapper.findByShareId">
 		</association>
 
 		<association property="cai" javaType="int" column="id"
@@ -29,7 +25,6 @@
 
 		<association property="commentCount" javaType="int" column="id"
 					 select="cn.peyton.children.chatter.mapper.CommentMapper.countByPostId">
-
 		</association>
 
 		<association property="ding" javaType="int" column="id"
@@ -48,13 +43,13 @@
 
 	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Post" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
 		insert into post(user_id,title,title_pic,content,share_num,path,type,create_time,post_class_id,share_id,is_open)
-		values (#{userId},#{title},#{titlePic},#{content},#{shareNum},#{path},#{type},#{createTime},#{postClassId},#{shareId},#{isOpen})
+		values (#{user.userId},#{title},#{titlePic},#{content},#{shareNum},#{path},#{type},#{createTime},#{postClassId},#{shareId},#{isOpen})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Post" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
 		insert into post
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="userId != null">user_id,</if>
+			<if test="user.id != null">user_id,</if>
 			<if test="title != null">title,</if>
 			<if test="titlePic != null">title_pic,</if>
 			<if test="content != null">content,</if>
@@ -67,7 +62,7 @@
 			<if test="isOpen != null">is_open,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="userId != null">#{userId},</if>
+			<if test="user.id != null">#{user.id},</if>
 			<if test="title != null">#{title},</if>
 			<if test="titlePic != null">#{titlePic},</if>
 			<if test="content != null">#{content},</if>
@@ -89,7 +84,7 @@
 	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Post">
 		update post
 		<set>
-			<if test="userId != null">user_id = #{userId},</if>
+			<if test="user.id != null">user_id = #{user.id},</if>
 			<if test="title != null">title = #{title},</if>
 			<if test="titlePic != null">title_pic = #{titlePic},</if>
 			<if test="content != null">content = #{content},</if>
@@ -107,7 +102,7 @@
 	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Post">
 		update post
 		set 
-			user_id = #{userId},
+			user_id = #{user.id},
 			title = #{title},
 			title_pic = #{titlePic},
 			content = #{content},

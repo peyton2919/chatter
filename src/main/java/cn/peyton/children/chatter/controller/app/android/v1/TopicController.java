@@ -60,7 +60,8 @@ public class TopicController extends AppController {
 	// 搜索话题
 	@PostMapping("/topic/search")
 	public JSONResult<List<TopicParam>> search(
-			@NotBlank(message = "搜索字段不能为空！") String keyword,
+			@NotBlank(message = "搜索字段不能为空！")
+			String keyword,
 			@Min(value = 1,message = "要大于0的数！")
 			Integer pageNo){
 

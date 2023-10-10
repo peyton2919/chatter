@@ -14,8 +14,8 @@ import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.page.PageQuery;
 import cn.peyton.core.token.Token;
 import cn.peyton.core.token.TokenTools;
-import cn.peyton.core.toolkit.AliSMSUtil;
 import cn.peyton.core.toolkit.FileTools;
+import cn.peyton.core.toolkit.LogTools;
 import cn.peyton.core.toolkit.MessageTools;
 import cn.peyton.core.validator.Regulation;
 import cn.peyton.core.validator.Valid;
@@ -129,8 +129,8 @@ public class UserController extends AppController {
 		session.setAttribute(KEY_SESSION_PHONE, phone);
 
 		//todo 后期更新 阿里大于
-		AliSMSUtil.sendCode(phone, code.toString());
-
+		//AliSMSUtil.sendCode(phone, code.toString());
+		LogTools.error("发送");
 		//发送验证逻辑
 		return JSONResult.success(MessageTools.createSMSTemplate(code + ""));
 	}

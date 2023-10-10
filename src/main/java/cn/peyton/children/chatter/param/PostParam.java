@@ -1,12 +1,10 @@
 package cn.peyton.children.chatter.param;
 
 
-import cn.peyton.children.chatter.bo.PostBo;
 import cn.peyton.children.chatter.pojo.Images;
 import cn.peyton.children.chatter.pojo.Post;
 import cn.peyton.core.inf.BaseConvertBo;
-import cn.peyton.core.toolkit.CheckedTools;
-import cn.peyton.core.toolkit.base.Lists;
+import cn.peyton.core.validator.constraints.Length;
 import cn.peyton.core.validator.constraints.NotBlank;
 import cn.peyton.core.validator.constraints.Size;
 
@@ -29,6 +27,7 @@ public class PostParam implements Serializable {
 	/** 发布人  */
 	private UserParam userParam;
 	/** 标题  */
+	@Length(max=80,message = "长度超出范围。")
 	private String title;
 	/** 标题图片  */
 	private String titlePic;
@@ -38,6 +37,7 @@ public class PostParam implements Serializable {
 	/** 分享数  */
 	private Integer shareNum;
 	/** 路径  */
+	@Length(max=255,message = "长度超出范围。")
 	private String path;
 	/** 0 图文 1分享  */
 	private Integer type;
@@ -45,8 +45,10 @@ public class PostParam implements Serializable {
 	private String createTime;
 	/** post类型编号  */
 	private Integer postClassId;
-	/** 分享文章对象 当type类型为1时,在查找文章  */
-	private PostParam sharePostParam;
+	/**
+	 * 分享文章Id 当type类型为1时,在查找文章
+	 */
+	private Integer shareId;
 	/** 1开放，0仅自己可见  */
 	@NotBlank(message = "可见方式不能为空！")
 	@Size(min = 0,max = 1,message = "数字超出限制范围!")
@@ -62,11 +64,8 @@ public class PostParam implements Serializable {
 
 	//================================== Constructor =======================================//
 	public PostParam() {
-		if (!CheckedTools.isNull(userParam)) {
+		if (null == userParam) {
 			userParam = new UserParam();
-		}
-		if (!CheckedTools.isNull(sharePostParam)) {
-			sharePostParam = new PostParam();
 		}
 		if (null == imageList) {
 			imageList = new ArrayList<>();
@@ -218,17 +217,17 @@ public class PostParam implements Serializable {
 	}
 
 	/**
-	 * @param sharePostParam 分享文章对象 当type类型为1时,在查找文章
+	 * @return 分享文章Id 当type类型为1时,在查找文章
 	 */
-	public void setSharePostParam(PostParam sharePostParam) {
-		this.sharePostParam = sharePostParam;
+	public Integer getShareId() {
+		return shareId;
 	}
 
 	/**
-	 * @return 分享文章对象 当type类型为1时,在查找文章
+	 * @param shareId 分享文章Id 当type类型为1时,在查找文章
 	 */
-	public PostParam getSharePostParam() {
-		return sharePostParam;
+	public void setShareId(Integer shareId) {
+		this.shareId = shareId;
 	}
 
 	/**
@@ -256,7 +255,6 @@ public class PostParam implements Serializable {
 	 * @param imageList 图片集合
 	 */
 	public void setImageList(List<Images> imageList) {
-		if (null == imageList){ imageList= Lists.newArrayList(); }
 		this.imageList = imageList;
 	}
 
@@ -320,7 +318,7 @@ public class PostParam implements Serializable {
 		post.setType(type);
 		post.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		post.setPostClassId(postClassId);
-		post.setSharePost(new PostBo().convert(getSharePostParam()));
+		post.setShareId(shareId);
 		post.setIsOpen(isOpen);
 		post.setImageList(imageList);
 		post.setCommentCount(commentCount);
@@ -349,7 +347,7 @@ public class PostParam implements Serializable {
 		this.setType(post.getType());
 		this.setCreateTime(BaseConvertBo.convertIntToStr(post.getCreateTime()));
 		this.setPostClassId(post.getPostClassId());
-		this.setSharePostParam(new PostBo().compat(post.getSharePost()));
+		this.setShareId(post.getShareId());
 		this.setIsOpen(post.getIsOpen());
 		this.setImageList(post.getImageList());
 		this.setCommentCount(post.getCommentCount());

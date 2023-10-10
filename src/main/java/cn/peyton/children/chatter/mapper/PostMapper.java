@@ -24,10 +24,10 @@ public interface PostMapper {
 
 	/**
 	 * <h4>插入 对象[根据属性是否有值 插入]</h4>
-	 * @param record 对象
+	 * @param post 对象
 	 * @return 受影响的行数
 	 */
-	int insertSelective(Post record);
+	int insertSelective(Post post);
 
 	/**
 	 * <h4>根据 主键 删除 对象</h4>
