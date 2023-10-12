@@ -63,5 +63,13 @@
 	</select>
 
 	<!-- new create method   -->
+	<insert id="insertBatch" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into post_image(post_id,image_id,create_time)
+		values
+		<foreach collection="postImageList" item="postImage" separator=",">
+			(#{postImage.postId},#{postImage.imageId},#{postImage.createTime})
+		</foreach>
+	</insert>
+
 
 </mapper>

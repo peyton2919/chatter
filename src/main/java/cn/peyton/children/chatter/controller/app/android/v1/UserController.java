@@ -49,19 +49,7 @@ import java.util.regex.Pattern;
 @RestController
 public class UserController extends AppController {
 
-	/** 存在session中的 code key */
-	private final static String KEY_SESSION_PHONE_CODE = "SESSION_PHONE_CODE_220323";
-	/** 存在 session中的 phone key */
-	private final static String KEY_SESSION_PHONE = "SESSION_PHONE_220323";
 
-	/** 手机登录时 存在 token 对象 key */
-	private final static String KEY_TOKEN_PHONE = "TOKEN_PHONE_2203231641";
-	/** 账号登录时 存在 token 对象 key */
-	private final static String KEY_TOKEN_ACCOUNT = "TOKEN_ACCOUNT_2203231829";
-	/** 其他登录时 存在 token 对象 key */
-	private final static String KEY_TOKEN_OTHER = "TOKEN_OTHER_2203231830";
-
-	private final static String KEY_PHONE_CACHE_TIME = "PHONE_TIME_2203262148";
 
 	@Resource
 	private UserService userService;
@@ -103,6 +91,7 @@ public class UserController extends AppController {
 
 			return JSONResult.fail(HttpStatusCode.ERR_PHONE_UNREGISTERED);
 		}
+
 		// 判断是否已经提交过
 		LocalCache cache = LocalCache.getInstance();
 		Object _objTime = cache.get(KEY_PHONE_CACHE_TIME);
@@ -193,7 +182,7 @@ public class UserController extends AppController {
 			// token 赋值到 _param 对象
 			_param.setToken(token);
 			// 把 _param 对象存在 session 中
-			session.setAttribute(PROPERTY.SESSION_USER,_param);
+			session.setAttribute(SESSION_USER,_param);
 			return JSONResult.success(phone + HttpStatusCode.SUCCESS_LOGIN.getMsg(), _param);
 		}
 		return JSONResult.fail(HttpStatusCode.ERR_PHONE_UNREGISTERED);
@@ -234,7 +223,7 @@ public class UserController extends AppController {
 		_param.setToken(token);
 		HttpSession session = request.getSession();
 		// 把 _param 对象存在 session 中
-		session.setAttribute(PROPERTY.SESSION_USER,_param);
+		session.setAttribute(SESSION_USER,_param);
 		return JSONResult.success((username + HttpStatusCode.SUCCESS_LOGIN.getMsg()), _param);
 	}
 
@@ -288,14 +277,14 @@ public class UserController extends AppController {
 		TokenTools tokenTools = new TokenTools();
 		String token = tokenTools.sign(KEY_TOKEN_OTHER, _userParam, param.getExpiresIn());
 		_userParam.setToken(token);
-		session.setAttribute(PROPERTY.SESSION_USER,_userParam);
+		session.setAttribute(SESSION_USER,_userParam);
 	}
 
 	// 用户退出
 	@PostMapping("/user/logout")
 	public JSONResult<UserParam> logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		session.removeAttribute(PROPERTY.SESSION_USER);
+		session.removeAttribute(SESSION_USER);
 		return JSONResult.success(HttpStatusCode.SUCCESS_OUT_LOGIN.getMsg());
 	}
 
@@ -410,6 +399,7 @@ public class UserController extends AppController {
 
 	// 搜索用户
 	@PostMapping("/search")
+	@Valid
 	public JSONResult<List<UserParam>> search(
 			@NotBlank(message = "搜索字段不能为空！") String keyword,
 			@Min(message = "要大于0的数！") int pageNo){

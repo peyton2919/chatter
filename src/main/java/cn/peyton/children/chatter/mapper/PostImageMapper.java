@@ -2,6 +2,8 @@ package cn.peyton.children.chatter.mapper;
 
 import cn.peyton.children.chatter.pojo.PostImage;
 
+import java.util.List;
+
 /**
  * <h3> 帖子图片关联 Mapper 接口</h3>
  * <pre>
@@ -57,5 +59,11 @@ public interface PostImageMapper {
 
 	// ==================================== new create method ==================================== //
 
-
+	/**
+	 * <h4>批量插入</h4>
+	 *
+	 * @param postImageList 图片对象集合
+	 * @return 返回受影响的行数
+	 */
+	int insertBatch(List<PostImage> postImageList);
 }

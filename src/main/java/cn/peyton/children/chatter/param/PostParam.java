@@ -1,7 +1,7 @@
 package cn.peyton.children.chatter.param;
 
 
-import cn.peyton.children.chatter.pojo.Images;
+import cn.peyton.children.chatter.bo.ImagesBo;
 import cn.peyton.children.chatter.pojo.Post;
 import cn.peyton.core.inf.BaseConvertBo;
 import cn.peyton.core.validator.constraints.Length;
@@ -54,7 +54,7 @@ public class PostParam implements Serializable {
 	@Size(min = 0,max = 1,message = "数字超出限制范围!")
 	private Integer isOpen;
 	/** 图片集合 */
-	private List<Images> imageList;
+	private List<ImagesParam> imageParamList;
 	/** 评论数 */
 	private Integer commentCount;
 	/** 顶  */
@@ -67,8 +67,8 @@ public class PostParam implements Serializable {
 		if (null == userParam) {
 			userParam = new UserParam();
 		}
-		if (null == imageList) {
-			imageList = new ArrayList<>();
+		if (null == imageParamList) {
+			imageParamList = new ArrayList<>();
 		}
 	}
 	//================================== Method =======================================//
@@ -247,15 +247,15 @@ public class PostParam implements Serializable {
 	/**
 	 * @return 图片集合
 	 */
-	public List<Images> getImageList() {
-		return imageList;
+	public List<ImagesParam> getImageParamList() {
+		return imageParamList;
 	}
 
 	/**
-	 * @param imageList 图片集合
+	 * @param imageParamList 图片集合
 	 */
-	public void setImageList(List<Images> imageList) {
-		this.imageList = imageList;
+	public void setImageParamList(List<ImagesParam> imageParamList) {
+		this.imageParamList = imageParamList;
 	}
 
 	/**
@@ -320,7 +320,7 @@ public class PostParam implements Serializable {
 		post.setPostClassId(postClassId);
 		post.setShareId(shareId);
 		post.setIsOpen(isOpen);
-		post.setImageList(imageList);
+		post.setImageList(new ImagesBo().reverse(imageParamList));
 		post.setCommentCount(commentCount);
 		post.setDing(ding);
 		post.setCai(cai);
@@ -349,7 +349,7 @@ public class PostParam implements Serializable {
 		this.setPostClassId(post.getPostClassId());
 		this.setShareId(post.getShareId());
 		this.setIsOpen(post.getIsOpen());
-		this.setImageList(post.getImageList());
+		this.setImageParamList(new ImagesBo().adapter(post.getImageList()));
 		this.setCommentCount(post.getCommentCount());
 		this.setDing(post.getDing());
 		this.setCai(post.getCai());

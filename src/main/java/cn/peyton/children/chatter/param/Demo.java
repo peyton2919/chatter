@@ -1,6 +1,7 @@
 package cn.peyton.children.chatter.param;
 
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <h4></h4>
@@ -15,14 +16,27 @@ import java.util.regex.Pattern;
 public class Demo {
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        String reg = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-        String username ="968875";
-        //Pattern pattern = Pattern.compile(username);
-        //Matcher matcher = pattern.matcher(Regulation.REGEX_EMAIL_ALL);
-        //boolean b = matcher.matches();
-        //System.out.println(b);
+        List<String> _l1 = new ArrayList<>();
+        _l1.add("1");
+        _l1.add("2");
+        _l1.add("3");
 
-        Boolean bbb = Pattern.matches(reg, username);
-        System.out.println(bbb);
+        //for (String _l : _l1) {
+        //    System.out.println(_l);
+        //}
+        _l1.clear();
+        List<String> _l2 = new ArrayList<>();
+        _l2.add("4");
+        _l2.add("5");
+        _l2.add("6");
+
+        _l1 = _l2;
+
+        for (String _l : _l1) {
+            System.out.println(_l);
+        }
+
+
+
     }
 }

@@ -34,6 +34,7 @@ public interface PROPERTY {
     /** 头像图片 存放位置 */
     String PATH_IMG_AVATAR = getLocation()+"static/images/avatar/";
 
+
     /** 邮箱 */
     String NAME_EMAIL = "邮箱";
     /** 手机 */

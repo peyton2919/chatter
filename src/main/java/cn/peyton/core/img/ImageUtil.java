@@ -582,7 +582,7 @@ public final class ImageUtil implements Serializable {
      * @throws IOException
      */
     @SuppressWarnings("static-access")
-    private static void insideScale(BufferedImage src, String result, int height, int width, boolean bb)
+    private static void insideScale(BufferedImage src, String result, Integer height, Integer width, boolean bb)
             throws IOException {
         // 缩放比例
         double ratio = 0.0d;
@@ -617,7 +617,7 @@ public final class ImageUtil implements Serializable {
         ImageIO.write((BufferedImage) iTemp, IMAGE_TYPE_JPEG, new File(result));
     }
 
-    private static void insideScale(BufferedImage src, String destImageFileAndName, int scale, boolean flag)
+    private static void insideScale(BufferedImage src, String destImageFileAndName, Integer scale, boolean flag)
             throws IOException {
         // 得到源图宽
         int width = src.getWidth();

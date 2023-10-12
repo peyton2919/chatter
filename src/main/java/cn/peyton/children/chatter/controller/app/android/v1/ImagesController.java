@@ -9,12 +9,13 @@ import cn.peyton.core.enums.HttpStatusCode;
 import cn.peyton.core.enums.PROPERTY;
 import cn.peyton.core.img.ImageProcessing;
 import cn.peyton.core.json.JSONResult;
+import cn.peyton.core.toolkit.HttpServletRequestTools;
 import cn.peyton.core.toolkit.base.Lists;
 import jakarta.annotation.Resource;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,13 +42,14 @@ public class ImagesController extends AppController {
 
 	// 上传单图或多图
 	@PostMapping(value = "/user/imgs/uploadmore")
-	public JSONResult<List<ImagesParam>> uploadMore(@RequestParam("files") MultipartFile[] files, HttpServletRequest request) throws IOException {
+	public JSONResult<List<ImagesParam>> uploadMore(List<MultipartFile> files) throws IOException, ServletException {
+		HttpServletRequest request = HttpServletRequestTools.getRequest();
 		HttpSession session = request.getSession();
 		UserParam _userParam = (UserParam) session.getAttribute(PROPERTY.SESSION_USER);
 		//todo
 		_userParam = userService.findById(1);
-		List<ImagesParam> _list = Lists.newArrayList();
 
+		List<ImagesParam> _list = Lists.newArrayList();
 		ImagesParam _p = null;
 		if (null != files) {
 			for (MultipartFile file : files) {
@@ -60,6 +62,8 @@ public class ImagesController extends AppController {
 				_list.add(_p);
 			}
 			List<ImagesParam> _results = imagesService.insertBatch(_list,_userParam,"测试数据",100);
+			// 图片集合返回前保存到 session 中,在提交帖子的时候 在 session 中获取 图片集合
+			session.setAttribute(KEY_SESSION_IMAGES,_results);
 			return JSONResult.success(_results);
 		}
 

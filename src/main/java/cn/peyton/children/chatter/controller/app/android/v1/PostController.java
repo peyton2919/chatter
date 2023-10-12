@@ -1,8 +1,11 @@
 package cn.peyton.children.chatter.controller.app.android.v1;
 
 import cn.peyton.children.chatter.controller.base.AppController;
+import cn.peyton.children.chatter.param.ImagesParam;
+import cn.peyton.children.chatter.param.PostImageParam;
 import cn.peyton.children.chatter.param.PostParam;
 import cn.peyton.children.chatter.param.UserParam;
+import cn.peyton.children.chatter.service.PostImageService;
 import cn.peyton.children.chatter.service.PostService;
 import cn.peyton.core.enums.HttpStatusCode;
 import cn.peyton.core.enums.PROPERTY;
@@ -20,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +40,8 @@ public class PostController extends AppController {
 
 	@Resource
 	private PostService postService;
+	@Resource
+	private PostImageService postImageService;
 
 	// 发表文章详情
 	@PostMapping("/user/post/add")
@@ -44,24 +50,36 @@ public class PostController extends AppController {
 	public JSONResult<PostParam> add(PostParam postParam, HttpServletRequest request) {
 		postParam.getUserParam().setId(1);
 		//todo
-		//HttpSession session = request.getSession();
-		//UserParam _userParam = (UserParam) session.getAttribute(PROPERTY.SESSION_USER);
-		//postParam.setUserParam(_userParam);
-		//postParam.setPath(_userParam.getUserInfoParam().getPath());
-		//String na = "";
-		//postParam.setTitle(StringTools.substring(postParam.getContent(),0,20));
-		//
-
-		// todo 连接图片
-		// 创建post_image 关联表
+		HttpSession session = request.getSession();
+		UserParam _userParam = (UserParam) session.getAttribute(PROPERTY.SESSION_USER);
 
 		// todo 更新数据
-
-		if (postService.add(postParam)) {
-			return JSONResult.success(postParam);
+		if (!postService.add(postParam)) {
+			return JSONResult.fail(HttpStatusCode.ERR_ADD_FAILED,postParam);
 		}
-
-		return JSONResult.fail(HttpStatusCode.ERR_ADD_FAILED);
+		// todo 连接图片
+		// 创建post_image 关联表
+		// 从 session 中获取图片
+		List<ImagesParam> _images = (List<ImagesParam>) request.getSession().getAttribute(KEY_SESSION_IMAGES);
+		if (null != _images) {
+			int _postId = postParam.getId();
+			// 拼装 postImage 对象
+			List<PostImageParam> _pips = new ArrayList<>();
+			for (ImagesParam _ip : _images) {
+				PostImageParam _p = new PostImageParam();
+				_p.setPostId(_postId);
+				_p.setImageId(_ip.getId());
+				_pips.add(_p);
+			}
+			_pips = postImageService.insertBatch(_pips);
+			if (null == _pips) {
+				return JSONResult.fail(HttpStatusCode.ERR_ADD_FAILED, postParam);
+			}
+			postParam.setImageParamList(_images);
+		} else {
+			return JSONResult.fail(HttpStatusCode.ERR_LACK_IMAGES);
+		}
+		return JSONResult.success(postParam);
 	}
 
 	// 获取文章详情

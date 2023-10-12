@@ -1,5 +1,6 @@
 package cn.peyton.children.chatter.controller.app.android.v1;
 
+import cn.peyton.children.chatter.controller.base.AppController;
 import cn.peyton.children.chatter.param.AdsenseParam;
 import cn.peyton.children.chatter.service.AdsenseService;
 import cn.peyton.core.json.JSONResult;
@@ -24,7 +25,7 @@ import java.util.List;
  * </pre>
 */
 @RestController
-public class AdsenseController {
+public class AdsenseController extends AppController {
 
 	@Resource
 	private AdsenseService adsenseService;

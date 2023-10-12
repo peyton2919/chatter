@@ -35,7 +35,6 @@ import java.util.Map;
 @Aspect
 @Component
 @Slf4j
-@Valid
 public class ValidationAspect {
 
     /**

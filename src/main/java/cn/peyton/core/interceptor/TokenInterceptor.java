@@ -41,7 +41,6 @@ public class TokenInterceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
         Token methodAnnotation = method.getAnnotation(Token.class);
 
-
         // 有 @Token 注解，需要认证
         if (null != methodAnnotation) {
             response.setCharacterEncoding("UTF-8");
@@ -51,14 +50,14 @@ public class TokenInterceptor implements HandlerInterceptor {
                 response.setStatus(200);
 
                 HttpServletResponseTools.returnJson(
-                        response, JsonMapper.toJSon(JSONResult.error(HttpStatusCode.ERR_ILLEGAL_TOKEN.getMsg())));
+                        response, JsonMapper.toJSon(JSONResult.fail(HttpStatusCode.ERR_ILLEGAL_TOKEN)));
                 return false;
             } else {
                 if (!tokenTools.verify(accessToken)) {
                     //
                     response.setStatus(200);
                     HttpServletResponseTools.returnJson(
-                            response, JsonMapper.toJSon(JSONResult.fail(HttpStatusCode.ERR_TOKEN_EXPIRE.getMsg())));
+                            response, JsonMapper.toJSon(JSONResult.fail(HttpStatusCode.ERR_TOKEN_EXPIRE)));
                     return false;
                 }
             }
