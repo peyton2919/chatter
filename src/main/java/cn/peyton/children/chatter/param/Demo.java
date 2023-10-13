@@ -1,8 +1,5 @@
 package cn.peyton.children.chatter.param;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * <h4></h4>
  * <pre>
@@ -16,27 +13,23 @@ import java.util.List;
 public class Demo {
 
     public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
-        List<String> _l1 = new ArrayList<>();
-        _l1.add("1");
-        _l1.add("2");
-        _l1.add("3");
+        String str = "sk中国{  #s= }3";
+        boolean contains = isP(str);
 
-        //for (String _l : _l1) {
-        //    System.out.println(_l);
-        //}
-        _l1.clear();
-        List<String> _l2 = new ArrayList<>();
-        _l2.add("4");
-        _l2.add("5");
-        _l2.add("6");
+        System.out.println(contains);
+    }
 
-        _l1 = _l2;
-
-        for (String _l : _l1) {
-            System.out.println(_l);
+    public static boolean isP(String str) {
+        int _first = 0, _second = 0, _third = 0;
+        _first = str.indexOf('{');
+        _second = str.indexOf('#');
+        if (_second <=_first){
+            return false;
         }
-
-
-
+        _third = str.indexOf('}');
+        if (_third > (_second + 3)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -1,7 +1,7 @@
 package cn.peyton.children.chatter.toolkit;
 
+import cn.peyton.children.chatter.controller.base.AppController;
 import cn.peyton.children.chatter.param.UserParam;
-import cn.peyton.core.enums.PROPERTY;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -40,7 +40,7 @@ public final class UserTools implements Serializable {
     public final static UserParam getUserParam(HttpServletRequest request, String key) {
         HttpSession session = request.getSession();
         if (key == null) {
-            return (UserParam) session.getAttribute(PROPERTY.SESSION_USER);
+            return (UserParam) session.getAttribute(AppController.SESSION_USER);
         }
         return (UserParam) session.getAttribute(key);
     }

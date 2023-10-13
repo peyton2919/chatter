@@ -82,6 +82,12 @@
 
         <!--  必选项 支持 core 结束 -->
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!--  阿里大于{短信}  -->
         <dependency>
             <groupId>com.aliyun</groupId>

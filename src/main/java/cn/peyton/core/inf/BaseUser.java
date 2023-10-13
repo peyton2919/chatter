@@ -29,6 +29,7 @@ public abstract class BaseUser<K,T> implements IUser, Serializable {
     public String getUserType() {
         return abstractUserType();
     }
+
     /**
      * <h4>设置用户类型 数值[强制子类实现]</h4>
      * @return -1为错误 0，1，2，3 正常

@@ -272,6 +272,7 @@ public enum HttpStatusCode {
         }
         return null;
     }
+
     /**
      * <h3>私有的构造函数</h3>
      * @param code 结果状态 状态标识

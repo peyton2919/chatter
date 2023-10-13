@@ -1,6 +1,6 @@
 package cn.peyton.children.chatter.controller.app.android.v1;
 
-import cn.peyton.children.chatter.controller.base.AppController;
+import cn.peyton.children.chatter.controller.hint.UserHintMessage;
 import cn.peyton.children.chatter.param.UserBindParam;
 import cn.peyton.children.chatter.param.UserInfoParam;
 import cn.peyton.children.chatter.param.UserParam;
@@ -47,7 +47,7 @@ import java.util.regex.Pattern;
  * </pre>
 */
 @RestController
-public class UserController extends AppController {
+public class UserController extends UserHintMessage {
 
 
 
@@ -81,6 +81,7 @@ public class UserController extends AppController {
 			@Phone
 			String phone, HttpServletRequest request) {
 
+
 		// 判断是否可用 ,返回 true 表示应该手机被禁用
 		if (userService.isStatus(phone, PROPERTY.PHONE, 0)) {
 			return JSONResult.fail(HttpStatusCode.ERR_USER_DISABLED);
@@ -88,8 +89,8 @@ public class UserController extends AppController {
 		//先判断手机号码 是否存在, 不存在就返回;
 		UserParam _user = userService.findByPhone(phone);
 		if (null == _user) {
-
-			return JSONResult.fail(HttpStatusCode.ERR_PHONE_UNREGISTERED);
+			return JSONResult.fail(PASSWORD_NOT_NULL);
+			//return JSONResult.fail(HttpStatusCode.ERR_PHONE_UNREGISTERED);
 		}
 
 		// 判断是否已经提交过
@@ -301,8 +302,7 @@ public class UserController extends AppController {
 		Matcher matcher;
 		if (PROPERTY.EMAIL.equals(type)) {
 			pattern = Pattern.compile(Regulation.REGEX_EMAIL_ALL);
-		}
-		if (PROPERTY.PHONE.equals(type)) {
+		}else if (PROPERTY.PHONE.equals(type)) {
 			pattern = Pattern.compile(Regulation.REGEX_PHONE);
 		}
 		if (PROPERTY.EMAIL.equals(type) || PROPERTY.PHONE.equals(type)) {
@@ -310,14 +310,15 @@ public class UserController extends AppController {
 			//验证不通过
 			if (!matcher.matches()) {
 				return JSONResult.fail(
-						((PROPERTY.PHONE.equals(type)) ? HttpStatusCode.ERR_PHONE.getCode() : HttpStatusCode.ERR_EMAIL.getCode()),
-						(PROPERTY.PHONE.equals(type)) ? HttpStatusCode.ERR_PHONE.getMsg() : HttpStatusCode.ERR_EMAIL.getMsg());
+						((PROPERTY.PHONE.equals(type)) ? HttpStatusCode.ERR_PHONE : HttpStatusCode.ERR_EMAIL));
 			}
 		}
-
+		HttpStatusCode _statusCode = HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND;
 		// 需要配置 AuthenticationInterceptor 拦截器,判断用户已经存到session中,否则可能转换异常
 		UserParam _user = UserTools.getUserParam(request);
-
+		if (null == _user) {
+			return JSONResult.fail(HttpStatusCode.ERR_NEED_LOGIN);
+		}
 		//申明 值 和 类型 并赋值
 		String _sessionType = _user.getLoginType();
 		String _tmpType = ""; //临时类型
@@ -332,24 +333,25 @@ public class UserController extends AppController {
 			_tmpMsg = PROPERTY.NAME_PHONE;
 			_tmpValue = _user.getPhone();
 		}
-
-		// 判断 当前登录方式
-		if (_tmpType.equals(_sessionType)) {
-			return JSONResult.fail(HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getCode(),
-					HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getMsg() + _tmpMsg);
+		if (_tmpValue.equals(value)) {
+			return JSONResult.fail(_statusCode.getCode(), (_tmpMsg + _statusCode.getMsg()));
 		}
 
-		// 判断当前用户的有没有绑定
-		if (null != _tmpValue && !"".equals(_tmpValue)) {
-			return JSONResult.fail(HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getCode(),
-					HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getMsg() + _tmpMsg);
+		// 判断 当前登录方式(手机或邮箱),这二种方式其中一处方式就返回已经绑定信息
+		if (_tmpType.equals(_sessionType)) {
+
+			JSONResult.fail(_statusCode.getCode(), (_tmpMsg + _statusCode.getMsg()));
+		}
+
+		// 判断当前用户的是否绑定（手机/邮箱)
+		if (null != _tmpValue && !"".equals(_tmpValue) && _sessionType.equals(type)) {
+			JSONResult.fail(_statusCode.getCode(), (_tmpMsg + _statusCode.getMsg()));
 		}
 		_tmpValue = value;
 		if (PROPERTY.EMAIL.equals(type)){
 			// 判断该 邮箱 是否绑定了其他用户
 			if (userService.isBindEmail(_user.getId(),_tmpValue)) {
-				return JSONResult.fail(HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getCode(),
-						HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getMsg() + _tmpMsg);
+				return JSONResult.fail(_statusCode.getCode(), (_tmpMsg + _statusCode.getMsg()));
 			}
 			_user.setEmail(_tmpValue);
 			if (userService.updateEmail(_user)) {
@@ -358,15 +360,14 @@ public class UserController extends AppController {
 		} else if (PROPERTY.PHONE.equals(type)) {
 			// 判断该手机是否绑定了其他用户
 			if (userService.isBindPhone(_user.getId(),_tmpValue)) {
-				return JSONResult.fail(HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getCode(),
-						HttpStatusCode.ERR_BINDING_HAS_BEEN_BOUND.getMsg() + _tmpMsg);
+				return JSONResult.fail(_statusCode.getCode(), (_tmpMsg + _statusCode.getMsg()));
 			}
 			_user.setPhone(_tmpValue);
 			if (userService.updatePhone(_user)) {
-				return JSONResult.success(_tmpMsg + HttpStatusCode.SUCCESS_BINDING);
+				return JSONResult.success(_tmpMsg + HttpStatusCode.SUCCESS_BINDING.getMsg());
 			}
 		}
-		return JSONResult.fail(HttpStatusCode.ERR_BINDING.getCode(), _tmpMsg + HttpStatusCode.ERR_BINDING.getMsg());
+		return JSONResult.fail(_statusCode.getCode(), (_tmpMsg + _statusCode.getMsg()));
 	}
 
 	// 绑定第三方账号; 需要 类型有 {qq,weixin,sinaweibo}
