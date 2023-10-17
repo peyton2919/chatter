@@ -24,7 +24,7 @@ public class UserParam implements Serializable {
 	private Integer id;
 	/** 名字  */
 	@NotBlank(message = "用户名称不能为空！")
-	@Length(min = 6,max = 30,message = "用户名称长度为6~30个字符！")
+	@Length(min = 4,max = 30,message = "用户名称长度为4~30个字符！")
 	private String username;
 	/** 头像  */
 	private String userPic;

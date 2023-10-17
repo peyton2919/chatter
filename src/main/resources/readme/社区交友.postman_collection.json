@@ -1,0 +1,1294 @@
+{
+	"info": {
+		"_postman_id": "06a4db5d-bac0-45d3-b23d-2015095b6120",
+		"name": "社区交友",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17928620"
+	},
+	"item": [
+		{
+			"name": "测试页面",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/test",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"test"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "xiaolong12",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "account",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "发送验证码",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/sendcode?phone=13500001234",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"sendcode"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "13500001234",
+							"description": "手机号码"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户注册",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/reg?username=xiaolong&password=123456&phone=13622223333&email=968875@qq.com&confirmPwd=123456",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"reg"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "xiaolong"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						},
+						{
+							"key": "phone",
+							"value": "13622223333"
+						},
+						{
+							"key": "email",
+							"value": "968875@qq.com"
+						},
+						{
+							"key": "confirmPwd",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "手机登录",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXl0b24ueXUiLCJleHAiOjE2OTY4MjY0MjUsImlhdCI6MTY5NjgyNTUyNSwiVE9LRU5fUEhPTkVfMjIwMzIzMTY0MSI6IntcImlkXCI6MSxcInVzZXJuYW1lXCI6XCIxMzUwMDAwMTIzNFwiLFwidXNlclBpY1wiOlwiaHR0cHM6Ly9jZXNoaTIuZGlzaGFpdC5jbi8vdXBsb2Fkcy8yMDIwMDExNS9kNzJkZjY1MWQ1MmFlNWFmOWQ5ZmY5YjQxNmNlZDc5Ny5qcGdcIixcInBhc3N3b3JkXCI6bnVsbCxcImNvbmZpcm1Qd2RcIjpudWxsLFwicGhvbmVcIjpcIjEzNTAwMDAxMjM0XCIsXCJlbWFpbFwiOlwiMTI1ODYzQHFxLmNvbVwiLFwic3RhdHVzXCI6bnVsbCxcImNyZWF0ZVRpbWVcIjpcIjIwMjItMDMtMTcgMjA6MTU6MTNcIixcImxvZ2luVHlwZVwiOlwicGhvbmVcIixcInRva2VuXCI6bnVsbCxcInVzZXJJbmZvUGFyYW1cIjp7XCJpZFwiOjEsXCJ1c2VySWRcIjoxLFwiYWdlXCI6MjAsXCJzZXhcIjoyLFwicWdcIjoxLFwiam9iXCI6XCJJVFwiLFwicGF0aFwiOlwi5ZCJ5p6X55yBLemVv-aYpeW4gi3ljZflhbPljLpcIixcImJpcnRoZGF5XCI6XCIxOTk2LTA2LTI5XCJ9LFwidXNlckJpbmRQYXJhbXNcIjpbXX0ifQ.dSpTAwcKeVEhREqiDeLBg_8pW3i-ebsGXf2_KRSFCJQ",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwZXl0b24ueXUiLCJleHAiOjE2OTY4MjY0MjUsImlhdCI6MTY5NjgyNTUyNSwiVE9LRU5fUEhPTkVfMjIwMzIzMTY0MSI6IntcImlkXCI6MSxcInVzZXJuYW1lXCI6XCIxMzUwMDAwMTIzNFwiLFwidXNlclBpY1wiOlwiaHR0cHM6Ly9jZXNoaTIuZGlzaGFpdC5jbi8vdXBsb2Fkcy8yMDIwMDExNS9kNzJkZjY1MWQ1MmFlNWFmOWQ5ZmY5YjQxNmNlZDc5Ny5qcGdcIixcInBhc3N3b3JkXCI6bnVsbCxcImNvbmZpcm1Qd2RcIjpudWxsLFwicGhvbmVcIjpcIjEzNTAwMDAxMjM0XCIsXCJlbWFpbFwiOlwiMTI1ODYzQHFxLmNvbVwiLFwic3RhdHVzXCI6bnVsbCxcImNyZWF0ZVRpbWVcIjpcIjIwMjItMDMtMTcgMjA6MTU6MTNcIixcImxvZ2luVHlwZVwiOlwicGhvbmVcIixcInRva2VuXCI6bnVsbCxcInVzZXJJbmZvUGFyYW1cIjp7XCJpZFwiOjEsXCJ1c2VySWRcIjoxLFwiYWdlXCI6MjAsXCJzZXhcIjoyLFwicWdcIjoxLFwiam9iXCI6XCJJVFwiLFwicGF0aFwiOlwi5ZCJ5p6X55yBLemVv-aYpeW4gi3ljZflhbPljLpcIixcImJpcnRoZGF5XCI6XCIxOTk2LTA2LTI5XCJ9LFwidXNlckJpbmRQYXJhbXNcIjpbXX0ifQ.dSpTAwcKeVEhREqiDeLBg_8pW3i-ebsGXf2_KRSFCJQ",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseurl}}/phonelogin?phone=13500001234&code=784333",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"phonelogin"
+					],
+					"query": [
+						{
+							"key": "phone",
+							"value": "13500001234"
+						},
+						{
+							"key": "code",
+							"value": "784333"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/login?username=112233@qq.com&password=123456",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "112233@qq.com"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "第三方登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/otherlogin?type=qq&openId=oU5Yyt95Owu3xcBDjMrEoM6RuKRc54&expiresIn&nickName&avatarUrl",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"otherlogin"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "qq"
+						},
+						{
+							"key": "openId",
+							"value": "oU5Yyt95Owu3xcBDjMrEoM6RuKRc54"
+						},
+						{
+							"key": "expiresIn",
+							"value": null
+						},
+						{
+							"key": "nickName",
+							"value": null
+						},
+						{
+							"key": "avatarUrl",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "退出登录",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/logout?type=account1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"logout"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "account1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户绑定{手机/邮箱}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/bind?value=223344@qq.com&type=email",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"bind"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "13500223377",
+							"disabled": true
+						},
+						{
+							"key": "type",
+							"value": "phone",
+							"disabled": true
+						},
+						{
+							"key": "value",
+							"value": "223344@qq.com"
+						},
+						{
+							"key": "type",
+							"value": "email"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "绑定第三方账号",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/bindother",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"bindother"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户关注",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/follow?followId=46000",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"follow"
+					],
+					"query": [
+						{
+							"key": "followId",
+							"value": "46000",
+							"description": "46"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "取消关注",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/unfollow?followId=46",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"unfollow"
+					],
+					"query": [
+						{
+							"key": "followId",
+							"value": "46"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "互关列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/friends?pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"friends"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "粉丝列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/fens?pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"fens"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "关注列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/follows?pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"follows"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取所有文章分类",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/postclass",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"postclass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取所有话题分类",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/topicclass",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"topicclass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取热门话题",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/hottopic?topicClassId=1&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"hottopic"
+					],
+					"query": [
+						{
+							"key": "topicClassId",
+							"value": "1"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取指定话题分类下的话题列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/topic/classid?topicClassId=1&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"topic",
+						"classid"
+					],
+					"query": [
+						{
+							"key": "topicClassId",
+							"value": "1"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "上传单图或多图",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "files",
+							"type": "file",
+							"src": [
+								"/F:/Users/peytonyu/Desktop/2112.jpg",
+								"/F:/Users/peytonyu/Desktop/2113.jpg"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseurl}}/user/imgs/uploadmore",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"imgs",
+						"uploadmore"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "发布文章详情",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/post/add?title=富贵花&titlePic=https://ceshi2.dishait.cn//uploads/20200203/e2472d4acb9bcf8efc96e86cb6835a56.jpg&content=富贵花&path=北京市-市辖区-西城区&type=0&postClassId=1&isOpen=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"post",
+						"add"
+					],
+					"query": [
+						{
+							"key": "userParam.id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "富贵花"
+						},
+						{
+							"key": "titlePic",
+							"value": "https://ceshi2.dishait.cn//uploads/20200203/e2472d4acb9bcf8efc96e86cb6835a56.jpg"
+						},
+						{
+							"key": "content",
+							"value": "富贵花"
+						},
+						{
+							"key": "path",
+							"value": "北京市-市辖区-西城区"
+						},
+						{
+							"key": "type",
+							"value": "0"
+						},
+						{
+							"key": "postClassId",
+							"value": "1"
+						},
+						{
+							"key": "isOpen",
+							"value": "1"
+						},
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取文章详情",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/post/detail?id=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"post",
+						"detail"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取指定话题下的文章列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/post/topicid?topicId=1&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"post",
+						"topicid"
+					],
+					"query": [
+						{
+							"key": "topicId",
+							"value": "1"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取指定文章分类下的文章列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/post/postclassid?postClassId=1&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"post",
+						"postclassid"
+					],
+					"query": [
+						{
+							"key": "postClassId",
+							"value": "1"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取指定用户下的文章列表{游客可点}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/post/userid?userId=2&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"post",
+						"userid"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "2"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取指定用户下的文章列表 {含隐私}",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/post/pkuserid?pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"post",
+						"pkuserid"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "搜索话题",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "keyword",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "pageNo",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseurl}}/topic/search?keyword=1&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"topic",
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "1"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "搜索文章",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/post/search?keyword=我&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"post",
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "我"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "搜索用户",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/search?keyword=1&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "1"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取广告列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/adsense?type=0&pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"adsense"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "0"
+						},
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户顶踩",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/support?postId=334&type=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"support"
+					],
+					"query": [
+						{
+							"key": "postId",
+							"value": "334"
+						},
+						{
+							"key": "type",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户评论",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/comment?fId=4&postId=12&data=这是一个测试数据",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"comment"
+					],
+					"query": [
+						{
+							"key": "fId",
+							"value": "4",
+							"description": "4"
+						},
+						{
+							"key": "postId",
+							"value": "12",
+							"description": "12"
+						},
+						{
+							"key": "data",
+							"value": "这是一个测试数据"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取当前文章的所有评论",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/comment/postid?postId=12",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"comment",
+						"postid"
+					],
+					"query": [
+						{
+							"key": "postId",
+							"value": "12",
+							"description": "12"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "编辑用户头像",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/E:/图片/demo/demo6.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseurl}}/user/edituserpic",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"edituserpic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "编辑用户信息",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/edituserinfo?age=45&sex=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"edituserinfo"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "45"
+						},
+						{
+							"key": "sex",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "修改用户密码",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/repassword?oldPassword=1234567&newPassword=123456&confirmPassword=123456",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"repassword"
+					],
+					"query": [
+						{
+							"key": "oldPassword",
+							"value": "1234567"
+						},
+						{
+							"key": "newPassword",
+							"value": "123456"
+						},
+						{
+							"key": "confirmPassword",
+							"value": "123456"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加黑名单",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/addblack?blackId=27",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"addblack"
+					],
+					"query": [
+						{
+							"key": "blackId",
+							"value": "27",
+							"description": "27"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "移除黑名单",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/removeblack?blackId=27",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"removeblack"
+					],
+					"query": [
+						{
+							"key": "blackId",
+							"value": "27",
+							"description": "27"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "用户反馈",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/feedback?data=程序不稳定",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"feedback"
+					],
+					"query": [
+						{
+							"key": "data",
+							"value": "程序不稳定",
+							"description": "程序不稳定"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "获取用户反馈列表",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/user/feedbacklist?pageNo=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"user",
+						"feedbacklist"
+					],
+					"query": [
+						{
+							"key": "pageNo",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "检查更新",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/update?version=1.0.3",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"update"
+					],
+					"query": [
+						{
+							"key": "version",
+							"value": "1.0.3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加帖子分类",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/postclass/add?className=旅游7",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"postclass",
+						"add"
+					],
+					"query": [
+						{
+							"key": "className",
+							"value": "旅游7"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "根据ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/findById?id=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"findById"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "查找全部",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/test/测试数据999",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"测试数据999"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加话题分类",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/topicclass/add?className=娱乐",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"topicclass",
+						"add"
+					],
+					"query": [
+						{
+							"key": "className",
+							"value": "娱乐"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "添加话题",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseurl}}/topic/add?title=涨知识&titlePic=https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/1.jpeg&desc=快来涨知识一起进步吧&topicClassId=1",
+					"host": [
+						"{{baseurl}}"
+					],
+					"path": [
+						"topic",
+						"add"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "涨知识"
+						},
+						{
+							"key": "titlePic",
+							"value": "https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/1.jpeg"
+						},
+						{
+							"key": "desc",
+							"value": "快来涨知识一起进步吧"
+						},
+						{
+							"key": "topicClassId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
