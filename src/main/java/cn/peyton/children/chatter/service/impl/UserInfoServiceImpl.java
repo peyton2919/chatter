@@ -23,7 +23,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 	@Override
 	public boolean updateUserInfo(UserInfoParam param) {
-		UserInfo userInfo = userInfoMapper.findByUserId(param.convert().getUserId());
+		UserInfo userInfo = userInfoMapper.findByUserId(param.getUserId());
 		int result = 0;
 		if (null == userInfo) {
 			result = userInfoMapper.insertSelective(param.convert());

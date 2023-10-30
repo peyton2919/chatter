@@ -1326,7 +1326,7 @@ INSERT INTO `post` VALUES (327, 341, '测试测试', '', '测试测试', 0, '北
 INSERT INTO `post` VALUES (328, 341, '是不是', '', '是不是', 0, '北京市-市辖区-西城区', 0, 1647519313, 1, 0, 1);
 INSERT INTO `post` VALUES (329, 341, '复印', '', '复印', 0, '北京市-市辖区-西城区', 0, 1647519313, 7, 0, 1);
 
--- 邮件分类
+-- 帖子分类
 INSERT INTO `post_class` VALUES (1, '关注', 1, 1647506672);
 INSERT INTO `post_class` VALUES (2, '推荐', 1, 1647506672);
 INSERT INTO `post_class` VALUES (3, '体育', 1, 1647506672);

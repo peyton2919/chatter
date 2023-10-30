@@ -68,7 +68,6 @@
 			id,class_name
 		from topic_class
 		where status = 1
-		order by create_time desc
 	</select>
 
 	<select id="isRename" resultType="java.lang.Integer" parameterType="java.lang.String">

@@ -17,14 +17,5 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 //@Configuration
 public class CorsConfig implements WebMvcConfigurer {
-    //@Override
-    //public void addCorsMappings(CorsRegistry registry) {
-    //    registry.addMapping("/")
-    //            // 否是发送 cookie
-    //            .allowCredentials(true)
-    //            .allowedOriginPatterns("*")
-    //            .allowedMethods(new String[]{"GET", "POST", "PUT", "DELETE"})
-    //            .allowedHeaders(new String[]{"Access-Control-Allow-Origin"})
-    //            .exposedHeaders(new String[]{});
-    //}
+
 }

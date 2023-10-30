@@ -17,6 +17,12 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD,ElementType.TYPE}) //表明此注解可用在方法上
 @Retention(RetentionPolicy.RUNTIME) //运行时有效
 public @interface Token {
-
+    /**
+     * <h4>用于验证 token </h4>
+     * @return
+     */
     boolean required() default true;
+
+    //虽然没用到，但是要加上
+    Class<?>[] groups() default {};
 }

@@ -96,4 +96,11 @@
 		from support
 		where post_id=#{postId} and type =1
 	</select>
+
+	<select id="findByPostIdAndUserId" resultMap="ResultSupportMap"  parameterType="java.util.Map">
+		select
+		<include refid="Column_support_List"/>
+		from support
+		where post_id = #{id} and user_id=#{userId}
+	</select>
 </mapper>

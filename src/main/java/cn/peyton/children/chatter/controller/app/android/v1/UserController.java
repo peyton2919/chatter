@@ -27,6 +27,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -120,7 +121,7 @@ public class UserController extends UserHintMessage {
 
 		//todo 后期更新 阿里大于
 		//AliSMSUtil.sendCode(phone, code.toString());
-		LogTools.error("发送");
+
 		//发送验证逻辑
 		return JSONResult.success(MessageTools.createSMSTemplate(code + ""));
 	}
@@ -145,7 +146,6 @@ public class UserController extends UserHintMessage {
 	// 手机登录
 	@PostMapping("/phonelogin")
 	@Valid
-	@Token
 	public JSONResult<UserParam> phoneLogin(@NotBlank(message = "手机号不能为空！") String phone,
 											@NotBlank(message = "验证码不能为空！") String code,
 											HttpServletRequest request) {
@@ -154,8 +154,6 @@ public class UserController extends UserHintMessage {
 
 			return JSONResult.fail(HttpStatusCode.ERR_USER_DISABLED);
 		}
-
-
 		//用手机号码 查找 为空表示该用户不存在
 		UserParam _param = userService.findByPhone(phone);
 		if (null == _param){
@@ -179,7 +177,8 @@ public class UserController extends UserHintMessage {
 			// token 工具类
 			TokenTools _tokenTools = new TokenTools();
 			//创建 token
-			String token = _tokenTools.sign(KEY_TOKEN_PHONE, _param);
+			String token = _tokenTools.sign(KEY_TOKEN, _param,24*60*60*1000L);
+
 			// token 赋值到 _param 对象
 			_param.setToken(token);
 			// 把 _param 对象存在 session 中
@@ -217,8 +216,9 @@ public class UserController extends UserHintMessage {
 		_param.setLoginType(_loginType);
 		// token 工具类
 		TokenTools tokenTools = new TokenTools();
+
 		//创建 token
-		String token = tokenTools.sign(KEY_TOKEN_ACCOUNT, _param);
+		String token = tokenTools.sign(KEY_TOKEN, _param,24*60*60*1000L);
 
 		// token 赋值到 _param 对象
 		_param.setToken(token);
@@ -276,7 +276,7 @@ public class UserController extends UserHintMessage {
 	private void createUserParam(UserParam _userParam, UserBindParam param, HttpSession session) {
 		_userParam.setLoginType(PROPERTY.OTHER);
 		TokenTools tokenTools = new TokenTools();
-		String token = tokenTools.sign(KEY_TOKEN_OTHER, _userParam, param.getExpiresIn());
+		String token = tokenTools.sign(KEY_TOKEN, _userParam, param.getExpiresIn());
 		_userParam.setToken(token);
 		session.setAttribute(SESSION_USER,_userParam);
 	}
@@ -288,6 +288,24 @@ public class UserController extends UserHintMessage {
 		session.removeAttribute(SESSION_USER);
 		return JSONResult.success(HttpStatusCode.SUCCESS_OUT_LOGIN.getMsg());
 	}
+
+	// todo 不做处理
+	@Valid
+	@PostMapping("/user/bindphone")
+	@Token
+	public JSONResult bindPhone(@Phone String phone,String code,
+								HttpServletRequest request){
+		HttpSession session = request.getSession();
+		String _reCode = (String) session.getAttribute(KEY_SESSION_PHONE_CODE);
+		if (null == _reCode){
+			return JSONResult.fail("验证码出错了");
+		}
+		if (code.equals(_reCode)) {
+
+		}
+		return JSONResult.fail("验证码出错了");
+	}
+
 
 	// 用户手机、邮箱 绑定
 	@PostMapping("/user/bind")
@@ -414,6 +432,7 @@ public class UserController extends UserHintMessage {
 	public JSONResult editUserPic(MultipartFile file, HttpServletRequest request) {
 		UserParam _user = UserTools.getUserParam(request);
 		String _path = null;
+		boolean _ub = true;
 		if (null == file) {
 			return JSONResult.fail(HttpStatusCode.ERR_NOT_OTHER);
 		}
@@ -424,26 +443,47 @@ public class UserController extends UserHintMessage {
 			e.printStackTrace();
 			return JSONResult.fail(HttpStatusCode.ERR_ERROR_FILE);
 		}
-		try {
-			if (userService.updateUserPic(_user.getId(), _path)) {
 
-				return JSONResult.success(HttpStatusCode.SUCCESS_AVATAR_UPDATE.getMsg(), _path);
+		try {
+			if (userService.updateUserPic(_user.getId(), (PROPERTY.PATH_IMG_AVATAR_SIMPLE + _path))) {
+				_ub = false;
+				return JSONResult.success(HttpStatusCode.SUCCESS_AVATAR_UPDATE.getMsg(), (PROPERTY.PATH_IMG_AVATAR_SIMPLE + _path));
 			}
 		} catch (Exception e) {
-
+			LogTools.error(e.getMessage());
 		}finally {
-			//删除头像
-			FileTools.delFile(PROPERTY.PATH_IMG_AVATAR + _path);
+			if (_ub){
+				//删除头像
+				FileTools.delFile(PROPERTY.PATH_IMG_AVATAR + _path);
+			}
 		}
 
 		return JSONResult.fail(HttpStatusCode.ERR_AVATAR_UPDATE);
 	}
 
 	// 编辑用户资料
+	@Transactional
+	@Token
 	@Valid
 	@PostMapping("/user/edituserinfo")
-	public JSONResult<UserInfoParam> editUserInfo(UserInfoParam param, HttpServletRequest request) {
-		UserParam _user = UserTools.getUserParam(request);
+	public JSONResult<UserInfoParam> editUserInfo(UserInfoParam param,String name, HttpServletRequest request) {
+		//UserParam _user = UserTools.getUserParam(request);
+		String _tokenValues = request.getHeader(TokenTools.Property.ACCESS_TOKEN);
+		TokenTools<UserParam> tokenTools = new TokenTools<UserParam>();
+		UserParam _user = tokenTools.getObject(KEY_TOKEN, _tokenValues, new UserParam());
+		if(null == _user){
+			return JSONResult.fail(HttpStatusCode.ERR_ILLEGAL_TOKEN);
+		}
+		if(!name.equals(_user.getUsername())){
+			// 判断重名
+			_user.setUsername(name);
+			if(userService.isRename(_user)){
+				return JSONResult.fail(HttpStatusCode.ERR_USER_NAME_BE_USED);
+			}
+			if (!userService.updateName(_user.getId(),name)){
+				return JSONResult.fail(HttpStatusCode.ERR_USER_UPDATE);
+			}
+		}
 		param.setUserId(_user.getId());
 		if (userInfoService.updateUserInfo(param)) {
 			return JSONResult.success(HttpStatusCode.SUCCESS_USER_UPDATE.getMsg(), param);

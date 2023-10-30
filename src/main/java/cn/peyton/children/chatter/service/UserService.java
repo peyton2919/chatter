@@ -141,6 +141,14 @@ public interface UserService {
     boolean updatePassword(Integer id, String password);
 
     /**
+     * <h4>更新 名称</h4>
+     * @param id 编号
+     * @param username 名称
+     * @return true 表示 更新成功; false表示 取反;
+     */
+    boolean updateName(Integer id, String username);
+
+    /**
      * <h4>判断用户编号 是否存在</h4>
      * @param userId 用户编号
      * @return  true 表示 用户存在; false 表示 取反;

@@ -3,6 +3,7 @@ package cn.peyton.children.chatter.param;
 
 import cn.peyton.children.chatter.pojo.Support;
 import cn.peyton.core.inf.BaseConvertBo;
+import cn.peyton.core.validator.constraints.NotBlank;
 import cn.peyton.core.validator.constraints.Size;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class SupportParam implements Serializable {
 	/** 发布人  */
 	private Integer userId;
 	/** 帖子id  */
+	@NotBlank(message = "帖子编号不能为空")
 	private Integer postId;
 	/** 0 顶 1踩  */
 	@Size(min = 0,max = 1,message = "数值超出规定范围！")

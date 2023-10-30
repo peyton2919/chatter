@@ -1,5 +1,6 @@
 package cn.peyton.children.chatter.controller.app.android.v1;
 
+import cn.peyton.children.chatter.controller.base.AppController;
 import cn.peyton.children.chatter.param.CommentParam;
 import cn.peyton.children.chatter.param.UserParam;
 import cn.peyton.children.chatter.service.CommentService;
@@ -12,6 +13,7 @@ import cn.peyton.core.validator.constraints.Min;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +29,7 @@ import java.util.List;
  * </pre>
 */
 @RestController
-public class CommentController {
+public class CommentController extends AppController {
 
 	@Resource
 	private CommentService commentService;
@@ -62,7 +64,7 @@ public class CommentController {
 	}
 
 	// 获取当前文章的所有评论
-	@PostMapping("/comment/postid")
+	@GetMapping("/comment/postid")
 	@Valid
 	public JSONResult<List<CommentParam>> findByPostId(
 			@Min(value = 0,message = "参数值要大于0！") Integer postId) {

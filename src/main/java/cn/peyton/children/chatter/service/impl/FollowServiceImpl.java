@@ -1,15 +1,16 @@
 package cn.peyton.children.chatter.service.impl;
 
-import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.FollowBo;
 import cn.peyton.children.chatter.mapper.FollowMapper;
 import cn.peyton.children.chatter.param.FollowParam;
 import cn.peyton.children.chatter.pojo.Follow;
 import cn.peyton.children.chatter.service.FollowService;
 import cn.peyton.core.page.PageQuery;
+import cn.peyton.core.toolkit.DateTools;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,10 +37,10 @@ public class FollowServiceImpl implements FollowService {
 		return followMapper.checkFollow(followId, userId) > 0 ? true : false;
 	}
 
-	@AutoWriteTimestamp
 	@Override
 	public boolean add(int userId, int followId) {
 		Follow _follow = new Follow();
+		_follow.setCreateTime(DateTools.dateToTimestamp(new Date()));
 		_follow.getFollowUser().setId(followId);
 		_follow.setUserId(userId);
 		return followMapper.insertSelective(_follow) > 0 ? true : false;

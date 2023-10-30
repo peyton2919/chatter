@@ -97,7 +97,6 @@
 		<include refid="Column_topic_List"/>
 		from topic
 		where topic_class_id = #{topicClassId}
-		order by create_time desc
 		limit #{page.offset},#{page.pageSize}
 	</select>
 

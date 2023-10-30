@@ -19,8 +19,6 @@ public class TopicClassParam implements Serializable {
 	private Integer id;
 	/** 名称  */
 	private String className;
-	/** 0 禁用 1启用  */
-	private Integer status;
 	/** 创建时间  */
 	private String createTime;
 
@@ -60,20 +58,6 @@ public class TopicClassParam implements Serializable {
 	}
 
 	/** 
-	 * @param status 0 禁用 1启用 
-	 */ 
-	public void setStatus(Integer status){
-		this.status = status;
-	}
-
-	/** 
-	 * @return 0 禁用 1启用 
-	 */ 
-	public Integer getStatus(){
-		return status;
-	}
-
-	/** 
 	 * @param createTime 创建时间 
 	 */ 
 	public void setCreateTime(String createTime){
@@ -98,7 +82,6 @@ public class TopicClassParam implements Serializable {
 		TopicClass topicClass = new TopicClass(); 
 		topicClass.setId(id);
 		topicClass.setClassName(className);
-		topicClass.setStatus(status);
 		topicClass.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return topicClass;
 	} 
@@ -115,7 +98,6 @@ public class TopicClassParam implements Serializable {
 		}
 		this.setId(topicClass.getId());
 		this.setClassName(topicClass.getClassName());
-		this.setStatus(topicClass.getStatus());
 		this.setCreateTime(BaseConvertBo.convertIntToStr(topicClass.getCreateTime()));
 		return this;
 	} 

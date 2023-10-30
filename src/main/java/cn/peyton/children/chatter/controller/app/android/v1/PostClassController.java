@@ -7,6 +7,7 @@ import cn.peyton.core.enums.HttpStatusCode;
 import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.validator.Valid;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class PostClassController extends AppController {
 	private PostClassService postClassService;
 
 	// 获取所有文章分类
-	@PostMapping("/postclass")
+	@GetMapping("/postclass")
 	public JSONResult<List<PostClassParam>> finds() {
 
 		return JSONResult.success(postClassService.finds());

@@ -1,6 +1,7 @@
 package cn.peyton.children.chatter.param;
 
 
+import cn.peyton.children.chatter.aop.img.ImageHostPath;
 import cn.peyton.children.chatter.bo.ImagesBo;
 import cn.peyton.children.chatter.pojo.Post;
 import cn.peyton.core.inf.BaseConvertBo;
@@ -21,6 +22,7 @@ import java.util.List;
  * @version 1.0.0
  * </pre>
 */
+@ImageHostPath(name = "titlePic")
 public class PostParam implements Serializable {
 	/** 编号  */
 	private Integer id;
@@ -30,6 +32,7 @@ public class PostParam implements Serializable {
 	@Length(max=80,message = "长度超出范围。")
 	private String title;
 	/** 标题图片  */
+
 	private String titlePic;
 	/** 内容  */
 	@NotBlank(message = "内容不能为空！")
@@ -62,6 +65,8 @@ public class PostParam implements Serializable {
 	/** 踩  */
 	private Integer cai;
 
+	private SupportParam supportParam;
+
 	//================================== Constructor =======================================//
 	public PostParam() {
 		if (null == userParam) {
@@ -69,6 +74,9 @@ public class PostParam implements Serializable {
 		}
 		if (null == imageParamList) {
 			imageParamList = new ArrayList<>();
+		}
+		if (null == supportParam) {
+			supportParam = new SupportParam();
 		}
 	}
 	//================================== Method =======================================//
@@ -299,6 +307,14 @@ public class PostParam implements Serializable {
 		this.commentCount = commentCount;
 	}
 
+	public SupportParam getSupportParam() {
+		return supportParam;
+	}
+
+	public void setSupportParam(SupportParam supportParam) {
+		this.supportParam = supportParam;
+	}
+
 	/**
 	 * <h4>对象转成Post对象<h4> 
 	 * <pre>
@@ -324,6 +340,7 @@ public class PostParam implements Serializable {
 		post.setCommentCount(commentCount);
 		post.setDing(ding);
 		post.setCai(cai);
+		post.setSupport(supportParam.convert());
 		return post;
 	} 
 	/**
@@ -353,6 +370,7 @@ public class PostParam implements Serializable {
 		this.setCommentCount(post.getCommentCount());
 		this.setDing(post.getDing());
 		this.setCai(post.getCai());
+		this.setSupportParam(this.supportParam.compat(post.getSupport()));
 		return this;
 	} 
 }

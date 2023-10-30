@@ -167,6 +167,14 @@ public interface UserMapper {
 	int updateEmail(User user);
 
 	/**
+	 * <h4>更新 名称</h4>
+	 * @param id 编号
+	 * @param username 名称
+	 * @return 1 表示 更新成功; 0 表示 取反;
+	 */
+	int updateName(Integer id, String username);
+
+	/**
 	 * <h4>判断 手机号码 是否被 他人绑定</h4>
 	 * @param userId 用户编号
 	 * @param phone 手机号码

@@ -33,7 +33,12 @@ public interface PROPERTY {
     String PATH_IMG_AD = getLocation()+"static/images/ad/";
     /** 头像图片 存放位置 */
     String PATH_IMG_AVATAR = getLocation()+"static/images/avatar/";
-
+    /** 头像图片 数据库存放位置 */
+    String PATH_IMG_AVATAR_SIMPLE = "/images/avatar/";
+    /** 广告图片 数据库存放位置 */
+    String PATH_IMG_AD_SIMPLE = "/images/ad/";
+    /** 产品图片 数据库存放位置 */
+    String PATH_IMG_PRODUCT_SIMPLE = "/images/product/";
 
     /** 邮箱 */
     String NAME_EMAIL = "邮箱";

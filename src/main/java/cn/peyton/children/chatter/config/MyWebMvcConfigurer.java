@@ -1,5 +1,7 @@
 package cn.peyton.children.chatter.config;
 
+import cn.peyton.core.enums.PROPERTY;
+import cn.peyton.core.inf.control.IController;
 import cn.peyton.core.interceptor.ParameterInterceptor;
 import cn.peyton.core.interceptor.TokenInterceptor;
 import cn.peyton.core.toolkit.base.Lists;
@@ -86,8 +88,10 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         //registry.addResourceHandler("/upload/**").addResourceLocations("file:D:\\upload\\");
         //registry.addResourceHandler("/goods-img/**").addResourceLocations("file:D:\\upload\\");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
     }
 
     @Override

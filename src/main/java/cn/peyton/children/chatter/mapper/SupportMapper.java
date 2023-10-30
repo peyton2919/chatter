@@ -88,4 +88,6 @@ public interface SupportMapper {
 	 */
 	int findCaiByPostId(Integer postId);
 
+	Support findByPostIdAndUserId(Integer id, Integer userId);
+
 }

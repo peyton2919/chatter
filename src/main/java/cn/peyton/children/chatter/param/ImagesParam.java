@@ -1,6 +1,7 @@
 package cn.peyton.children.chatter.param;
 
 
+import cn.peyton.children.chatter.aop.img.ImageHostPath;
 import cn.peyton.children.chatter.pojo.Images;
 import cn.peyton.core.inf.BaseConvertBo;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @version 1.0.0
  * </pre>
 */
+@ImageHostPath(name = "url")
 public class ImagesParam implements Serializable {
 	/** 编号  */
 	private Integer id;

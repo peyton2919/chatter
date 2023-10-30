@@ -178,9 +178,9 @@
 			count(id)
 		from user
 		where 1!=1
-		<if test="username != null"> or username = #{username}</if>
-		<if test="phone != null"> or phone = #{phone}</if>
-		<if test="email != null"> or email = #{email}</if>
+		<if test="username != null"> and username = #{username}</if>
+		<if test="phone != null"> and phone = #{phone}</if>
+		<if test="email != null"> and email = #{email}</if>
 	</select>
 
 	<select id="checkSimpleRename" resultType="java.lang.Integer">
@@ -229,10 +229,17 @@
 		where id = #{id}
 	</update>
 
+	<update id="updateName" parameterType="cn.peyton.children.chatter.pojo.User">
+		update user
+		set
+			username = #{username}
+		where id = #{id}
+	</update>
+
 	<update id="updateUserPic">
 		update user
 		set
-			user_pic = #{userPic}、
+			user_pic = #{userPic}
 		where id = #{id}
 	</update>
 

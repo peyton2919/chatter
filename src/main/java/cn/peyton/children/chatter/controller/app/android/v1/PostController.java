@@ -12,6 +12,7 @@ import cn.peyton.core.enums.PROPERTY;
 import cn.peyton.core.err.child.ValidationException;
 import cn.peyton.core.json.JSONResult;
 import cn.peyton.core.page.PageQuery;
+import cn.peyton.core.token.TokenTools;
 import cn.peyton.core.validator.Valid;
 import cn.peyton.core.validator.constraints.Min;
 import cn.peyton.core.validator.constraints.NotBlank;
@@ -20,6 +21,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -83,7 +85,7 @@ public class PostController extends AppController {
 	}
 
 	// 获取文章详情
-	@PostMapping("/post/detail")
+	@GetMapping("/post/detail")
 	@Valid
 	public JSONResult<PostParam> detail(@Min(message = "要大于0的数！") Integer id) {
 
@@ -91,7 +93,7 @@ public class PostController extends AppController {
 	}
 
 	// 获取指定话题下的文章列表
-	@PostMapping("/post/topicid")
+	@GetMapping("/post/topicid")
 	@Valid
 	public JSONResult<List<PostParam>> findByTopicId(
 			@Min(message = "要大于0的数！") Integer topicId,
@@ -102,17 +104,20 @@ public class PostController extends AppController {
 	}
 
 	// 获取指定文章分类下的文章列表
-	@PostMapping("/post/postclassid")
+	@GetMapping("/post/postclassid")
 	@Valid
 	public JSONResult<List<PostParam>> findByPostClassId(
 			@Min(message = "要大于0的数！")Integer postClassId,
-			@Min(message = "要大于0的数！")Integer pageNo){
+			@Min(message = "要大于0的数！")Integer pageNo,HttpServletRequest request){
+		String _tokenValues = request.getHeader("token");
+		TokenTools<UserParam> _tokenTools = new TokenTools();
+		UserParam _userParam = _tokenTools.getObject(KEY_TOKEN, _tokenValues, new UserParam());
 
-		return JSONResult.success(postService.findByClassId(postClassId,new PageQuery(pageNo)));
+		return JSONResult.success(postService.findByClassId(postClassId,_userParam.getId(),new PageQuery(pageNo)));
 	}
 
 	// 获取指定用户下的文章列表 {游客可点}
-	@PostMapping("/post/userid")
+	@GetMapping("/post/userid")
 	@Valid
 	public JSONResult<List<PostParam>> findByUserId(
 			@Min(message = "要大于0的数！")Integer userId,
@@ -122,7 +127,7 @@ public class PostController extends AppController {
 	}
 
 	// 获取指定用户下的文章列表 {含隐私}
-	@PostMapping("/user/post/pkuserid")
+	@GetMapping("/user/post/pkuserid")
 	@Valid
 	public JSONResult<List<PostParam>> findByPKUserId(
 			@Min(message = "要大于0的数！") Integer pageNo,

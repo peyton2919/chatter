@@ -158,6 +158,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean updateName(Integer id, String username) {
+		return userMapper.updateName(id, username) > 0 ? true : false;
+	}
+
+	@Override
 	public boolean isUserId(Integer userId) {
 		return userMapper.checkUserId(userId) > 0 ? true : false;
 	}

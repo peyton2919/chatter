@@ -34,7 +34,7 @@ public interface PostService {
      * @param page 分页对象
      * @return 文章集合
      */
-    List<PostParam> findByClassId(int postClassId, PageQuery page);
+    List<PostParam> findByClassId(int postClassId,int userId, PageQuery page);
 
     /**
      * <h4>根据关键字，分页查找,只查isOpen=1</h4>

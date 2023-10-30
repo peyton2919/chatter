@@ -324,7 +324,6 @@ CREATE TABLE `topic` (
 
 LOCK TABLES `topic` WRITE;
 /*!40000 ALTER TABLE `topic` DISABLE KEYS */;
-INSERT INTO `topic` VALUES (1,'涨知识','https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/1.jpeg','快来涨知识一起进步吧',1,NULL,1),(2,'美食晒出来','https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/2.jpeg','生活唯独美食不可辜负',1,NULL,1),(3,'二次元的日常','https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/3.jpeg','来一起维护你心中的精神圣地',1,NULL,1),(4,'情感点滴','https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/4.jpeg','这里不卖酒，也不换故事',1,NULL,1),(5,'总有一句话贼走心','https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/5.jpeg','孤独到嗓子眼',1,NULL,1),(6,'足球二三事','https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/6.jpeg','生命之杯GOGOGO',1,NULL,1),(7,'斗图必备','https://tangzhe123-com.oss-cn-shenzhen.aliyuncs.com/Appstatic/qsbk/demo/topicpic/7.jpeg','手机里没有千个表情包，就敢跟我聊天？',1,NULL,1);
 /*!40000 ALTER TABLE `topic` ENABLE KEYS */;
 UNLOCK TABLES;
 

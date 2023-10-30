@@ -10,21 +10,16 @@
 	</resultMap>
 
 	<sql id="Column_adsense_List">
-		id,src,url,type,create_time
+		`id`,`src`,`url`,`type`,`create_time`
 	</sql>
 
-	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Adsense" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into adsense(src,url,type,create_time)
-		values (#{src},#{url},#{type},#{createTime})
-	</insert>
-
 	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Adsense" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
-		insert into adsense
+		insert into `adsense`
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="src != null">src,</if>
-			<if test="url != null">url,</if>
-			<if test="type != null">type,</if>
-			<if test="createTime != null">create_time,</if>
+			<if test="src != null">`src`,</if>
+			<if test="url != null">`url`,</if>
+			<if test="type != null">`type`,</if>
+			<if test="createTime != null">`create_time`,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="src != null">#{src},</if>
@@ -35,40 +30,29 @@
 	</insert>
 
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from adsense
-		where id = #{id}
+		delete from `adsense`
+		where `id` = #{id}
 	</delete>
 
 	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Adsense">
-		update adsense
+		update `adsense`
 		<set>
-			<if test="src != null">src = #{src},</if>
-			<if test="url != null">url = #{url},</if>
-			<if test="type != null">type = #{type},</if>
-			<if test="createTime != null">create_time = #{createTime},</if>
+			<if test="src != null">`src` = #{src},</if>
+			<if test="url != null">`url` = #{url},</if>
+			<if test="type != null">`type` = #{type},</if>
+			<if test="createTime != null">`create_time` = #{createTime},</if>
 		</set>
-		where id = #{id}
-	</update>
-
-	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Adsense">
-		update adsense
-		set 
-			src = #{src},
-			url = #{url},
-			type = #{type},
-			create_time = #{createTime}
 		where id = #{id}
 	</update>
 
 	<select id="selectByPrimaryKey" resultMap="ResultAdsenseMap"  parameterType="java.lang.Integer">
 		select
 		<include refid="Column_adsense_List"/>
-		from adsense
-		where id = #{id}
+		from `adsense`
+		where `id` = #{id}
 	</select>
 
 	<!-- new create method   -->
-
 	<select id="findByType" resultMap="ResultAdsenseMap">
 		select
 		<include refid="Column_adsense_List"/>
@@ -76,4 +60,25 @@
 		where type = #{type}
 		limit #{page.offset},#{page.pageSize}
 	</select>
+
+	<select id="selectByAllOrKeyword" resultMap="ResultAdsenseMap"  parameterType="map">
+
+	</select>
+
+	<select id="selectByObj" resultMap="ResultAdsenseMap"  parameterType="map">
+
+	</select>
+
+	<select id="count" resultType = "java.lang.Integer" parameterType="java.lang.String">
+
+	</select>
+
+	<select id="isRename" resultType = "java.lang.Integer" parameterType="cn.peyton.children.chatter.pojo.Adsense">
+
+	</select>
+
+	<update id="upStatus" parameterType="cn.peyton.children.chatter.pojo.Adsense">
+
+	</update>
+
 </mapper>

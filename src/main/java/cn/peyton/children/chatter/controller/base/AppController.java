@@ -1,7 +1,14 @@
 package cn.peyton.children.chatter.controller.base;
 
-import org.springframework.stereotype.Controller;
+import cn.peyton.children.chatter.param.UserParam;
+import cn.peyton.core.enums.HttpStatusCode;
+import cn.peyton.core.json.JSONResult;
+import cn.peyton.core.token.TokenTools;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.Serializable;
 
 /**
  * <h4>app 根目录</h4>
@@ -13,9 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @version 1.0.0
  * </pre>
  */
-@Controller
+@RestController
 @RequestMapping("/api")
-public class AppController {
+public class AppController extends BaseController implements Serializable {
+
 
     /** session中的 验证码 key */
     public final static String KEY_SESSION_PHONE_CODE = "SESSION_PHONE_CODE_220323";
@@ -28,11 +36,21 @@ public class AppController {
     public final static String SESSION_USER = "SESSION_USER_PARAM_2203231859";
 
     /** token中 手机号码 key */
-    public final static String KEY_TOKEN_PHONE = "TOKEN_PHONE_2203231641";
-    /** token中 账户号码 key */
-    public final static String KEY_TOKEN_ACCOUNT = "TOKEN_ACCOUNT_2203231829";
-    /** token 其他号码 key */
-    public final static String KEY_TOKEN_OTHER = "TOKEN_OTHER_2203231830";
+    public final static String KEY_TOKEN = "TOKEN_2203231641";
 
     public final static String KEY_PHONE_CACHE_TIME = "PHONE_TIME_2203262148";
+
+    @Override
+    public JSONResult<UserParam>  handleToken(HttpServletRequest request) {
+        String _tokenValues = request.getHeader(TokenTools.Property.ACCESS_TOKEN);
+        if (null == _tokenValues){
+            return JSONResult.fail(HttpStatusCode.ERR_ILLEGAL_TOKEN);
+        }
+        TokenTools<UserParam> _tokenTools = new TokenTools<>();
+        UserParam _userParam = _tokenTools.getObject(KEY_TOKEN, _tokenValues, new UserParam());
+        if (null == _userParam){
+            return JSONResult.fail(HttpStatusCode.ERR_ILLEGAL_TOKEN);
+        }
+        return JSONResult.success(_userParam);
+    }
 }

@@ -1,5 +1,7 @@
 package cn.peyton.children.chatter.test;
 
+import com.alibaba.fastjson2.JSON;
+
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,14 +28,14 @@ public class T2 {
             put("telephone", "123456789");
         }};
         //获取实体中给属性的值
-        Object target = ReflectUtil.getTarget(entity, addProperties);
+        Object target = ReflectUtil1.getObject(entity, addProperties);
 
-
-        System.out.println(ReflectUtil.getFieldValueByName("id", target));
-        System.out.println(ReflectUtil.getFieldValueByName("name", target));
-        System.out.println(ReflectUtil.getFieldValueByName("age", target));
-        System.out.println(ReflectUtil.getFieldValueByName("sex", target));
-        System.out.println(ReflectUtil.getFieldValueByName("telephone", target));
+        System.out.println(JSON.toJSONString(target));
+        //System.out.println(ReflectUtil.getFieldValueByName("id", target));
+        //System.out.println(ReflectUtil.getFieldValueByName("name", target));
+        //System.out.println(ReflectUtil.getFieldValueByName("age", target));
+        //System.out.println(ReflectUtil.getFieldValueByName("sex", target));
+        //System.out.println(ReflectUtil.getFieldValueByName("telephone", target));
     }
 
     public static Object deleteProperty(Object obj, String fieldName) throws Exception {

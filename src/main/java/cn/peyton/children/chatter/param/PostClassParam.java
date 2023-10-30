@@ -22,8 +22,6 @@ public class PostClassParam implements Serializable {
 	/** 类型名称  */
 	@NotBlank(message = "名称不能为空")
 	private String className;
-	/** 0 禁用 1启用  */
-	private Integer status;
 	/** 创建时间  */
 	private String createTime;
 
@@ -61,35 +59,19 @@ public class PostClassParam implements Serializable {
 	public String getClassName(){
 		return className;
 	}
-
-	/** 
-	 * @param status 0 禁用 1启用 
-	 */ 
-	public void setStatus(Integer status){
-		this.status = status;
-	}
-
-	/** 
-	 * @return 0 禁用 1启用 
-	 */ 
-	public Integer getStatus(){
-		return status;
-	}
-
-	/** 
-	 * @param createTime 创建时间 
-	 */ 
+	/**
+	 * @param createTime 创建时间
+	 */
 	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
 
-	/** 
-	 * @return 创建时间 
-	 */ 
+	/**
+	 * @return 创建时间
+	 */
 	public String getCreateTime(){
 		return createTime;
 	}
-
 
 	/**
 	 * <h4>对象转成PostClass对象<h4> 
@@ -102,7 +84,6 @@ public class PostClassParam implements Serializable {
 		PostClass postClass = new PostClass(); 
 		postClass.setId(id);
 		postClass.setClassName(className);
-		postClass.setStatus(status);
 		postClass.setCreateTime(BaseConvertBo.convertStrToInt(createTime));
 		return postClass;
 	} 
@@ -119,7 +100,6 @@ public class PostClassParam implements Serializable {
 		}
 		this.setId(postClass.getId());
 		this.setClassName(postClass.getClassName());
-		this.setStatus(postClass.getStatus());
 		this.setCreateTime(BaseConvertBo.convertIntToStr(postClass.getCreateTime()));
 		return this;
 	}

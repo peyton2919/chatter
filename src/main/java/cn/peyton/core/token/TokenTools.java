@@ -31,7 +31,7 @@ import java.util.Map;
 public class TokenTools<T> implements Serializable {
     /**
      * 过期时间一天， 24 * 60 * 60 * 1000
-     * TODO 正式运行时修改为15分钟 15*60*1000
+     * TODO 正式运行时修改为15分钟 15 * 60 * 1000
      */
     private long expireTime = 900000l;
     /** 发行者 */
@@ -53,7 +53,7 @@ public class TokenTools<T> implements Serializable {
      * <h4>加密 Token</h4>
      * @param userId 用户编号
      * @param username 用户名称
-     * @param expireTime 过期时间（毫秒）
+     * @param expireTime 过期时间（毫秒）;如: 过期时间一天， 24 * 60 * 60 * 1000
      * @return
      */
     public String sign(String userId, String username,long expireTime) {
@@ -82,7 +82,7 @@ public class TokenTools<T> implements Serializable {
      * <h4>加密 Token</h4>
      * @param key 键
      * @param obj 值
-     * @param expireTime 过期时间（毫秒）
+     * @param expireTime 过期时间（毫秒）; 如: 过期时间一天， 24 * 60 * 60 * 1000
      * @return
      */
     public String signObj(String key, String obj, long expireTime) {
@@ -108,7 +108,7 @@ public class TokenTools<T> implements Serializable {
      * <h4>加密 Token</h4>
      * @param key 关键字
      * @param t 对象
-     * @param expireTime 过期时间（毫秒）
+     * @param expireTime 过期时间（毫秒） 如: 过期时间一天， 24 * 60 * 60 * 1000
      * @return 字符串
      */
     public String sign(String key, T t,long expireTime) {
@@ -431,7 +431,7 @@ public class TokenTools<T> implements Serializable {
         /** 时间 key */
         String TIMESTAMP = "timestamp";
         /** Token key */
-        String ACCESS_TOKEN = "ACCESS_TOKEN";
+        String ACCESS_TOKEN = "token";
     }
     // **************************************** get and set **************************************** //
 }

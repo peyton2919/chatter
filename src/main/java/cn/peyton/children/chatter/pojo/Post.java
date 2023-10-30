@@ -83,6 +83,9 @@ public class Post implements Serializable {
 	 */
 	private Integer cai;
 
+	private Support support;
+
+
 	//================================== Constructor =======================================//
 	public Post() {
 		if (!CheckedTools.isNull(this.user)) {
@@ -90,6 +93,9 @@ public class Post implements Serializable {
 		}
 		if (null == imageList) {
 			imageList = new ArrayList<>();
+		}
+		if (null == support) {
+			support = new Support();
 		}
 	}
 
@@ -321,6 +327,14 @@ public class Post implements Serializable {
 	 */
 	public void setCommentCount(Integer commentCount) {
 		this.commentCount = commentCount;
+	}
+
+	public Support getSupport() {
+		return support;
+	}
+
+	public void setSupport(Support support) {
+		this.support = support;
 	}
 
 }

@@ -3,10 +3,11 @@ package cn.peyton.children.chatter.service.impl;
 import cn.peyton.children.chatter.aop.timestamp.AutoWriteTimestamp;
 import cn.peyton.children.chatter.bo.PostBo;
 import cn.peyton.children.chatter.mapper.PostMapper;
+import cn.peyton.children.chatter.mapper.SupportMapper;
 import cn.peyton.children.chatter.param.PostParam;
 import cn.peyton.children.chatter.pojo.Post;
+import cn.peyton.children.chatter.pojo.Support;
 import cn.peyton.children.chatter.service.PostService;
-import cn.peyton.children.chatter.service.SupportService;
 import cn.peyton.core.page.PageQuery;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -27,8 +28,9 @@ public class PostServiceImpl implements PostService {
 	@Resource
 	private PostMapper postMapper;
 
+
 	@Resource
-	private SupportService supportService;
+	private SupportMapper supportMapper;
 
 	@AutoWriteTimestamp
 	@Override
@@ -48,9 +50,15 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostParam> findByClassId(int postClassId, PageQuery page) {
-
-		return new PostBo().adapter(postMapper.findByClassId(postClassId,page)) ;
+	public List<PostParam> findByClassId(int postClassId,int userId, PageQuery page) {
+		List<Post> posts = postMapper.findByClassId(postClassId, page);
+		if (null != posts && posts.size() > 0) {
+			for (int i = 0; i < posts.size(); i++) {
+				Support support = supportMapper.findByPostIdAndUserId(posts.get(i).getId(), userId);
+				posts.get(i).setSupport(support);
+			}
+		}
+		return new PostBo().adapter(posts) ;
 	}
 
 	@Override

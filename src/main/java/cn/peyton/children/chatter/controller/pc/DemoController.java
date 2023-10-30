@@ -1,9 +1,7 @@
 package cn.peyton.children.chatter.controller.pc;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <h4></h4>
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
     @GetMapping("/test/{stuNo}")
+    @ResponseBody
     public String get(@PathVariable String stuNo) {
         return "测试数据"+ stuNo;
     }

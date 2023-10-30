@@ -18,18 +18,18 @@
 
 	<insert id="insert" parameterType="cn.peyton.children.chatter.pojo.Follow" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
 		insert into follow(follow_id,user_id,create_time)
-		values (#{followId},#{userId},#{createTime})
+		values (#{followUser.id},#{userId},#{createTime})
 	</insert>
 
 	<insert id="insertSelective" parameterType="cn.peyton.children.chatter.pojo.Follow" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
 		insert into follow
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="followId != null">follow_id,</if>
+			<if test="followUser.id != null">follow_id,</if>
 			<if test="userId != null">user_id,</if>
 			<if test="createTime != null">create_time,</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="followId != null">#{followId},</if>
+			<if test="followUser.id != null">#{followUser.id},</if>
 			<if test="userId != null">#{userId},</if>
 			<if test="createTime != null">#{createTime},</if>
 		</trim>
@@ -43,7 +43,7 @@
 	<update id="updateByPrimaryKeySelective" parameterType="cn.peyton.children.chatter.pojo.Follow">
 		update follow
 		<set>
-			<if test="followId != null">follow_id = #{followId},</if>
+			<if test="followUser.id != null">follow_id = #{followUser.id},</if>
 			<if test="userId != null">user_id = #{userId},</if>
 			<if test="createTime != null">create_time = #{createTime},</if>
 		</set>
@@ -53,7 +53,7 @@
 	<update id="updateByPrimaryKey" parameterType="cn.peyton.children.chatter.pojo.Follow">
 		update follow
 		set 
-			follow_id = #{followId},
+			follow_id = #{followUser.id},
 			user_id = #{userId},
 			create_time = #{createTime}
 		where id = #{id}
@@ -83,6 +83,13 @@
 		where user_id=#{userId} and follow_id=#{followId}
 
 	</select>
+
+	<delete id="deleteByUserIdAndFollowId" parameterType="java.lang.Integer">
+		delete from follow
+		where user_id=#{userId} and follow_id=#{followId}
+	</delete>
+
+
 
 	<select id="friends" resultMap="ResultFollowMap">
 		SELECT

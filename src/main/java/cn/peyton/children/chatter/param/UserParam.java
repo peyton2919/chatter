@@ -1,5 +1,6 @@
 package cn.peyton.children.chatter.param;
 
+import cn.peyton.children.chatter.aop.img.ImageHostPath;
 import cn.peyton.children.chatter.pojo.User;
 import cn.peyton.children.chatter.pojo.UserBind;
 import cn.peyton.children.chatter.pojo.UserInfo;
@@ -19,6 +20,7 @@ import java.util.List;
  * @version 1.0.0
  * </pre>
 */
+@ImageHostPath(name = "userPic")
 public class UserParam implements Serializable {
 	/** 编号  */
 	private Integer id;
